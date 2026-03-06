@@ -6,6 +6,7 @@
 |------|-----------|
 | _Member 1_ | _ID_ |
 | _Member 2_ | _ID_ |
+| _Member 3_ | _ID_ |
 
 ## Project Topic
 
