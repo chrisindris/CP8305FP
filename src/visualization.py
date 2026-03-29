@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
-
+import math
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.inspection import permutation_importance
 
@@ -106,14 +106,17 @@ def plot_pairplot(
     return grid
 
 
-def plot_boxplots(df: pd.DataFrame, columns: list) -> plt.Figure:
+def plot_boxplots(df: pd.DataFrame, columns: list, rows: int = 1) -> plt.Figure:
     """Side-by-side box plots for multiple numeric columns."""
-    fig, axes = plt.subplots(1, len(columns), figsize=(5 * len(columns), 5))
-    if len(columns) == 1:
-        axes = [axes]
-    for ax, col in zip(axes, columns):
-        sns.boxplot(y=df[col], ax=ax, color="steelblue")
-        ax.set_title(col)
+    num_cols = math.ceil(len(columns) / rows)
+    fig, axes = plt.subplots(nrows=rows, ncols=num_cols, figsize=(5 * num_cols, 5 * rows))
+    for i, ax in enumerate(axes.flatten()):
+        try:
+            col = columns[i]
+            sns.boxplot(y=df[col], ax=ax, color="steelblue")
+            ax.set_title(col)
+        except IndexError:
+            ax.axis('off')
     plt.tight_layout()
     return fig
 
