@@ -11,6 +11,167 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
 
 
 # ---------------------------------------------------------------------------
+# Model-specific numerical preprocessing rules
+# ---------------------------------------------------------------------------
+
+PREPROCESSING_RULES: dict[str, dict[str, str]] = {
+    "time_in_hospital": {
+        "knn": "standardize",
+        "decision_tree": "none",
+        "logistic_regression": "standardize",
+        "gaussian_nb": "optional_log1p",
+    },
+    "num_lab_procedures": {
+        "knn": "standardize",
+        "decision_tree": "none",
+        "logistic_regression": "standardize",
+        "gaussian_nb": "none",
+    },
+    "num_procedures": {
+        "knn": "log1p_then_standardize",
+        "decision_tree": "none",
+        "logistic_regression": "log1p_then_standardize",
+        "gaussian_nb": "log1p",
+    },
+    "num_medications": {
+        "knn": "standardize",
+        "decision_tree": "none",
+        "logistic_regression": "standardize",
+        "gaussian_nb": "none",
+    },
+    "number_outpatient": {
+        "knn": "log1p_then_standardize",
+        "decision_tree": "none",
+        "logistic_regression": "log1p_then_standardize",
+        "gaussian_nb": "log1p",
+    },
+    "number_emergency": {
+        "knn": "log1p_then_standardize",
+        "decision_tree": "none",
+        "logistic_regression": "log1p_then_standardize",
+        "gaussian_nb": "log1p",
+    },
+    "number_inpatient": {
+        "knn": "log1p_then_standardize",
+        "decision_tree": "none",
+        "logistic_regression": "log1p_then_standardize",
+        "gaussian_nb": "log1p",
+    },
+    "number_diagnoses": {
+        "knn": "standardize",
+        "decision_tree": "none",
+        "logistic_regression": "standardize",
+        "gaussian_nb": "none",
+    },
+}
+
+SKEWNESS_THRESHOLD: float = 1.0
+
+
+# ---------------------------------------------------------------------------
+# Column-level transforms
+# ---------------------------------------------------------------------------
+
+def apply_column_transform(
+    series: pd.Series,
+    transform: str,
+    skewness_threshold: float = SKEWNESS_THRESHOLD,
+) -> tuple[pd.Series, object]:
+    """Apply a named transform to a single numeric column.
+
+    Parameters
+    ----------
+    series : pd.Series
+        The column values to transform.
+    transform : str
+        One of ``"none"``, ``"standardize"``, ``"log1p"``,
+        ``"log1p_then_standardize"``, or ``"optional_log1p"``.
+    skewness_threshold : float
+        Absolute skewness above which ``"optional_log1p"`` applies log1p.
+
+    Returns
+    -------
+    tuple[pd.Series, object]
+        The transformed series and fitted metadata.  Metadata is ``None``
+        for ``"none"`` and ``"log1p"``, a :class:`StandardScaler` for
+        ``"standardize"``, a ``("log1p", StandardScaler)`` tuple for
+        ``"log1p_then_standardize"``, or ``"log1p"`` / ``None`` for
+        ``"optional_log1p"`` depending on whether the transform fired.
+    """
+    if transform == "none":
+        return series, None
+
+    if transform == "standardize":
+        scaler = StandardScaler()
+        vals = scaler.fit_transform(series.values.reshape(-1, 1)).ravel()
+        return pd.Series(vals, index=series.index, name=series.name), scaler
+
+    if transform == "log1p":
+        return pd.Series(
+            np.log1p(series.values), index=series.index, name=series.name,
+        ), None
+
+    if transform == "log1p_then_standardize":
+        logged = np.log1p(series.values)
+        scaler = StandardScaler()
+        vals = scaler.fit_transform(logged.reshape(-1, 1)).ravel()
+        return pd.Series(vals, index=series.index, name=series.name), (
+            "log1p",
+            scaler,
+        )
+
+    if transform == "optional_log1p":
+        if abs(series.skew()) > skewness_threshold:
+            return pd.Series(
+                np.log1p(series.values), index=series.index, name=series.name,
+            ), "log1p"
+        return series, None
+
+    raise ValueError(
+        f"Unknown transform: '{transform}'. "
+        "Use 'none', 'standardize', 'log1p', "
+        "'log1p_then_standardize', or 'optional_log1p'."
+    )
+
+
+def preprocess_numericals_for_model(
+    df: pd.DataFrame,
+    model_type: str,
+    rules: dict[str, dict[str, str]] | None = None,
+) -> tuple[pd.DataFrame, dict[str, object]]:
+    """Apply model-specific preprocessing to numerical columns.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+    model_type : str
+        Key into each column's rule dict (e.g. ``"knn"``).
+    rules : dict, optional
+        Mapping of ``{column: {model_type: transform}}``.
+        Defaults to :data:`PREPROCESSING_RULES`.
+
+    Returns
+    -------
+    tuple[pd.DataFrame, dict]
+        A copy of *df* with transformed columns and a dict mapping
+        column names to fitted metadata (scalers / transform labels).
+    """
+    if rules is None:
+        rules = PREPROCESSING_RULES
+
+    df = df.copy()
+    fitted: dict[str, object] = {}
+
+    for col, model_rules in rules.items():
+        if col not in df.columns:
+            continue
+        transform = model_rules.get(model_type, "none")
+        df[col], fitted[col] = apply_column_transform(df[col], transform)
+
+    return df, fitted
+
+
+# ---------------------------------------------------------------------------
 # Scaling
 # ---------------------------------------------------------------------------
 

@@ -63,15 +63,19 @@ def plot_missing_values(df: pd.DataFrame, title: str = "Missing Values") -> plt.
     return fig
 
 
-def plot_distribution(
-    df: pd.DataFrame, column: str, bins: int = 30, kde: bool = True
-) -> plt.Figure:
+def plot_distribution(df: pd.DataFrame, columns: list, rows: int = 1, bins: int = 30, kde: bool = True) -> plt.Figure:
     """Histogram (with optional KDE) for a single numeric column."""
-    fig, ax = plt.subplots(figsize=(8, 4))
-    sns.histplot(df[column].dropna(), bins=bins, kde=kde, ax=ax, color="steelblue")
-    ax.set_title(f"Distribution of {column}")
-    ax.set_xlabel(column)
-    ax.set_ylabel("Frequency")
+    num_cols = math.ceil(len(columns) / rows)
+    fig, axes = plt.subplots(nrows=rows, ncols=num_cols, figsize=(5 * num_cols, 5 * rows))
+    for i, ax in enumerate(axes.flatten()):
+        try:
+            col = columns[i]
+            sns.histplot(df[col].dropna(), bins=bins, kde=kde, ax=ax, color="steelblue")
+            ax.set_title(f"Distribution of {col}")
+            ax.set_xlabel(col)
+            ax.set_ylabel("Frequency")
+        except IndexError:
+            ax.axis('off')
     plt.tight_layout()
     return fig
 
@@ -97,9 +101,7 @@ def plot_correlation_heatmap(
     return fig
 
 
-def plot_pairplot(
-    df: pd.DataFrame, columns: list, hue: str | None = None
-) -> sns.PairGrid:
+def plot_pairplot(df: pd.DataFrame, columns: list, hue: str | None = None) -> sns.PairGrid:
     """Seaborn pairplot for a selection of numeric columns."""
     grid = sns.pairplot(df[columns + ([hue] if hue else [])], hue=hue, diag_kind="kde")
     grid.figure.suptitle("Pair Plot", y=1.02)
@@ -121,17 +123,42 @@ def plot_boxplots(df: pd.DataFrame, columns: list, rows: int = 1) -> plt.Figure:
     return fig
 
 
-def plot_count(
-    df: pd.DataFrame, column: str, title: str | None = None
-) -> plt.Figure:
+def plot_count(df: pd.DataFrame, columns: str, rows: int = 1, title: str | None = None) -> plt.Figure:
     """Bar chart of value counts for a categorical column."""
-    fig, ax = plt.subplots(figsize=(8, 4))
-    order = df[column].value_counts().index
-    sns.countplot(data=df, x=column, order=order, ax=ax, palette="Blues_d")
-    ax.set_title(title or f"Count of {column}")
-    ax.set_xlabel(column)
-    ax.set_ylabel("Count")
-    ax.tick_params(axis="x", rotation=45)
+    num_cols = math.ceil(len(columns) / rows)
+    fig, axes = plt.subplots(nrows=rows, ncols=num_cols, figsize=(5 * num_cols, 5 * rows))
+    
+    for i, ax in enumerate(axes.flatten()):
+        try:
+            column = columns[i]
+            order = df[column].value_counts().index
+            sns.countplot(data=df, x=column, order=order, ax=ax, legend=False)
+            ax.set_title(title or f"Count of {column}")
+            ax.set_xlabel(column)
+            ax.set_ylabel("Count")
+            ax.tick_params(axis="x", rotation=45)
+        except IndexError:
+            ax.axis('off')
+    plt.tight_layout()
+    return fig
+
+
+def plot_scatter(df: pd.DataFrame, columns: list, rows: int = 1, title: str | None = None) -> plt.Figure:
+    """Bar chart of value counts for a categorical column."""
+    target_column = 'readmitted_binary'
+    
+    num_cols = math.ceil(len(columns) / rows)
+    fig, axes = plt.subplots(nrows=rows, ncols=num_cols, figsize=(5 * num_cols, 5 * rows))
+    
+    for i, ax in enumerate(axes.flatten()):
+        try:
+            column = columns[i]
+            ax.scatter(df[column], df[target_column], alpha=0.4)
+            ax.set_xlabel(column)
+            ax.set_ylabel(target_column)
+            ax.set_title(f'{column} vs {target_column}')
+        except IndexError:
+            ax.axis('off')
     plt.tight_layout()
     return fig
 
@@ -217,6 +244,46 @@ def plot_residuals(y_true, y_pred, title: str = "Residual Plot") -> plt.Figure:
     ax.set_title(title)
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Residual")
+    plt.tight_layout()
+    return fig
+
+
+# ---------------------------------------------------------------------------
+# Association-rule plots
+# ---------------------------------------------------------------------------
+
+def plot_association_rules(
+    rules: pd.DataFrame,
+    x: str = "support",
+    y: str = "confidence",
+    color: str = "lift",
+    top_n: int | None = None,
+    title: str = "Association Rules (support vs confidence)",
+) -> plt.Figure:
+    """Scatter plot of association rules coloured by a metric.
+
+    Parameters
+    ----------
+    rules : pd.DataFrame
+        Output of ``mlxtend.frequent_patterns.association_rules``.
+    x, y : str
+        Columns mapped to the x- and y-axes (default support / confidence).
+    color : str
+        Column mapped to marker colour (default lift).
+    top_n : int or None
+        If given, only the *top_n* rules by *color* are plotted.
+    """
+    df = rules.nlargest(top_n, color) if top_n else rules
+    fig, ax = plt.subplots(figsize=(10, 6))
+    scatter = ax.scatter(
+        df[x], df[y], c=df[color], cmap="coolwarm", alpha=0.7, edgecolors="grey",
+        linewidths=0.5,
+    )
+    cbar = plt.colorbar(scatter, ax=ax)
+    cbar.set_label(color.capitalize())
+    ax.set_xlabel(x.capitalize())
+    ax.set_ylabel(y.capitalize())
+    ax.set_title(title)
     plt.tight_layout()
     return fig
 
