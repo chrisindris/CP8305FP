@@ -114,7 +114,7 @@ def remove_outliers_iqr(df: pd.DataFrame, columns: list) -> pd.DataFrame:
 # Encoding
 # ---------------------------------------------------------------------------
 
-def encode_categoricals(df: pd.DataFrame, columns: list) -> pd.DataFrame:
+def encode_categoricals(df: pd.DataFrame, columns: list, drop_first: bool = True) -> pd.DataFrame:
     """One-hot encode the specified categorical columns.
 
     Parameters
@@ -127,7 +127,34 @@ def encode_categoricals(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     -------
     pd.DataFrame
     """
-    return pd.get_dummies(df, columns=columns, drop_first=True)
+    return pd.get_dummies(df, columns=columns, drop_first=drop_first)
+
+
+def encode_categoricals_wrapper(df: pd.DataFrame, target_column: str, drop_first: bool = True) -> pd.DataFrame:
+    """This wrapper will automatically encode all of the categorical columns (except the target column and the id columns)
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+    target_column : str
+    drop_first : bool, optional
+    """
+    # Ensure that we do not encode the id columns or the target column
+    id_columns = ['encounter_id', 'patient_nbr']
+    columns_to_exclude = id_columns + [target_column]
+
+    # One-hot encode all categorical columns except the target column and the id columns
+    categorical_columns = [
+        c for c in df.select_dtypes(include=['object', 'category']).columns
+        if c not in columns_to_exclude
+    ]
+
+    if categorical_columns:
+        df = encode_categoricals(df, categorical_columns, drop_first=drop_first)
+
+    print(f'Encoded {len(categorical_columns)} categorical columns.')
+    print(f'Shape after encoding: {df.shape}')
+    return df
 
 
 # ---------------------------------------------------------------------------
