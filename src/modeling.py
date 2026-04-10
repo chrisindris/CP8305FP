@@ -611,8 +611,10 @@ def run_cv_experiment(
                     y_train=y_tr.values if use_cw else None,
                 )
 
+                uses_smote = imbalance_strategy in ("smote", "class_weight+smote")
                 needs_sample_weight = (
                     use_cw
+                    and not uses_smote
                     and not _apply_class_weighting(clone(estimator), y_tr.values)
                 )
                 if needs_sample_weight:
