@@ -1,5 +1,6 @@
 # Large files (i.e. processed data)
 data/processed/
+diabetic_data.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

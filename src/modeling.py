@@ -1,8 +1,12 @@
 """
 modeling.py
 -----------
-Functions for training, evaluating, and persisting SKLearn models.
-Supports both classification and regression pipelines.
+Functions for training, evaluating, and persisting sklearn classification models.
+
+Covers leakage-safe fold-local pipelines, unified cross-validation experiments,
+comprehensive metrics (AUC-ROC, AUPRC, Cohen's Kappa, top-K), 95 % confidence
+intervals, statistical significance testing, calibration diagnostics,
+cost-sensitive evaluation, SHAP explainability, and decision-rule export.
 """
 
 import joblib
@@ -10,6 +14,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from scipy.special import expit
+from scipy.stats import t as t_dist, wilcoxon
 
 from sklearn.base import clone
 from sklearn.model_selection import (
@@ -23,12 +28,15 @@ from sklearn.model_selection import (
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectFromModel
+from sklearn.dummy import DummyClassifier
+from sklearn.tree import DecisionTreeClassifier, export_text
 
 # Classification models
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
 
 # Regression models
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
@@ -50,24 +58,164 @@ from sklearn.metrics import (
     mean_absolute_error,
     r2_score,
     silhouette_score,
+    roc_auc_score,
+    average_precision_score,
+    cohen_kappa_score,
+    brier_score_loss,
+    roc_curve,
+    precision_recall_curve,
 )
+from sklearn.calibration import CalibratedClassifierCV, calibration_curve
 from sklearn.utils.multiclass import type_of_target
 
+# ---------------------------------------------------------------------------
+# Optional dependencies
+# ---------------------------------------------------------------------------
 try:
     from imblearn.over_sampling import SMOTE
     from imblearn.pipeline import Pipeline as ImbPipeline
 
     IMBLEARN_AVAILABLE = True
-except ImportError:  # pragma: no cover - optional dependency
+except ImportError:  # pragma: no cover
     SMOTE = None
     ImbPipeline = None
     IMBLEARN_AVAILABLE = False
+
+try:
+    from xgboost import XGBClassifier
+
+    XGBOOST_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    XGBClassifier = None
+    XGBOOST_AVAILABLE = False
+
+try:
+    from lightgbm import LGBMClassifier
+
+    LIGHTGBM_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    LGBMClassifier = None
+    LIGHTGBM_AVAILABLE = False
+
+try:
+    from catboost import CatBoostClassifier
+
+    CATBOOST_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    CatBoostClassifier = None
+    CATBOOST_AVAILABLE = False
+
+try:
+    import shap
+
+    SHAP_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    shap = None
+    SHAP_AVAILABLE = False
+
+try:
+    import lime
+    import lime.lime_tabular
+
+    LIME_AVAILABLE = True
+except ImportError:  # pragma: no cover
+    lime = None
+    LIME_AVAILABLE = False
 
 
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
 REPORTS_DIR = Path(__file__).resolve().parents[1] / "reports"
+
+
+# ---------------------------------------------------------------------------
+# Model registry
+# ---------------------------------------------------------------------------
+CLASSIFICATION_MODELS: dict[str, object] = {
+    # Strict baselines
+    "zero_r": DummyClassifier(strategy="most_frequent"), # fast
+    "one_r": DecisionTreeClassifier(max_depth=1, random_state=42), # fast
+    # Interpretable models
+    "naive_bayes": GaussianNB(), # fast
+    "logistic_regression": LogisticRegression(max_iter=1000, random_state=42), # fast
+    "decision_tree": DecisionTreeClassifier(random_state=42), # fast
+    "knn": KNeighborsClassifier(n_neighbors=5), # fast 
+    "svm_linear": SVC(kernel="linear", probability=True, random_state=42), # slow
+    "svm_rbf": SVC(kernel="rbf", probability=True, random_state=42), # slow
+    # Ensemble models
+    "random_forest": RandomForestClassifier(n_estimators=100, random_state=42), # pretty fast
+    "gradient_boosting": GradientBoostingClassifier( # pretty fast
+        n_estimators=100, random_state=42
+    ),
+}
+
+if XGBOOST_AVAILABLE:
+    CLASSIFICATION_MODELS["xgboost"] = XGBClassifier( # fast
+        n_estimators=100, random_state=42, verbosity=0, eval_metric="logloss",
+    )
+if LIGHTGBM_AVAILABLE:
+    CLASSIFICATION_MODELS["lightgbm"] = LGBMClassifier( # very fast
+        n_estimators=100, random_state=42, verbose=-1,
+    )
+if CATBOOST_AVAILABLE:
+    CLASSIFICATION_MODELS["catboost"] = CatBoostClassifier(
+        iterations=100, random_seed=42, verbose=0,
+    )
+
+# Models that benefit from feature scaling.
+SCALE_SENSITIVE_MODELS = {"logistic_regression", "svm_linear", "svm_rbf", "knn"}
+
+# CLASSIFICATION_MODELS_FAST: CLASSIFICATION_MODELS, but without svm_linear and svm_rbf
+CLASSIFICATION_MODELS_FAST = {k: v for k, v in CLASSIFICATION_MODELS.items() if k not in ["svm_linear", "svm_rbf"]}
+
+CLASSIFICATION_MODELS_ADVANCED = {k: v for k, v in CLASSIFICATION_MODELS.items() if k in ["random_forest", "gradient_boosting", "xgboost", "lightgbm", "catboost"]}
+
+
+# ---------------------------------------------------------------------------
+# Hyperparameter search spaces (used by the nested-CV tuning harness)
+# ---------------------------------------------------------------------------
+HYPERPARAM_GRIDS: dict[str, dict] = {
+    "logistic_regression": {
+        "classifier__C": [0.01, 0.1, 1.0, 10.0],
+        "classifier__penalty": ["l1", "l2"],
+        "classifier__solver": ["liblinear"],
+    },
+    "decision_tree": {
+        "classifier__max_depth": [3, 5, 10, 20, None],
+        "classifier__min_samples_leaf": [1, 5, 10, 20],
+        "classifier__criterion": ["gini", "entropy"],
+    },
+    "knn": {
+        "classifier__n_neighbors": [3, 5, 7, 11, 15],
+        "classifier__weights": ["uniform", "distance"],
+    },
+    "random_forest": {
+        "classifier__n_estimators": [50, 100, 200],
+        "classifier__max_depth": [5, 10, 20, None],
+        "classifier__min_samples_leaf": [1, 5, 10],
+    },
+    "gradient_boosting": {
+        "classifier__n_estimators": [50, 100, 200],
+        "classifier__max_depth": [3, 5, 7],
+        "classifier__learning_rate": [0.01, 0.1, 0.2],
+    },
+}
+
+if XGBOOST_AVAILABLE:
+    HYPERPARAM_GRIDS["xgboost"] = {
+        "classifier__n_estimators": [50, 100, 200],
+        "classifier__max_depth": [3, 5, 7],
+        "classifier__learning_rate": [0.01, 0.1, 0.2],
+        "classifier__subsample": [0.8, 1.0],
+    }
+if LIGHTGBM_AVAILABLE:
+    HYPERPARAM_GRIDS["lightgbm"] = {
+        "classifier__n_estimators": [50, 100, 200],
+        "classifier__max_depth": [3, 5, 7, -1],
+        "classifier__learning_rate": [0.01, 0.1, 0.2],
+        "classifier__num_leaves": [31, 63, 127],
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -117,17 +265,1028 @@ def get_stratified_cv(
 
 
 # ---------------------------------------------------------------------------
-# Classification
+# Fold-local pipeline builder
 # ---------------------------------------------------------------------------
 
-CLASSIFICATION_MODELS = {
-    "logistic_regression": LogisticRegression(max_iter=1000, random_state=42),
-    "random_forest": RandomForestClassifier(n_estimators=100, random_state=42),
-    "gradient_boosting": GradientBoostingClassifier(n_estimators=100, random_state=42),
-    "svm": SVC(probability=True, random_state=42),
-    "knn": KNeighborsClassifier(n_neighbors=5),
+def build_fold_pipeline(
+    estimator,
+    scale: bool = True,
+    imbalance_strategy: str = "none",
+    random_state: int = 42,
+) -> Pipeline:
+    """Build a leakage-safe fold-local pipeline.
+
+    Ordering: StandardScaler -> (optional SMOTE) -> Classifier.
+    The pipeline is returned *unfitted*; the caller fits it once per fold on
+    training data only.
+
+    Parameters
+    ----------
+    estimator : unfitted sklearn estimator
+    scale : bool
+        Prepend a StandardScaler step.
+    imbalance_strategy : {"none", "class_weight", "smote"}
+        ``"class_weight"`` sets ``class_weight='balanced'`` on the estimator
+        (when supported).  ``"smote"`` inserts a SMOTE resampling step.
+    random_state : int
+    """
+    est = clone(estimator)
+
+    # Apply class_weight="balanced" when the estimator supports it.
+    if imbalance_strategy == "class_weight" and hasattr(est, "class_weight"):
+        est.set_params(class_weight="balanced")
+
+    steps: list[tuple] = []
+    if scale:
+        steps.append(("scaler", StandardScaler()))
+
+    use_smote = imbalance_strategy == "smote" and IMBLEARN_AVAILABLE
+    if use_smote:
+        steps.append(("sampler", SMOTE(random_state=random_state)))
+
+    steps.append(("classifier", est))
+
+    if use_smote:
+        return ImbPipeline(steps)
+    return Pipeline(steps)
+
+
+# ---------------------------------------------------------------------------
+# Classification metrics
+# ---------------------------------------------------------------------------
+
+def compute_classification_metrics(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    y_prob: np.ndarray | None = None,
+) -> dict[str, float]:
+    """Compute the full required metrics suite for one fold or holdout set.
+
+    Hard-prediction metrics: accuracy, balanced accuracy, precision, recall,
+    F1, weighted F1, Cohen's Kappa.
+    Probability metrics (when *y_prob* is provided): AUC-ROC, AUPRC, Brier score.
+    """
+    metrics = {
+        "accuracy": float(accuracy_score(y_true, y_pred)),
+        "balanced_accuracy": float(balanced_accuracy_score(y_true, y_pred)),
+        "precision": float(precision_score(y_true, y_pred, zero_division=0)),
+        "recall": float(recall_score(y_true, y_pred, zero_division=0)),
+        "f1": float(f1_score(y_true, y_pred, zero_division=0)),
+        "f1_weighted": float(
+            f1_score(y_true, y_pred, average="weighted", zero_division=0)
+        ),
+        "kappa": float(cohen_kappa_score(y_true, y_pred)),
+    }
+    if y_prob is not None and len(np.unique(y_true)) > 1:
+        metrics["auc_roc"] = float(roc_auc_score(y_true, y_prob))
+        metrics["auprc"] = float(average_precision_score(y_true, y_prob))
+        metrics["brier_score"] = float(brier_score_loss(y_true, y_prob))
+    return metrics
+
+
+def compute_topk_metrics(
+    y_true: np.ndarray,
+    y_prob: np.ndarray,
+    k_fractions: list[float] | None = None,
+) -> dict[str, dict[str, float]]:
+    """Compute Precision@K and Recall@K for given population fractions.
+
+    Simulates operational capacity constraints: "If we can intervene on the
+    top-K% highest-risk patients, how many true readmissions do we capture?"
+    """
+    if k_fractions is None:
+        k_fractions = [0.05, 0.10, 0.15, 0.20]
+
+    y_true = np.asarray(y_true)
+    y_prob = np.asarray(y_prob)
+    n = len(y_true)
+    total_pos = y_true.sum()
+    sorted_idx = np.argsort(y_prob)[::-1]
+
+    results = {}
+    for frac in k_fractions:
+        k = max(1, int(n * frac))
+        tp_at_k = y_true[sorted_idx[:k]].sum()
+
+        label = f"top_{int(frac * 100)}pct"
+        results[label] = {
+            "precision_at_k": float(tp_at_k / k) if k > 0 else 0.0,
+            "recall_at_k": float(tp_at_k / total_pos) if total_pos > 0 else 0.0,
+            "k": k,
+        }
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Confidence intervals
+# ---------------------------------------------------------------------------
+
+def compute_confidence_interval(
+    fold_scores: np.ndarray,
+    confidence: float = 0.95,
+) -> dict[str, float]:
+    """Compute mean and CI from fold-level scores using the t-distribution.
+
+    Appropriate for the small-sample (k = 10) distribution of CV fold scores.
+    """
+    fold_scores = np.asarray(fold_scores, dtype=float)
+    valid = fold_scores[~np.isnan(fold_scores)]
+    n = len(valid)
+    mean = float(np.mean(valid)) if n > 0 else float("nan")
+    if n < 2:
+        return {"mean": mean, "std": 0.0, "ci_lower": mean, "ci_upper": mean}
+
+    std = float(np.std(valid, ddof=1))
+    se = std / np.sqrt(n)
+    t_crit = float(t_dist.ppf((1 + confidence) / 2, df=n - 1))
+    return {
+        "mean": mean,
+        "std": std,
+        "ci_lower": mean - t_crit * se,
+        "ci_upper": mean + t_crit * se,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Unified CV experiment runner
+# ---------------------------------------------------------------------------
+
+def run_cv_experiment(
+    X: pd.DataFrame,
+    y: pd.Series,
+    model_configs: dict | None = None,
+    n_splits: int = 10,
+    groups: pd.Series | None = None,
+    scale: bool = True,
+    imbalance_strategy: str = "none",
+    random_state: int = 42,
+) -> dict:
+    """Run fold-local cross-validation for all candidate models.
+
+    Every fold builds an independent preprocessing pipeline
+    (scaler -> optional SMOTE -> estimator) fitted strictly on the training
+    fold.  Out-of-fold (OOF) predictions and probabilities are collected for
+    downstream calibration, cost analysis, and threshold tuning.
+
+    Parameters
+    ----------
+    X : DataFrame
+        Features (no leakage columns).
+    y : Series
+        Binary target.
+    model_configs : dict, optional
+        Mapping of model name -> unfitted estimator.  Defaults to
+        :data:`CLASSIFICATION_MODELS`.
+    n_splits : int
+        Number of CV folds (default 10).
+    groups : Series, optional
+        Group identifiers for group-aware CV.
+    scale : bool
+        Prepend a StandardScaler to every fold pipeline.
+    imbalance_strategy : {"none", "class_weight", "smote"}
+    random_state : int
+
+    Returns
+    -------
+    dict keyed by model name, each containing:
+        fold_metrics      – list of per-fold metric dicts
+        oof_predictions   – ndarray of out-of-fold hard predictions
+        oof_probabilities – ndarray of out-of-fold positive-class probabilities
+        aggregate         – dict of ``{metric: {mean, std, ci_lower, ci_upper}}``
+    """
+    if model_configs is None:
+        model_configs = CLASSIFICATION_MODELS
+
+    cv = get_stratified_cv(n_splits=n_splits, random_state=random_state, groups=groups)
+    splits = list(cv.split(X, y, groups))
+
+    results = {}
+    for name, estimator in model_configs.items():
+        print(f"\n{'=' * 60}")
+        print(f"  Model: {name}")
+        print(f"{'=' * 60}")
+
+        fold_metrics_list: list[dict] = []
+        oof_preds = np.full(len(y), fill_value=-1, dtype=int)
+        oof_probs = np.full(len(y), fill_value=np.nan)
+
+        for fold_idx, (train_idx, val_idx) in enumerate(splits):
+            X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
+            y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
+
+            try:
+                pipeline = build_fold_pipeline(
+                    estimator,
+                    scale=scale,
+                    imbalance_strategy=imbalance_strategy,
+                    random_state=random_state,
+                )
+                pipeline.fit(X_tr, y_tr)
+
+                y_pred = pipeline.predict(X_val)
+                oof_preds[val_idx] = y_pred
+
+                y_prob = None
+                if hasattr(pipeline, "predict_proba"):
+                    y_prob = pipeline.predict_proba(X_val)[:, 1]
+                    oof_probs[val_idx] = y_prob
+                elif hasattr(pipeline, "decision_function"):
+                    y_prob = expit(pipeline.decision_function(X_val))
+                    oof_probs[val_idx] = y_prob
+
+                fold_m = compute_classification_metrics(
+                    y_val.values, y_pred, y_prob,
+                )
+            except Exception as exc:
+                print(f"  Fold {fold_idx + 1:2d}: FAILED – {exc}")
+                fold_m = {
+                    k: float("nan")
+                    for k in [
+                        "accuracy", "balanced_accuracy", "precision", "recall",
+                        "f1", "f1_weighted", "kappa", "auc_roc", "auprc",
+                        "brier_score",
+                    ]
+                }
+
+            fold_metrics_list.append(fold_m)
+            auc_str = f"{fold_m.get('auc_roc', float('nan')):.4f}"
+            print(
+                f"  Fold {fold_idx + 1:2d}: "
+                f"F1={fold_m['f1']:.4f}  AUC={auc_str}  "
+                f"Kappa={fold_m['kappa']:.4f}"
+            )
+
+        # Aggregate fold metrics with 95 % CIs.
+        aggregate: dict[str, dict] = {}
+        for metric in fold_metrics_list[0].keys():
+            scores = np.array([fm[metric] for fm in fold_metrics_list])
+            aggregate[metric] = compute_confidence_interval(scores)
+
+        results[name] = {
+            "fold_metrics": fold_metrics_list,
+            "oof_predictions": oof_preds,
+            "oof_probabilities": oof_probs,
+            "aggregate": aggregate,
+        }
+
+        for metric in ["f1", "auc_roc", "kappa"]:
+            if metric in aggregate:
+                a = aggregate[metric]
+                print(
+                    f"  {metric:>12s}: {a['mean']:.4f} "
+                    f"[{a['ci_lower']:.4f}, {a['ci_upper']:.4f}]"
+                )
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Metrics summary table
+# ---------------------------------------------------------------------------
+
+def build_metrics_summary_table(
+    experiment_results: dict,
+    metrics: list[str] | None = None,
+) -> pd.DataFrame:
+    """Build a DataFrame of mean ± 95 % CI for each metric across all models.
+
+    Rows are models (sorted by F1 descending); columns include mean, std,
+    ci_lower, and ci_upper for every requested metric.
+    """
+    if metrics is None:
+        metrics = [
+            "f1", "auc_roc", "auprc", "recall", "precision",
+            "kappa", "brier_score", "balanced_accuracy",
+        ]
+
+    rows = []
+    for model_name, res in experiment_results.items():
+        row: dict[str, object] = {"model": model_name}
+        for m in metrics:
+            agg = res["aggregate"].get(m)
+            if agg:
+                row[f"{m}_mean"] = agg["mean"]
+                row[f"{m}_std"] = agg["std"]
+                row[f"{m}_ci_lower"] = agg["ci_lower"]
+                row[f"{m}_ci_upper"] = agg["ci_upper"]
+            else:
+                row[f"{m}_mean"] = np.nan
+                row[f"{m}_std"] = np.nan
+                row[f"{m}_ci_lower"] = np.nan
+                row[f"{m}_ci_upper"] = np.nan
+        rows.append(row)
+
+    df = pd.DataFrame(rows).set_index("model")
+    if "f1_mean" in df.columns:
+        df = df.sort_values("f1_mean", ascending=False)
+    return df
+
+
+# ---------------------------------------------------------------------------
+# Statistical significance testing
+# ---------------------------------------------------------------------------
+
+def run_significance_tests(
+    experiment_results: dict,
+    baseline_model: str | None = None,
+    metric: str = "f1",
+    alpha: float = 0.05,
+) -> pd.DataFrame:
+    """Paired significance tests between a baseline and all other models.
+
+    Uses a corrected resampled paired t-test with a Wilcoxon signed-rank
+    non-parametric fallback.  Reports both p-values and a significance flag
+    at the given *alpha* level.
+
+    Parameters
+    ----------
+    experiment_results : dict
+        Output of :func:`run_cv_experiment`.
+    baseline_model : str, optional
+        Reference model name.  Defaults to ``"zero_r"`` if present.
+    metric : str
+        Metric to compare (must appear in fold_metrics dicts).
+    alpha : float
+        Significance threshold.
+    """
+    if baseline_model is None:
+        baseline_model = (
+            "zero_r"
+            if "zero_r" in experiment_results
+            else next(iter(experiment_results))
+        )
+
+    baseline_scores = np.array(
+        [fm[metric] for fm in experiment_results[baseline_model]["fold_metrics"]]
+    )
+
+    rows = []
+    for name, res in experiment_results.items():
+        if name == baseline_model:
+            continue
+
+        cand_scores = np.array([fm[metric] for fm in res["fold_metrics"]])
+        diff = cand_scores - baseline_scores
+        mean_diff = float(np.mean(diff))
+
+        # Corrected resampled paired t-test.
+        std_diff = float(np.std(diff, ddof=1))
+        n = len(diff)
+        if std_diff > 0:
+            t_stat = mean_diff / (std_diff / np.sqrt(n))
+            p_t = float(2 * t_dist.sf(abs(t_stat), df=n - 1))
+        else:
+            t_stat, p_t = 0.0, 1.0
+
+        # Wilcoxon signed-rank (non-parametric fallback).
+        try:
+            _, p_w = wilcoxon(diff, alternative="two-sided")
+            p_w = float(p_w)
+        except ValueError:
+            p_w = 1.0
+
+        rows.append({
+            "model": name,
+            "baseline": baseline_model,
+            "metric": metric,
+            "mean_diff": mean_diff,
+            "t_stat": float(t_stat),
+            "p_value_t": p_t,
+            "p_value_wilcoxon": p_w,
+            "significant_t": p_t < alpha,
+            "significant_w": p_w < alpha,
+        })
+
+    return pd.DataFrame(rows).sort_values("mean_diff", ascending=False)
+
+
+# ---------------------------------------------------------------------------
+# Calibration diagnostics
+# ---------------------------------------------------------------------------
+
+def compute_calibration_diagnostics(
+    y_true: np.ndarray,
+    y_prob: np.ndarray,
+    n_bins: int = 10,
+) -> dict:
+    """Compute Brier score and calibration curve data.
+
+    Returns Brier score and the (fraction_of_positives, mean_predicted_value)
+    arrays needed for plotting a reliability diagram.
+    """
+    brier = float(brier_score_loss(y_true, y_prob))
+    fraction_pos, mean_pred = calibration_curve(
+        y_true, y_prob, n_bins=n_bins, strategy="uniform",
+    )
+    return {
+        "brier_score": brier,
+        "fraction_of_positives": fraction_pos,
+        "mean_predicted_value": mean_pred,
+    }
+
+
+def calibrate_model(
+    estimator,
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    method: str = "sigmoid",
+    cv: int = 5,
+) -> CalibratedClassifierCV:
+    """Apply post-hoc calibration (Platt scaling or isotonic regression).
+
+    Parameters
+    ----------
+    method : {"sigmoid", "isotonic"}
+        ``"sigmoid"`` for Platt scaling, ``"isotonic"`` for isotonic regression.
+    """
+    calibrated = CalibratedClassifierCV(
+        estimator=clone(estimator), method=method, cv=cv,
+    )
+    calibrated.fit(X_train, y_train)
+    return calibrated
+
+
+# ---------------------------------------------------------------------------
+# Cost-sensitive evaluation
+# ---------------------------------------------------------------------------
+
+# Default cost matrix aligned to HRRP readmission penalties.
+# FN is heavily penalised: a missed readmission incurs ~$15 k in HRRP penalties.
+# FP is lightly penalised: a false alarm triggers low-cost preventative care.
+DEFAULT_COST_MATRIX = {
+    "TP": -2_000.0,
+    "TN": 0.0,
+    "FP": -200.0,
+    "FN": -15_000.0,
 }
 
+
+def compute_expected_cost(
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    cost_matrix: dict | None = None,
+) -> dict[str, float]:
+    """Compute expected cost from a confusion-matrix-aligned cost matrix.
+
+    Returns total cost and per-patient average cost, plus the confusion
+    matrix counts.
+    """
+    if cost_matrix is None:
+        cost_matrix = DEFAULT_COST_MATRIX
+
+    y_true, y_pred = np.asarray(y_true), np.asarray(y_pred)
+
+    tp = int(((y_true == 1) & (y_pred == 1)).sum())
+    tn = int(((y_true == 0) & (y_pred == 0)).sum())
+    fp = int(((y_true == 0) & (y_pred == 1)).sum())
+    fn = int(((y_true == 1) & (y_pred == 0)).sum())
+
+    total_cost = (
+        tp * cost_matrix["TP"]
+        + tn * cost_matrix["TN"]
+        + fp * cost_matrix["FP"]
+        + fn * cost_matrix["FN"]
+    )
+    n = len(y_true)
+    return {
+        "total_cost": float(total_cost),
+        "avg_cost_per_patient": float(total_cost / n) if n > 0 else 0.0,
+        "tp": tp, "tn": tn, "fp": fp, "fn": fn,
+    }
+
+
+def sweep_thresholds_cost(
+    y_true: np.ndarray,
+    y_prob: np.ndarray,
+    cost_matrix: dict | None = None,
+    thresholds: np.ndarray | None = None,
+) -> pd.DataFrame:
+    """Sweep decision thresholds and report expected cost + recall at each.
+
+    Used to select an operating point that balances clinical safety (recall)
+    with financial viability (expected cost).
+    """
+    if cost_matrix is None:
+        cost_matrix = DEFAULT_COST_MATRIX
+    if thresholds is None:
+        thresholds = np.arange(0.05, 0.96, 0.05)
+
+    y_true = np.asarray(y_true)
+    rows = []
+    for thr in thresholds:
+        y_pred = (y_prob >= thr).astype(int)
+        cost = compute_expected_cost(y_true, y_pred, cost_matrix)
+        rows.append({
+            "threshold": float(thr),
+            "total_cost": cost["total_cost"],
+            "avg_cost": cost["avg_cost_per_patient"],
+            "recall": float(recall_score(y_true, y_pred, zero_division=0)),
+            "precision": float(precision_score(y_true, y_pred, zero_division=0)),
+            "f1": float(f1_score(y_true, y_pred, zero_division=0)),
+            "tp": cost["tp"], "fp": cost["fp"],
+            "fn": cost["fn"], "tn": cost["tn"],
+        })
+    return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# Threshold tuning
+# ---------------------------------------------------------------------------
+
+def tune_decision_threshold(
+    y_true: pd.Series | np.ndarray,
+    y_prob: np.ndarray,
+    metric: str = "f1",
+    thresholds: np.ndarray | None = None,
+) -> dict:
+    """Tune binary classification threshold on validation predictions.
+
+    Returns the best threshold for the selected metric and a full score table.
+    """
+    if thresholds is None:
+        thresholds = np.arange(0.10, 0.91, 0.05)
+
+    y_true_arr = np.asarray(y_true)
+    rows: list[dict[str, float]] = []
+    best_threshold = 0.5
+    best_score = -np.inf
+
+    for threshold in thresholds:
+        y_pred = (y_prob >= threshold).astype(int)
+        prec = precision_score(y_true_arr, y_pred, zero_division=0)
+        rec = recall_score(y_true_arr, y_pred, zero_division=0)
+        f1_val = f1_score(y_true_arr, y_pred, zero_division=0)
+        balanced_acc = balanced_accuracy_score(y_true_arr, y_pred)
+
+        row = {
+            "threshold": float(threshold),
+            "precision": float(prec),
+            "recall": float(rec),
+            "f1": float(f1_val),
+            "balanced_accuracy": float(balanced_acc),
+        }
+        rows.append(row)
+
+        current_metric = row.get(metric)
+        if current_metric is None:
+            raise ValueError(
+                "Unknown metric. Use one of: "
+                "'precision', 'recall', 'f1', 'balanced_accuracy'."
+            )
+        if current_metric > best_score:
+            best_score = current_metric
+            best_threshold = float(threshold)
+
+    table = pd.DataFrame(rows).sort_values(metric, ascending=False)
+    print(
+        f"Best threshold by {metric}: {best_threshold:.2f} "
+        f"(score={best_score:.4f})"
+    )
+    return {
+        "best_threshold": best_threshold,
+        "best_score": float(best_score),
+        "metric": metric,
+        "table": table,
+    }
+
+
+# ---------------------------------------------------------------------------
+# SHAP explainability
+# ---------------------------------------------------------------------------
+
+def compute_shap_values(
+    pipeline_or_model,
+    X: pd.DataFrame,
+    feature_names: list[str] | None = None,
+    max_samples: int = 500,
+) -> tuple:
+    """Compute SHAP values for a fitted model or pipeline.
+
+    Handles sklearn Pipelines by extracting the final estimator and
+    pre-transforming X through any preprocessing steps.  Uses TreeExplainer
+    for tree-based models and KernelExplainer otherwise.
+
+    Returns
+    -------
+    (shap_values, explainer, X_sample)
+    """
+    if not SHAP_AVAILABLE:
+        raise ImportError(
+            "shap is required for SHAP explanations. "
+            "Install via: pip install shap"
+        )
+
+    # Extract the estimator and pre-transform X when given a Pipeline.
+    is_pipeline = isinstance(pipeline_or_model, Pipeline) or (
+        ImbPipeline is not None and isinstance(pipeline_or_model, ImbPipeline)
+    )
+    if is_pipeline:
+        estimator = pipeline_or_model.steps[-1][1]
+        X_transformed = X.copy()
+        for _, step in pipeline_or_model.steps[:-1]:
+            if hasattr(step, "transform"):
+                X_transformed = step.transform(X_transformed)
+        cols = feature_names or (list(X.columns) if hasattr(X, "columns") else None)
+        if isinstance(X_transformed, np.ndarray) and cols:
+            X_transformed = pd.DataFrame(X_transformed, columns=cols)
+    else:
+        estimator = pipeline_or_model
+        X_transformed = X
+
+    # Subsample for speed on large datasets.
+    if len(X_transformed) > max_samples:
+        rng = np.random.RandomState(42)
+        idx = rng.choice(len(X_transformed), max_samples, replace=False)
+        X_sample = (
+            X_transformed.iloc[idx]
+            if hasattr(X_transformed, "iloc")
+            else X_transformed[idx]
+        )
+    else:
+        X_sample = X_transformed
+
+    # Choose explainer by estimator type.
+    tree_types = {
+        "RandomForestClassifier", "GradientBoostingClassifier",
+        "DecisionTreeClassifier", "XGBClassifier", "LGBMClassifier",
+        "CatBoostClassifier",
+    }
+    model_type = type(estimator).__name__
+
+    if model_type in tree_types:
+        explainer = shap.TreeExplainer(estimator)
+        sv = explainer.shap_values(X_sample)
+        if isinstance(sv, list):
+            sv = sv[1]
+    else:
+        background = shap.kmeans(X_sample, min(10, len(X_sample)))
+        explainer = shap.KernelExplainer(estimator.predict_proba, background)
+        sv = explainer.shap_values(X_sample, nsamples=100)
+        if isinstance(sv, list):
+            sv = sv[1]
+
+    return sv, explainer, X_sample
+
+
+# ---------------------------------------------------------------------------
+# LIME explainability
+# ---------------------------------------------------------------------------
+
+def compute_lime_explanation(
+    pipeline_or_model,
+    X_train: pd.DataFrame,
+    instance: np.ndarray | pd.Series,
+    feature_names: list[str] | None = None,
+    num_features: int = 10,
+):
+    """Generate a LIME explanation for a single instance.
+
+    Returns a :class:`lime.explanation.Explanation` object whose
+    ``.as_pyplot_figure()`` method produces a Matplotlib figure.
+    """
+    if not LIME_AVAILABLE:
+        raise ImportError(
+            "lime is required for LIME explanations. "
+            "Install via: pip install lime"
+        )
+
+    names = feature_names or (
+        list(X_train.columns) if hasattr(X_train, "columns") else None
+    )
+    train_data = X_train.values if hasattr(X_train, "values") else X_train
+
+    explainer = lime.lime_tabular.LimeTabularExplainer(
+        training_data=train_data,
+        feature_names=names,
+        class_names=["Not Readmitted", "Readmitted"],
+        mode="classification",
+    )
+
+    predict_fn = (
+        pipeline_or_model.predict_proba
+        if hasattr(pipeline_or_model, "predict_proba")
+        else pipeline_or_model.predict
+    )
+    instance_arr = instance.values if hasattr(instance, "values") else instance
+
+    return explainer.explain_instance(
+        instance_arr, predict_fn, num_features=num_features,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Rule export
+# ---------------------------------------------------------------------------
+
+def export_tree_rules(
+    tree_model: DecisionTreeClassifier,
+    feature_names: list[str],
+    max_depth: int | None = None,
+) -> str:
+    """Export human-readable decision rules from a fitted decision tree.
+
+    Returns a string representation suitable for clinical checklists.
+    """
+    return export_text(
+        tree_model,
+        feature_names=feature_names,
+        max_depth=max_depth,
+        show_weights=True,
+    )
+
+
+def export_forest_top_rules(
+    forest_model: RandomForestClassifier,
+    feature_names: list[str],
+    n_trees: int = 3,
+    max_depth: int = 3,
+) -> list[str]:
+    """Export rules from the top-N trees in a random forest.
+
+    Trees are taken in order of the ensemble; pass a fitted model.
+    """
+    rules = []
+    for i, tree in enumerate(forest_model.estimators_[:n_trees]):
+        rule_text = export_text(
+            tree, feature_names=feature_names,
+            max_depth=max_depth, show_weights=True,
+        )
+        rules.append(f"--- Tree {i + 1} ---\n{rule_text}")
+    return rules
+
+
+# ---------------------------------------------------------------------------
+# Nested CV (unbiased tuning + evaluation)
+# ---------------------------------------------------------------------------
+
+def run_tuned_cv_experiment(
+    X: pd.DataFrame,
+    y: pd.Series,
+    model_configs: dict | None = None,
+    param_grids: dict | None = None,
+    n_outer_splits: int = 10,
+    n_inner_splits: int = 5,
+    groups: pd.Series | None = None,
+    scale: bool = True,
+    scoring: str = "f1",
+    random_state: int = 42,
+) -> dict:
+    """Nested CV: inner loop tunes hyperparameters, outer loop evaluates.
+
+    This two-level protocol prevents optimistic bias from hyperparameter
+    selection: the outer folds never see the tuning decisions.
+
+    Only models that have a corresponding entry in *param_grids* are tuned;
+    others are silently skipped.
+    """
+    if model_configs is None:
+        model_configs = CLASSIFICATION_MODELS
+    if param_grids is None:
+        param_grids = HYPERPARAM_GRIDS
+
+    outer_cv = get_stratified_cv(n_outer_splits, random_state, groups)
+    outer_splits = list(outer_cv.split(X, y, groups))
+
+    results = {}
+    for name, estimator in model_configs.items():
+        grid = param_grids.get(name)
+        if grid is None:
+            continue
+
+        print(f"\n{'=' * 60}")
+        print(f"  Nested CV: {name}")
+        print(f"{'=' * 60}")
+
+        fold_metrics_list: list[dict] = []
+        best_params_per_fold: list[dict] = []
+        oof_preds = np.full(len(y), fill_value=-1, dtype=int)
+        oof_probs = np.full(len(y), fill_value=np.nan)
+
+        for fold_idx, (train_idx, val_idx) in enumerate(outer_splits):
+            X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
+            y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
+
+            pipeline = build_fold_pipeline(
+                estimator, scale=scale, random_state=random_state,
+            )
+
+            inner_groups = (
+                groups.iloc[train_idx] if groups is not None else None
+            )
+            inner_cv = get_stratified_cv(
+                n_inner_splits, random_state + fold_idx, inner_groups,
+            )
+
+            gs = GridSearchCV(
+                pipeline, grid, cv=inner_cv, scoring=scoring,
+                n_jobs=-1, refit=True,
+            )
+            gs.fit(X_tr, y_tr, groups=inner_groups)
+            best_params_per_fold.append(gs.best_params_)
+
+            best_pipeline = gs.best_estimator_
+            y_pred = best_pipeline.predict(X_val)
+            oof_preds[val_idx] = y_pred
+
+            y_prob = None
+            if hasattr(best_pipeline, "predict_proba"):
+                y_prob = best_pipeline.predict_proba(X_val)[:, 1]
+                oof_probs[val_idx] = y_prob
+
+            fold_m = compute_classification_metrics(y_val.values, y_pred, y_prob)
+            fold_metrics_list.append(fold_m)
+            print(
+                f"  Fold {fold_idx + 1:2d}: "
+                f"F1={fold_m['f1']:.4f}  "
+                f"AUC={fold_m.get('auc_roc', float('nan')):.4f}  "
+                f"Best={gs.best_params_}"
+            )
+
+        aggregate: dict[str, dict] = {}
+        for metric in fold_metrics_list[0].keys():
+            scores = np.array([fm[metric] for fm in fold_metrics_list])
+            aggregate[metric] = compute_confidence_interval(scores)
+
+        results[name] = {
+            "fold_metrics": fold_metrics_list,
+            "oof_predictions": oof_preds,
+            "oof_probabilities": oof_probs,
+            "aggregate": aggregate,
+            "best_params_per_fold": best_params_per_fold,
+        }
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Imbalance strategy comparison
+# ---------------------------------------------------------------------------
+
+def compare_imbalance_strategies(
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    model_name: str = "logistic_regression",
+    cv: int = 5,
+    random_state: int = 42,
+    groups: pd.Series | None = None,
+    scoring: str = "f1",
+) -> dict[str, dict[str, float]]:
+    """Compare baseline, class-weighted, and SMOTE-based training strategies.
+
+    All estimates are computed with stratified CV on the training set only.
+    Pipelines use the leakage-safe fold-local builder so scaling and SMOTE
+    are fit strictly on training folds.
+    """
+    if model_name not in CLASSIFICATION_MODELS:
+        raise ValueError(
+            f"Unknown model '{model_name}'. "
+            f"Choose from: {list(CLASSIFICATION_MODELS)}"
+        )
+
+    estimator = clone(CLASSIFICATION_MODELS[model_name])
+    use_scaler = model_name in SCALE_SENSITIVE_MODELS
+    splitter = get_stratified_cv(n_splits=cv, random_state=random_state, groups=groups)
+
+    results: dict[str, dict[str, float]] = {}
+
+    # Baseline (no imbalance handling).
+    baseline_pipe = build_fold_pipeline(
+        estimator, scale=use_scaler,
+        imbalance_strategy="none", random_state=random_state,
+    )
+    baseline_scores = cross_val_score(
+        baseline_pipe, X_train, y_train,
+        cv=splitter, scoring=scoring, groups=groups,
+    )
+    results["baseline"] = {
+        "mean": float(np.mean(baseline_scores)),
+        "std": float(np.std(baseline_scores)),
+    }
+
+    # Class-weight balanced.
+    if hasattr(estimator, "class_weight"):
+        cw_pipe = build_fold_pipeline(
+            estimator, scale=use_scaler,
+            imbalance_strategy="class_weight", random_state=random_state,
+        )
+        cw_scores = cross_val_score(
+            cw_pipe, X_train, y_train,
+            cv=splitter, scoring=scoring, groups=groups,
+        )
+        results["class_weight_balanced"] = {
+            "mean": float(np.mean(cw_scores)),
+            "std": float(np.std(cw_scores)),
+        }
+
+    # SMOTE (scaler -> SMOTE -> classifier, all fold-local).
+    if IMBLEARN_AVAILABLE:
+        smote_pipe = build_fold_pipeline(
+            estimator, scale=use_scaler,
+            imbalance_strategy="smote", random_state=random_state,
+        )
+        smote_scores = cross_val_score(
+            smote_pipe, X_train, y_train,
+            cv=splitter, scoring=scoring, groups=groups,
+        )
+        results["smote"] = {
+            "mean": float(np.mean(smote_scores)),
+            "std": float(np.std(smote_scores)),
+        }
+    else:
+        results["smote"] = {"mean": np.nan, "std": np.nan}
+
+    print("Imbalance strategy comparison completed.")
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Probability helper
+# ---------------------------------------------------------------------------
+
+def predict_positive_probability(pipeline: Pipeline, X: pd.DataFrame) -> np.ndarray:
+    """Return positive-class probabilities from a fitted classifier pipeline.
+
+    Falls back to calibrated sigmoid of decision scores when ``predict_proba``
+    is unavailable.
+    """
+    if hasattr(pipeline, "predict_proba"):
+        return pipeline.predict_proba(X)[:, 1]
+
+    if hasattr(pipeline, "decision_function"):
+        scores = pipeline.decision_function(X)
+        return expit(scores)
+
+    raise AttributeError(
+        "Pipeline does not expose predict_proba or decision_function."
+    )
+
+
+# ---------------------------------------------------------------------------
+# Feature selection
+# ---------------------------------------------------------------------------
+
+def select_features_l1(
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    C: float = 0.1,
+    random_state: int = 42,
+) -> tuple[list[str], LogisticRegression]:
+    """Select features with L1-regularized logistic regression.
+
+    Returns selected column names and the fitted selector estimator.
+    """
+    selector_model = LogisticRegression(
+        penalty="l1",
+        solver="liblinear",
+        C=C,
+        class_weight="balanced",
+        max_iter=2000,
+        random_state=random_state,
+    )
+    selector_model.fit(X_train, y_train)
+
+    selector = SelectFromModel(selector_model, prefit=True, threshold="median")
+    selected_mask = selector.get_support()
+    selected_columns = X_train.columns[selected_mask].tolist()
+
+    if not selected_columns:
+        selected_columns = X_train.columns.tolist()
+
+    print(
+        f"L1 feature selection kept {len(selected_columns)} "
+        f"of {X_train.shape[1]} features."
+    )
+    return selected_columns, selector_model
+
+
+# ---------------------------------------------------------------------------
+# Hyper-parameter tuning
+# ---------------------------------------------------------------------------
+
+def grid_search(
+    model,
+    param_grid: dict,
+    X_train: pd.DataFrame,
+    y_train: pd.Series,
+    cv: int = 5,
+    scoring: str = "accuracy",
+) -> GridSearchCV:
+    """Run GridSearchCV and print the best parameters.
+
+    Returns
+    -------
+    GridSearchCV (fitted)
+    """
+    gs = GridSearchCV(model, param_grid, cv=cv, scoring=scoring, n_jobs=-1)
+    gs.fit(X_train, y_train)
+    print(f"Best params : {gs.best_params_}")
+    print(f"Best score  : {gs.best_score_:.4f}")
+    return gs
+
+
+# ---------------------------------------------------------------------------
+# Classification (backward compatibility)
+# ---------------------------------------------------------------------------
 
 def train_classifier(
     X_train: pd.DataFrame,
@@ -156,7 +1315,6 @@ def train_classifier(
             f"Choose from: {list(CLASSIFICATION_MODELS)}"
         )
     estimator = clone(CLASSIFICATION_MODELS[model_name])
-    # Apply class weighting when the estimator supports it.
     if class_weight is not None and hasattr(estimator, "class_weight"):
         estimator.set_params(class_weight=class_weight)
 
@@ -199,7 +1357,9 @@ REGRESSION_MODELS = {
     "ridge": Ridge(alpha=1.0),
     "lasso": Lasso(alpha=0.1, max_iter=10000),
     "random_forest": RandomForestRegressor(n_estimators=100, random_state=42),
-    "gradient_boosting": GradientBoostingRegressor(n_estimators=100, random_state=42),
+    "gradient_boosting": GradientBoostingRegressor(
+        n_estimators=100, random_state=42
+    ),
 }
 
 
@@ -209,20 +1369,7 @@ def train_regressor(
     model_name: str = "random_forest",
     scale: bool = True,
 ) -> Pipeline:
-    """Train a regression pipeline.
-
-    Parameters
-    ----------
-    X_train, y_train : array-like
-    model_name : str
-        Key from :data:`REGRESSION_MODELS`.
-    scale : bool
-        If ``True``, prepend a :class:`~sklearn.preprocessing.StandardScaler`.
-
-    Returns
-    -------
-    sklearn.pipeline.Pipeline
-    """
+    """Train a regression pipeline."""
     if model_name not in REGRESSION_MODELS:
         raise ValueError(
             f"Unknown model '{model_name}'. "
@@ -242,12 +1389,7 @@ def evaluate_regressor(
     X_test: pd.DataFrame,
     y_test: pd.Series,
 ) -> dict:
-    """Evaluate a regression pipeline and print a summary.
-
-    Returns
-    -------
-    dict with rmse, mae, r2
-    """
+    """Evaluate a regression pipeline and print a summary."""
     y_pred = pipeline.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     mae = mean_absolute_error(y_test, y_pred)
@@ -268,12 +1410,7 @@ def train_kmeans(
     n_clusters: int = 3,
     random_state: int = 42,
 ) -> tuple:
-    """Fit KMeans and return the model together with cluster labels.
-
-    Returns
-    -------
-    tuple[KMeans, np.ndarray]
-    """
+    """Fit KMeans and return the model together with cluster labels."""
     model = KMeans(n_clusters=n_clusters, random_state=random_state, n_init="auto")
     labels = model.fit_predict(X)
     score = silhouette_score(X, labels)
@@ -282,12 +1419,7 @@ def train_kmeans(
 
 
 def find_optimal_k(X: pd.DataFrame, k_range: range = range(2, 11)) -> list:
-    """Compute inertia for a range of *k* values (elbow method).
-
-    Returns
-    -------
-    list of (k, inertia) tuples
-    """
+    """Compute inertia for a range of *k* values (elbow method)."""
     results = []
     for k in k_range:
         km = KMeans(n_clusters=k, random_state=42, n_init="auto")
@@ -298,7 +1430,7 @@ def find_optimal_k(X: pd.DataFrame, k_range: range = range(2, 11)) -> list:
 
 
 # ---------------------------------------------------------------------------
-# Cross-validation
+# Cross-validation (backward compatibility)
 # ---------------------------------------------------------------------------
 
 def cross_validate_model(
@@ -310,31 +1442,18 @@ def cross_validate_model(
     groups: pd.Series | None = None,
     random_state: int = 42,
 ) -> dict:
-    """Run k-fold cross-validation and return mean ± std scores.
-
-    Returns
-    -------
-    dict with scores array, mean, std
-    """
+    """Run k-fold cross-validation and return mean ± std scores."""
     target_type = type_of_target(y)
     is_classification_target = target_type in {"binary", "multiclass"}
 
     if is_classification_target:
         splitter = get_stratified_cv(
-            n_splits=cv,
-            random_state=random_state,
-            groups=groups,
+            n_splits=cv, random_state=random_state, groups=groups,
         )
         scores = cross_val_score(
-            model,
-            X,
-            y,
-            cv=splitter,
-            scoring=scoring,
-            groups=groups,
+            model, X, y, cv=splitter, scoring=scoring, groups=groups,
         )
     else:
-        # Regression targets cannot use stratified splitters.
         splitter = KFold(n_splits=cv, shuffle=True, random_state=random_state)
         scores = cross_val_score(model, X, y, cv=splitter, scoring=scoring)
     print(
@@ -344,245 +1463,12 @@ def cross_validate_model(
     return {"scores": scores, "mean": scores.mean(), "std": scores.std()}
 
 
-def compare_imbalance_strategies(
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    model_name: str = "logistic_regression",
-    cv: int = 5,
-    random_state: int = 42,
-    groups: pd.Series | None = None,
-    scoring: str = "f1",
-) -> dict[str, dict[str, float]]:
-    """Compare baseline, class-weighted, and SMOTE-based training strategies.
-
-    All estimates are computed with stratified CV on the training set only.
-    """
-    if model_name not in CLASSIFICATION_MODELS:
-        raise ValueError(
-            f"Unknown model '{model_name}'. "
-            f"Choose from: {list(CLASSIFICATION_MODELS)}"
-        )
-
-    estimator = clone(CLASSIFICATION_MODELS[model_name])
-    use_scaler = model_name in {"logistic_regression", "svm", "knn"}
-    splitter = get_stratified_cv(n_splits=cv, random_state=random_state, groups=groups)
-
-    results: dict[str, dict[str, float]] = {}
-
-    baseline_steps = []
-    if use_scaler:
-        baseline_steps.append(("scaler", StandardScaler()))
-    baseline_steps.append(("classifier", clone(estimator)))
-    baseline_pipeline = Pipeline(baseline_steps)
-    baseline_scores = cross_val_score(
-        baseline_pipeline,
-        X_train,
-        y_train,
-        cv=splitter,
-        scoring=scoring,
-        groups=groups,
-    )
-    results["baseline"] = {
-        "mean": float(np.mean(baseline_scores)),
-        "std": float(np.std(baseline_scores)),
-    }
-
-    if hasattr(estimator, "class_weight"):
-        weighted_estimator = clone(estimator)
-        weighted_estimator.set_params(class_weight="balanced")
-        weighted_steps = []
-        if use_scaler:
-            weighted_steps.append(("scaler", StandardScaler()))
-        weighted_steps.append(("classifier", weighted_estimator))
-        weighted_pipeline = Pipeline(weighted_steps)
-        weighted_scores = cross_val_score(
-            weighted_pipeline,
-            X_train,
-            y_train,
-            cv=splitter,
-            scoring=scoring,
-            groups=groups,
-        )
-        results["class_weight_balanced"] = {
-            "mean": float(np.mean(weighted_scores)),
-            "std": float(np.std(weighted_scores)),
-        }
-
-    if IMBLEARN_AVAILABLE:
-        smote_steps = [("smote", SMOTE(random_state=random_state))]
-        if use_scaler:
-            smote_steps.append(("scaler", StandardScaler()))
-        smote_steps.append(("classifier", clone(estimator)))
-        smote_pipeline = ImbPipeline(smote_steps)
-        smote_scores = cross_val_score(
-            smote_pipeline,
-            X_train,
-            y_train,
-            cv=splitter,
-            scoring=scoring,
-            groups=groups,
-        )
-        results["smote"] = {
-            "mean": float(np.mean(smote_scores)),
-            "std": float(np.std(smote_scores)),
-        }
-    else:
-        results["smote"] = {
-            "mean": np.nan,
-            "std": np.nan,
-        }
-
-    print("Imbalance strategy comparison completed.")
-    return results
-
-
-def predict_positive_probability(pipeline: Pipeline, X: pd.DataFrame) -> np.ndarray:
-    """Return positive-class probabilities from a fitted classifier pipeline.
-
-    Falls back to calibrated sigmoid of decision scores when ``predict_proba``
-    is unavailable.
-    """
-    if hasattr(pipeline, "predict_proba"):
-        return pipeline.predict_proba(X)[:, 1]
-
-    if hasattr(pipeline, "decision_function"):
-        scores = pipeline.decision_function(X)
-        return expit(scores)
-
-    raise AttributeError(
-        "Pipeline does not expose predict_proba or decision_function."
-    )
-
-
-def tune_decision_threshold(
-    y_true: pd.Series | np.ndarray,
-    y_prob: np.ndarray,
-    metric: str = "f1",
-    thresholds: np.ndarray | None = None,
-) -> dict:
-    """Tune binary classification threshold on validation predictions.
-
-    Returns the best threshold for the selected metric and a full score table.
-    """
-    if thresholds is None:
-        thresholds = np.arange(0.10, 0.91, 0.05)
-
-    y_true_arr = np.asarray(y_true)
-    rows: list[dict[str, float]] = []
-    best_threshold = 0.5
-    best_score = -np.inf
-
-    for threshold in thresholds:
-        y_pred = (y_prob >= threshold).astype(int)
-        precision = precision_score(y_true_arr, y_pred, zero_division=0)
-        recall = recall_score(y_true_arr, y_pred, zero_division=0)
-        f1 = f1_score(y_true_arr, y_pred, zero_division=0)
-        balanced_acc = balanced_accuracy_score(y_true_arr, y_pred)
-
-        row = {
-            "threshold": float(threshold),
-            "precision": float(precision),
-            "recall": float(recall),
-            "f1": float(f1),
-            "balanced_accuracy": float(balanced_acc),
-        }
-        rows.append(row)
-
-        current_metric = row.get(metric)
-        if current_metric is None:
-            raise ValueError(
-                "Unknown metric. Use one of: "
-                "'precision', 'recall', 'f1', 'balanced_accuracy'."
-            )
-        if current_metric > best_score:
-            best_score = current_metric
-            best_threshold = float(threshold)
-
-    table = pd.DataFrame(rows).sort_values(metric, ascending=False)
-    print(
-        f"Best threshold by {metric}: {best_threshold:.2f} "
-        f"(score={best_score:.4f})"
-    )
-    return {
-        "best_threshold": best_threshold,
-        "best_score": float(best_score),
-        "metric": metric,
-        "table": table,
-    }
-
-
-def select_features_l1(
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    C: float = 0.1,
-    random_state: int = 42,
-) -> tuple[list[str], LogisticRegression]:
-    """Select features with L1-regularized logistic regression.
-
-    Returns selected column names and the fitted selector estimator.
-    """
-    selector_model = LogisticRegression(
-        penalty="l1",
-        solver="liblinear",
-        C=C,
-        class_weight="balanced",
-        max_iter=2000,
-        random_state=random_state,
-    )
-    selector_model.fit(X_train, y_train)
-
-    selector = SelectFromModel(selector_model, prefit=True, threshold="median")
-    selected_mask = selector.get_support()
-    selected_columns = X_train.columns[selected_mask].tolist()
-
-    # Ensure downstream code still runs if regularization is too aggressive.
-    if not selected_columns:
-        selected_columns = X_train.columns.tolist()
-
-    print(
-        f"L1 feature selection kept {len(selected_columns)} of {X_train.shape[1]} features."
-    )
-    return selected_columns, selector_model
-
-
-# ---------------------------------------------------------------------------
-# Hyper-parameter tuning
-# ---------------------------------------------------------------------------
-
-def grid_search(
-    model,
-    param_grid: dict,
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    cv: int = 5,
-    scoring: str = "accuracy",
-) -> GridSearchCV:
-    """Run GridSearchCV and print the best parameters.
-
-    Returns
-    -------
-    GridSearchCV (fitted)
-    """
-    gs = GridSearchCV(model, param_grid, cv=cv, scoring=scoring, n_jobs=-1)
-    gs.fit(X_train, y_train)
-    print(f"Best params : {gs.best_params_}")
-    print(f"Best score  : {gs.best_score_:.4f}")
-    return gs
-
-
 # ---------------------------------------------------------------------------
 # Persistence
 # ---------------------------------------------------------------------------
 
 def save_model(model, filename: str) -> None:
-    """Serialize *model* to ``reports/<filename>`` using :mod:`joblib`.
-
-    Parameters
-    ----------
-    model : fitted estimator or pipeline
-    filename : str
-        E.g. ``"random_forest_classifier.pkl"``.
-    """
+    """Serialize *model* to ``reports/<filename>`` using :mod:`joblib`."""
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     path = REPORTS_DIR / filename
     joblib.dump(model, path)
@@ -590,11 +1476,6 @@ def save_model(model, filename: str) -> None:
 
 
 def load_model(filename: str):
-    """Load a previously saved model from ``reports/<filename>``.
-
-    Returns
-    -------
-    Fitted estimator or pipeline.
-    """
+    """Load a previously saved model from ``reports/<filename>``."""
     path = REPORTS_DIR / filename
     return joblib.load(path)
