@@ -64,8 +64,10 @@ from sklearn.metrics import (
     brier_score_loss,
     roc_curve,
     precision_recall_curve,
+    auc as sklearn_auc,
 )
 from sklearn.calibration import CalibratedClassifierCV, calibration_curve
+from sklearn.utils.class_weight import compute_sample_weight
 from sklearn.utils.multiclass import type_of_target
 
 # ---------------------------------------------------------------------------
@@ -182,6 +184,7 @@ CLASSIFICATION_MODELS_FAST = dict(CLASSIFICATION_MODELS)
 
 CLASSIFICATION_MODELS_ADVANCED = {k: v for k, v in CLASSIFICATION_MODELS.items() if k in ["random_forest", "gradient_boosting", "xgboost", "lightgbm", "catboost"]}
 
+CLASSIFICATION_MODELS_SGD = {k: v for k, v in CLASSIFICATION_MODELS.items() if k in ["zero_r", "one_r", "sgd_classifier"]}
 
 # ---------------------------------------------------------------------------
 # Hyperparameter search spaces (used by the nested-CV tuning harness)
@@ -330,12 +333,42 @@ def make_reduction_step(
     )
 
 
+def _apply_class_weighting(est, y_train: np.ndarray | None = None) -> bool:
+    """Set class-weight parameters on *est* in-place.
+
+    Returns ``True`` if the estimator was configured (caller should NOT pass
+    ``sample_weight`` during fit); ``False`` if the estimator does not support
+    any built-in class weighting (caller should fall back to ``sample_weight``).
+    """
+    if hasattr(est, "class_weight"):
+        est.set_params(class_weight="balanced")
+        return True
+
+    if XGBOOST_AVAILABLE and isinstance(est, XGBClassifier):
+        if y_train is not None:
+            n_neg = int((y_train == 0).sum())
+            n_pos = max(int((y_train == 1).sum()), 1)
+            est.set_params(scale_pos_weight=n_neg / n_pos)
+        return True
+
+    if LIGHTGBM_AVAILABLE and isinstance(est, LGBMClassifier):
+        est.set_params(is_unbalance=True)
+        return True
+
+    if CATBOOST_AVAILABLE and isinstance(est, CatBoostClassifier):
+        est.set_params(auto_class_weights="Balanced")
+        return True
+
+    return False
+
+
 def build_fold_pipeline(
     estimator,
     scale: bool = True,
     imbalance_strategy: str = "none",
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
+    y_train: np.ndarray | None = None,
 ) -> Pipeline:
     """Build a leakage-safe fold-local pipeline.
 
@@ -354,18 +387,23 @@ def build_fold_pipeline(
     estimator : unfitted sklearn estimator
     scale : bool
         Prepend a StandardScaler step.
-    imbalance_strategy : {"none", "class_weight", "smote"}
+    imbalance_strategy : {"none", "class_weight", "smote", "class_weight+smote"}
         ``"class_weight"`` sets ``class_weight='balanced'`` on the estimator
-        (when supported).  ``"smote"`` inserts a SMOTE resampling step.
+        (or equivalent for XGBoost/LightGBM/CatBoost).
+        ``"smote"`` inserts a SMOTE resampling step.
+        ``"class_weight+smote"`` applies both strategies.
     random_state : int
     reduction : tuple[str, dict] or None
         See :func:`make_reduction_step`.
+    y_train : ndarray, optional
+        Training-fold labels, needed to compute ``scale_pos_weight`` for
+        XGBoost when using a class-weight strategy.
     """
     est = clone(estimator)
 
-    # Apply class_weight="balanced" when the estimator supports it.
-    if imbalance_strategy == "class_weight" and hasattr(est, "class_weight"):
-        est.set_params(class_weight="balanced")
+    use_class_weight = imbalance_strategy in ("class_weight", "class_weight+smote")
+    if use_class_weight:
+        _apply_class_weighting(est, y_train)
 
     steps: list[tuple] = []
     if scale:
@@ -374,7 +412,10 @@ def build_fold_pipeline(
     if reduction is not None:
         steps.append(make_reduction_step(reduction, random_state=random_state))
 
-    use_smote = imbalance_strategy == "smote" and IMBLEARN_AVAILABLE
+    use_smote = (
+        imbalance_strategy in ("smote", "class_weight+smote")
+        and IMBLEARN_AVAILABLE
+    )
     if use_smote:
         steps.append(("sampler", SMOTE(random_state=random_state)))
 
@@ -398,7 +439,8 @@ def compute_classification_metrics(
 
     Hard-prediction metrics: accuracy, balanced accuracy, precision, recall,
     F1, weighted F1, Cohen's Kappa.
-    Probability metrics (when *y_prob* is provided): AUC-ROC, AUPRC, Brier score.
+    Probability metrics (when *y_prob* is provided): AUC-ROC, AUPRC,
+    PR-AUC (trapezoidal), Brier score.
     """
     metrics = {
         "accuracy": float(accuracy_score(y_true, y_pred)),
@@ -414,6 +456,8 @@ def compute_classification_metrics(
     if y_prob is not None and len(np.unique(y_true)) > 1:
         metrics["auc_roc"] = float(roc_auc_score(y_true, y_prob))
         metrics["auprc"] = float(average_precision_score(y_true, y_prob))
+        prec_vals, rec_vals, _ = precision_recall_curve(y_true, y_prob)
+        metrics["pr_auc"] = float(sklearn_auc(rec_vals, prec_vals))
         metrics["brier_score"] = float(brier_score_loss(y_true, y_prob))
     return metrics
 
@@ -493,6 +537,7 @@ def run_cv_experiment(
     groups: pd.Series | None = None,
     scale: bool = True,
     imbalance_strategy: str = "none",
+    threshold: float = 0.5,
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
 ) -> dict:
@@ -518,7 +563,11 @@ def run_cv_experiment(
         Group identifiers for group-aware CV.
     scale : bool
         Prepend a StandardScaler to every fold pipeline.
-    imbalance_strategy : {"none", "class_weight", "smote"}
+    imbalance_strategy : {"none", "class_weight", "smote", "class_weight+smote"}
+    threshold : float
+        Decision threshold for converting probabilities to hard predictions.
+        When not 0.5, probabilities are obtained first and thresholded;
+        falls back to ``predict()`` if no probability output is available.
     random_state : int
     reduction : tuple[str, dict] or None
         Optional fold-local reduction; see :func:`make_reduction_step`.
@@ -552,17 +601,25 @@ def run_cv_experiment(
             y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
             try:
+                use_cw = imbalance_strategy in ("class_weight", "class_weight+smote")
                 pipeline = build_fold_pipeline(
                     estimator,
                     scale=scale,
                     imbalance_strategy=imbalance_strategy,
                     random_state=random_state,
                     reduction=reduction,
+                    y_train=y_tr.values if use_cw else None,
                 )
-                pipeline.fit(X_tr, y_tr)
 
-                y_pred = pipeline.predict(X_val)
-                oof_preds[val_idx] = y_pred
+                needs_sample_weight = (
+                    use_cw
+                    and not _apply_class_weighting(clone(estimator), y_tr.values)
+                )
+                if needs_sample_weight:
+                    sw = compute_sample_weight("balanced", y_tr)
+                    pipeline.fit(X_tr, y_tr, classifier__sample_weight=sw)
+                else:
+                    pipeline.fit(X_tr, y_tr)
 
                 y_prob = None
                 if hasattr(pipeline, "predict_proba"):
@@ -571,6 +628,12 @@ def run_cv_experiment(
                 elif hasattr(pipeline, "decision_function"):
                     y_prob = expit(pipeline.decision_function(X_val))
                     oof_probs[val_idx] = y_prob
+
+                if y_prob is not None and threshold != 0.5:
+                    y_pred = (y_prob >= threshold).astype(int)
+                else:
+                    y_pred = pipeline.predict(X_val)
+                oof_preds[val_idx] = y_pred
 
                 fold_m = compute_classification_metrics(
                     y_val.values, y_pred, y_prob,
@@ -582,7 +645,7 @@ def run_cv_experiment(
                     for k in [
                         "accuracy", "balanced_accuracy", "precision", "recall",
                         "f1", "f1_weighted", "kappa", "auc_roc", "auprc",
-                        "brier_score",
+                        "pr_auc", "brier_score",
                     ]
                 }
 
@@ -633,7 +696,7 @@ def build_metrics_summary_table(
     """
     if metrics is None:
         metrics = [
-            "f1", "auc_roc", "auprc", "recall", "precision",
+            "f1", "auc_roc", "auprc", "pr_auc", "recall", "precision",
             "kappa", "brier_score", "balanced_accuracy",
         ]
 
@@ -1109,6 +1172,7 @@ def run_tuned_cv_experiment(
     scoring: str = "f1",
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
+    n_jobs: int = 1,
 ) -> dict:
     """Nested CV: inner loop tunes hyperparameters, outer loop evaluates.
 
@@ -1124,6 +1188,11 @@ def run_tuned_cv_experiment(
         Optional fold-local reduction; see :func:`make_reduction_step`.
         Grid-search parameters for the reducer use the ``reducer__`` prefix
         (e.g. ``reducer__n_components``).
+    n_jobs : int
+        Parallel jobs for inner :class:`~sklearn.model_selection.GridSearchCV`.
+        Use ``1`` (default) to limit RAM and CPU load: ``-1`` uses all cores
+        and joblib typically copies *X_tr* per worker, which spikes memory on
+        large matrices. Pass ``-1`` only if you have headroom.
     """
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
@@ -1168,10 +1237,11 @@ def run_tuned_cv_experiment(
 
             gs = GridSearchCV(
                 pipeline, grid, cv=inner_cv, scoring=scoring,
-                n_jobs=-1, refit=True,
+                n_jobs=n_jobs, refit=True,
             )
             gs.fit(X_tr, y_tr, groups=inner_groups)
-            best_params_per_fold.append(gs.best_params_)
+            best_params = gs.best_params_
+            best_params_per_fold.append(best_params)
 
             best_pipeline = gs.best_estimator_
             y_pred = best_pipeline.predict(X_val)
@@ -1188,8 +1258,9 @@ def run_tuned_cv_experiment(
                 f"  Fold {fold_idx + 1:2d}: "
                 f"F1={fold_m['f1']:.4f}  "
                 f"AUC={fold_m.get('auc_roc', float('nan')):.4f}  "
-                f"Best={gs.best_params_}"
+                f"Best={best_params}"
             )
+            del gs
 
         aggregate: dict[str, dict] = {}
         for metric in fold_metrics_list[0].keys():
