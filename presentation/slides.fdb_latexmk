@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber slides"] 1775813192.63739 "slides.bcf" "slides.bbl" "slides" 1775814927.46018 0
-  "slides.bcf" 1775814915.29765 108567 a74c7252c58f2f5288e6622bc8da91ec "pdflatex"
+["biber slides"] 1775813192.63739 "slides.bcf" "slides.bbl" "slides" 1775816943.04401 0
+  "slides.bcf" 1775816942.81869 108567 a74c7252c58f2f5288e6622bc8da91ec "pdflatex"
   "slides.bib" 1775807900.94377 19284 a323b9f3c15d6782ad2a955d7f1eb7ed ""
   (generated)
   "slides.bbl"
   "slides.blg"
   (rewritten before read)
-["pdflatex"] 1775814907.99778 "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/presentation/slides.tex" "slides.pdf" "slides" 1775814927.48131 0
-  "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/presentation/slides.tex" 1775814906.38462 8810 3c982801f43f13274fa7c7d8bf73c8fd ""
+["pdflatex"] 1775816939.94724 "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/presentation/slides.tex" "slides.pdf" "slides" 1775816943.04438 0
+  "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/presentation/slides.tex" 1775816939.68368 9181 f08a9581bc50b7c4100e56567f12deda ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -320,13 +320,14 @@
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "figures/Gemini_Generated_Image_rz8xj0rz8xj0rz8x.png" 1775804224.84859 2860043 9c4541ffbacb17f4bd3ca86873461bf4 ""
   "figures/TMU-rgb.png" 1768944134 8412 d01a897a149d29b2ccb7857812431a8b ""
-  "slides.aux" 1775814915.29332 5280 272a55668335b09446f9c8ce0b3d0762 "pdflatex"
+  "figures/performance.png" 1775815070.88121 46902 3557a1ab87e3d1045decf7c5995a6167 ""
+  "slides.aux" 1775816942.81638 5408 f0e02e13f059c0b6d8f5c97c99abee6d "pdflatex"
   "slides.bbl" 1775813195.39591 14544 e96e4266146f7c716c6633135fa85f4d "biber slides"
-  "slides.nav" 1775814915.30116 2951 b9c47cd8f666a416a136ef20f1875c57 "pdflatex"
-  "slides.out" 1775814915.29515 1032 19c0aa9df88d30cc85293116c30ece05 "pdflatex"
-  "slides.run.xml" 1775814915.29978 2400 d293abf2fa222908659ed890e7424698 "pdflatex"
-  "slides.tex" 1775814906.38462 8810 3c982801f43f13274fa7c7d8bf73c8fd ""
-  "slides.toc" 1775814915.30121 369 85584450538d735e03b4b7404dff5368 "pdflatex"
+  "slides.nav" 1775816942.81964 3043 e1caa16746851e41f13a10ddfb4b1b27 "pdflatex"
+  "slides.out" 1775816942.81759 1032 19c0aa9df88d30cc85293116c30ece05 "pdflatex"
+  "slides.run.xml" 1775816942.81956 2400 d293abf2fa222908659ed890e7424698 "pdflatex"
+  "slides.tex" 1775816939.68368 9181 f08a9581bc50b7c4100e56567f12deda ""
+  "slides.toc" 1775816942.81968 369 a5555ee6c8c457cb1d349672b16b582c "pdflatex"
   (generated)
   "slides.aux"
   "slides.bcf"

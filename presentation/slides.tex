@@ -201,10 +201,19 @@ Hospital Readmission in Diabetic Patients}
 % ==========================================================
 \section{Findings \& Recommendations}
 
+\begin{frame}\frametitle{Initial Scores (Without the Tricks)}
+
+\begin{center}
+  \includegraphics[height=5.5cm]{figures/performance.png}
+\end{center}
+
+\begin{itemize}
+    \item Dataset imbalance is a significant challenge; AUC-ROC handles the class imbalance best. This shows the importance of attribute elimination and identifying the classes correlating with the target. 
+\end{itemize}
+\end{frame}
+
 \begin{frame}\frametitle{Initial Insights \& Business Value}
 \begin{itemize}
-    \item \textbf{Actionable Drivers:} [Placeholder for core indicators from 04\_analysis\_findings, e.g., HbA1c changes, specific comorbidities].
-    \vspace{6pt}
     \item \textbf{Clinical Application:} Transitioning from ``black-box scoring'' to transparent risk triggers enables targeted preventive resource allocation at discharge.
     \vspace{6pt}
     \item \textbf{Recommendation:} Deploy an interpretable rule-set overlay to flag high-risk discharges, balancing intervention costs against HRRP penalty risks.
@@ -217,8 +226,15 @@ Hospital Readmission in Diabetic Patients}
 \begin{frame}\frametitle{Conclusion \& Next Steps}
 \begin{itemize}
     \item \textbf{Summary:} Shifted focus from raw prediction to Cost-Sensitive Knowledge Discovery, providing interpretable rules to mitigate HRRP readmission penalties.
+    \begin{itemize}
+      \item Focus: raw prediction to cost-sensitive discovery
+      \item Provide interpretable rules for clinicians
+    \end{itemize}
     \vspace{6pt}
-    \item \textbf{Next Steps in Analysis:} Complete integration of specific KD techniques and formalize the custom evaluation matrix. Include findings from Unsupervised constraints.
+    \item \textbf{Next Steps in Analysis:} 
+    \begin{itemize}
+      \item Whittle away at the attributes for better fit and interpretability.
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
