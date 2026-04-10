@@ -1,0 +1,936 @@
+Current Diabetes Reports (2018) 18: 21
+https://doi.org/10.1007/s11892-018-0989-1
+
+CORRECTION
+
+Correction to: Hospital Readmission of Patients with Diabetes
+Daniel J. Rubin 1
+Published online: 13 March 2018
+# Springer Science+Business Media, LLC, part of Springer Nature 2018
+
+Correction to: Curr Diab Rep (2015) 15: 17
+https://doi.org/10.1007/s11892-015-0584-7
+This article was originally published with errors that were
+introduced during the editing process. The corrected version
+of this article appears below.
+Abstract Hospital readmission is a high-priority health care
+quality measure and target for cost reduction. Despite broad
+interest in readmission, relatively little research has focused on
+patients with diabetes. The burden of diabetes among hospitalized patients, however, is substantial, growing, and costly,
+and readmissions contribute a significant portion of this burden. Reducing readmission rates of diabetic patients has the
+potential to greatly reduce health care costs while simultaneously improving care. Risk factors for readmission in this
+population include lower socioeconomic status, racial/ethnic
+minority, comorbidity burden, public insurance, emergent or
+urgent admission, and a history of recent prior hospitalization.
+Hospitalized patients with diabetes may be at higher risk of
+readmission than those without diabetes. Potential ways to
+reduce readmission risk are inpatient education, specialty care,
+better discharge instructions, coordination of care, and postdischarge support. More studies are needed to test the effect of
+these interventions on the readmission rates of patients with
+diabetes.
+Keywords Hospital readmission I Inpatient diabetesI
+Transitional careI Transitions of care I Risk factors I Discharge
+support
+The online version of the original article can be found at https://doi.org/
+10.1007/s11892-015-0584-7
+* Daniel J. Rubin
+djrubin@temple.edu
+1
+
+Section of Endocrinology, Diabetes, and Metabolism, School of
+Medicine, Temple University, 3322 N. Broad ST., Ste 205,
+Philadelphia, PA 19140, USA
+
+Introduction
+Hospital readmission is a high-priority health care quality
+measure and target for cost reduction, particularly within 30
+days of discharge (30-day readmission, aka early readmission)
+[1–3]. Despite the broad interest in readmission, relatively
+little research has focused specifically on readmission of patients with diabetes [4–6]. The burden of diabetes among hospitalized patients, however, is substantial, growing, and costly,
+and readmissions contribute a significant portion of this burden. Reducing readmission rates among patients with diabetes
+has the potential to greatly reduce health care costs while
+simultaneously improving care. Recent research has provided
+some insight into the risk factors for readmission and the barriers to reducing readmission risk, as well as ways to mitigate
+that risk.
+
+Why Should We Care About Readmission
+Among Diabetic Patients?
+Many believe readmission rates reflect the quality of health
+care delivery, although this is debated [7]. Starting October 1,
+2012, the Centers for Medicare and Medicaid Services began
+to decrease payments to hospitals that have greater-thanexpected 30-day readmission rates under the Hospital
+Readmission Reduction Program established by the Patient
+Protection and Affordable Care Act, reflecting an effort to
+motivate improvements in care while reducing costs [8]. In
+the current era of major health care reform, there is growing
+interest in hospital readmissions. There has been an exponential rise in the past decade of PubMed-cited articles published
+in this area, from less than 100 annually in the 1980s to 1379
+in 2013 [9].
+Despite interest in readmissions, few studies have focused
+on readmissions among patients with diabetes [4–6]. There
+were only 85 publications listed on PubMed containing the
+search terms “hospital, readmission, and diabetes” in 2013 [9],
+and many of these publications are not relevant to this topic.
+
+21 Page 2 of 9
+
+The lack of attention paid to readmission of diabetic
+patients may reflect the fact that less than 2 % of hospital discharges annually list a primary diagnosis of diabetes [10]. This statistic, however, belies the reality
+that the burden of diabetes among hospitalized patients
+is substantial, growing, and costly. Patients with diabetes currently represent about 9 % of the US population
+[11], but they account for approximately 25 % of hospitalizations (over eight million per year) [10, 12, 13].
+The number and proportion of hospitalized patients with
+diabetes has increased steadily over the past two decades [10, 12, 14], mirroring the increasing incidence
+and prevalence of diabetes in the general population
+[11, 15]. While the overall 30-day readmission rate of
+hospitalized patients is 8.5–13.5 % [16, 17], the 30-day
+readmission rate of diabetic patients is 14.4–22.7 % [18,
+19, 20•, 21, 22]. Estimates of readmission rates beyond
+30 days after hospital discharge are even higher, with
+over 26 % of diabetic patients being readmitted within 3
+months and 30 % within 1 year [23, 24] In 2012, costs
+associated with the hospitalization of diabetic patients in
+the USA were $124 billion, of which an estimated $25 billion
+was attributable to 30-day readmissions assuming a 20 %
+readmission rate [12, 25]. Therefore, reducing 30-day
+readmissions of patients with diabetes has the potential to
+greatly reduce healthcare costs while simultaneously improving care. A modest 5 % reduction in the 30-day readmission
+rate would result in 82,754 fewer admissions per year based
+on Agency for Healthcare Research and Quality Nationwide
+Inpatient Sample data from 2012, translating into an estimated
+annual cost savings of $1.2 billion [10, 25]. These data and the
+widespread interest in health care reform have prompted recent calls for more research on how to prevent readmissions in
+this important group of patients [4, 5, 26].
+In order for readmissions to be prevented, they must
+first be understood. A good understanding of the causes
+and risk factors for readmission is crucial. Readmission
+risk reduction interventions are more likely to be effective if they are informed by a solid understanding of the
+factors contributing to readmission risk. However, these
+interventions (discussed below) require human and financial resources. The resource requirements of interventions combined with the substantial prevalence of
+diabetes among hospitalized patients make interventions
+that attempt to reduce readmissions among all patients
+with diabetes impractical. Resources should therefore be
+focused on the highest-risk patients. Such high-risk patients do indeed exist. The Urban Diabetes Study, which
+included 291,752 discharges of diabetic patients in
+Philadelphia, PA, found that 10.5 % of the patients were
+discharged at least five times over 8 years. This group
+of high utilizers accounted for 64 % of all the discharges during the study period [18].
+
+Curr Diab Rep (2018) 18: 21
+
+Risk Factors for Readmission Among Patients
+with Diabetes
+30-Day Readmission
+Studies of readmission risk factors among patients with diabetes can be grouped into those that focused on readmission
+within 30 days and those that examined readmission over
+longer time periods. Risk factors for 30-day readmission
+based on studies of at least 2000 patients are presented in
+Table 1 [18, 19, 20•, 22, 27, 28, 29•, 30, 31]. The following
+factors are associated with an increased risk of 30-day readmission and have been reported by at least two studies: male
+gender, comorbidity burden, hospital length of stay, government insurance vs. private or no insurance, emergent or urgent
+vs. elective admission, recent prior hospitalization, and being
+discharged against medical advice. Factors that are associated
+with an increased risk of 30-day readmission but have only
+been reported by one study or in abstract form include lower
+education level, being unemployed, living in an urban area vs.
+a remote rural area, lower income, receiving inpatient nutrition
+support, increased serum creatinine, lower serum hematocrit,
+being discharged with home health care or to another institution, the number microvascular or macrovascular diabetes
+complications, failing to recognize and document a diagnosis
+of diabetes, and, counterintuitively, having outpatient followup within 30 days of discharge. It is possible that sicker patients were more motivated to obtain follow-up than healthier
+patients and thus were more likely to be readmitted. There are
+conflicting data on the associations of age, race, ethnicity,
+proximity to the hospital, and A1c with 30-day readmission.
+The few studies exploring an association of A1c with 30day readmission deserve a comment. A recently published
+single-center retrospective cohort study of 2265 hospitalized
+diabetic patients with an A1c >9 % did not find an independent association of baseline admission A1c with 30-day readmission [29•]. In contrast, a single-center retrospective cohort
+study of 1949 hospitalized patients with type 2 diabetes in a
+Boston-area primary care network found that the subgroup of
+patients with an admission A1c ≥8 % had an approximately 20
+% lower odds of 30-day readmission for each 1 % increase in
+A1c [32•]. In further contrast, a retrospective cohort study of
+880 diabetic and non-diabetic patients who underwent coronary artery bypass surgery found that a preoperative A1c >6 %
+was associated with a roughly twofold increase in the odds of
+readmission within 30 days after surgery [33]. Lastly, a retrospective cohort study of nearly 70,000 in patients with diabetes found that merely measuring the A1c was associated with a
+decreased risk of 30-day readmission among patients with a
+primary diagnosis of diabetes but not those with other primary
+diagnoses [30]. This suggests that greater attention to diabetes
+reflected by A1c measurement may improve outcomes among
+patients hospitalized for diabetes. The association of A1c with
+
+Curr Diab Rep (2018) 18: 21
+Table 1
+
+Page 3 of 9 21
+
+Risk factors for 30-day readmission of patients with diabetes
+
+Risk factor
+
+Effect, if statistically significant [reference]
+[27]
+
+Sociodemographics
+Male vs. female gender
+
+[19]
+
+[28]
+
+[29•]
+
+[18]
+
+[20•]
+
+[22]
+
+−
+
++
+
++
+
+Increasing age
+
+−
+
+−
+
+NS
+
+Black vs. white
+Hispanic vs. white
+
+NS
+
++
+−
+
++
+
++
+
++
++
+
++
+++
+
++
+
+NS
++
+
+NS
+
+Less than college vs. college graduate
+Disabled vs. employed
+Retired vs. employed
++
+
+Home zip code <5 miles from hospital
+Remote rural vs. urban residents
+
+−−
+
++
+NS
+
++
+
++
+NS
+
++
+−
+
+Insurance: Private vs. Medicare
+Insurance: Private vs. none
+
+NS
+
+Insurance: Medicaid vs. none
+Insurance: Medicare vs. none
+
++
+NS
+
++
+
++
+
++
+
+Insurance: Medicaid vs. private
+Hospital-related
+
++
+
+Number of prior hospitalizations
+Discharge within 30 days prior to admission
+Urgent or emergent vs. elective admission
+Admission serum creatinine, mg/dl
+Admission hematocrit, per 5 %
+
++
+++
++
++
+−
++
+
++
+
++
+++
+
++
+
+NS
+
++
+
++
+
++
++
+−
+
++
+
++
+
++
+
+Macrovascular complications, per diagnosis
+DM dx not coded, had prior dx vs. coded, had prior dx
+Pre-admission glucocorticoid
+Pre-admission insulin
+Therapy intensification on discharge
+Inpatient diabetes education
+A1c, %
+Other
+Pre-admission statin
+Comorbidity burden
+Outpatient follow-up within 30 days
+
+[31]
+
+++
+
+Unemployed vs. employed
+Lower income county
+
+Length of stay
+Discharge with intravenous catheter vs. self-care
+Discharge against medical advice
+Diabetes-related
+Microvascular complications, per diagnosis
+
+[30]
+
++
++
++
+
++
++
+
+−−
+NS
++
++
+
++
+++
+
+++
+
++
+
+− odds ratio (OR) 0.75–0.99 or not provided, − − OR < 0.75, + OR 1.01–2.00, + + OR > 2.00, DM diabetes mellitus, dx diagnosis,
+NS not statistically significant
+
+30-day readmission therefore remains unclear and may depend on the level of glycemic control and reason for
+hospitalization.
+Most of the studies noted above used administrative databases to explore readmission risk factors or were not designed
+
+to identify reasons for readmission per se. In an effort to broaden the understanding of 30-day readmission among patients
+with diabetes, we performed a qualitative study [34•]. Based
+on thematic analysis of semi-structured interviews of adult in
+patients with diabetes who were readmitted within 30 days of
+
+21 Page 4 of 9
+
+hospital discharge, we identified five themes that contribute to
+readmission risk: (1) poor health literacy, i.e., lack of knowledge about diabetes and discharge instructions, (2) health system failure of the hospital discharge process and post-discharge
+support, (3) failure of factors that were expected to be protective, such as following the discharge instructions, being aware
+of medication changes upon discharge, and having help and
+social support at home, (4) social determinants of health impeding care, and (5) loss of control over illness. Most of the
+patients reported needing help with transportation, medications,
+and food. Patients generally denied actively exacerbating their
+condition prior to readmission and believed that being
+readmitted was out of their control. These findings suggest
+several points of intervention that will be discussed below.
+Predicting Early Readmission Risk
+While the work by other groups discussed thus far provides
+some insight into 30-day readmission risk factors for diabetic
+patients, none provides the ability to identify individual high
+risk patients at the point of care. We therefore developed the
+Diabetes Early Readmission Risk Index (DERRI), which is a
+multivariable logistic regression model that predicts the risk of
+all-cause 30-day readmission among hospitalized patients
+with diabetes [22]. The DERRI is based on a retrospective
+cohort of 17,595 adult patients with diabetes discharged between 2004 and 2012. Out of the 43 variables examined, there
+were 13 statistically significant predictors of 30-day readmission retained in the model (included in Table 1). The DERRI
+has good discriminatory ability (C-statistic 0.72) and is adequately calibrated (Hosmer-Lemeshow goodness-of-fit test
+p=0.41). Early readmission risk in the highest tertile was 40
+%, accounting for 58 % of all early readmissions. This early
+readmission risk index may be useful for targeting discharge
+support resources to those at higher risk.
+
+Curr Diab Rep (2018) 18: 21
+
+contributes to long-term readmission risk. First, a high A1c is
+associated with an increased risk for hospitalization for any
+cause and cardiovascular disease [38–40]. Second, insulin
+therapy post-discharge is associated with a lower risk of readmission at 1 year. In a study of patients with type 2 diabetes
+who used insulin before and during hospitalization, patients
+who continued insulin after discharge had lower risks of allcause and diabetes-related readmission within 12 months
+compared to patients who did not continue the insulin [41].
+A companion study of insulin-naïve type 2 diabetes patients
+with baseline A1c levels ≥8 % who initiated insulin during
+hospitalization found a trend for an association between insulin continuation and lower risk of readmission [42]. Among
+the subgroup of patients, however, with a baseline A1c ≥9 %,
+insulin continuation was significantly associated with a lower
+risk of all-cause (adjust hazard ratio [HR] 0.58 [0.36–0.93]
+95%CI) and diabetes-related readmission (adjusted HR 0.46
+[0.23–0.87] 95%CI).
+In contrast to the evidence supporting a role of poor glycemic
+control in contributing to readmission risk, some data actually
+suggest that poor glycemia is associated with lower readmission
+risk. A one-arm pilot trial of individualized diabetes education
+and phone follow-up in 82 patients with an A1c >9%found that
+lower baseline A1c was a weak predictor of readmission at 3
+months but not at 6 months [43••]. The same group performed a
+retrospective analysis of 2069 hospitalized diabetic patients with
+a baseline A1c >9 % and found that higher A1c was associated
+with lower risk of readmission within 6 months [29•]. Post hoc
+analysis revealed that higher A1c was only associated with lower readmission risk among those patients who received inpatient
+diabetes education, suggesting that patients with the worst glycemic control may stand to gain the most from education. Given
+the conflicting evidence regarding glycemic control and readmission risk, it is unclear if hyperglycemia is a marker for increased risk or a cause for readmissions. More research is needed to clarify this relationship.
+
+Readmission Beyond 30 Days After Discharge
+Not surprisingly, there is considerable overlap among risk
+factors for 30-day readmission of patients with diabetes and
+readmission more than 30 days after discharge, including
+higher comorbidity burden, public versus private insurance,
+lower income, length of stay, diabetes-related complications,
+and renal disease [23, 24, 29•, 35, 36]. While data on the effect
+of race and ethnicity on 30-day readmission were mixed, multiple studies have shown that African American and Hispanic
+patients are at greater risk of readmission after 30 days than
+Caucasians [23, 29•, 35]. In contrast to 30-day readmission,
+patients living in urban areas are more likely to be readmitted
+after 30 days than rural patients [23, 37].
+As with the data on 30-day readmission, the effect of glycemic control on later readmission is unclear. There is some
+evidence to support the hypothesis that poor glycemic control
+
+Diabetes as a Risk Factor for Readmission
+Patients with diabetes may be at higher risk of readmission
+than those without diabetes. In a study of 4769 medical patients, diabetes was associated with a statistically significant
+40 % increased risk of readmission within 90 days [44].
+Diabetes is also associated with an increased risk of readmission in patients hospitalized for cardiac surgery [45, 46], heart
+failure [47, 48], acute myocardial infarction [49], stroke [50],
+or liver disease [51]. In contrast, recent studies have not found
+that diabetes is independently associated with an increased
+risk of 30-day readmission in medical patients or veterans
+[52, 53]. Considered together, these data suggest that the effect
+of diabetes on readmission risk may vary by length of followup and by primary reason for hospitalization.
+
+Curr Diab Rep (2018) 18: 21
+
+Page 5 of 9 21
+
+Barriers to Reducing Readmission Risk of Patients
+with Diabetes
+
+Strategies for Reducing Readmission Risk of Patients
+with Diabetes
+
+Having established that the risk of readmission of diabetic patients depends on multiple sociodemographic,
+medical, and process-related factors, and given the
+complexity of diabetes management, it is not surprising
+that multiple barriers to reducing readmission risk exist.
+Competing medical priorities may overshadow diabetes
+in the discharge planning process, especially among patients hospitalized for other reasons. For example, a
+survey of medical charts of diabetic patients at one
+academic teaching hospital found that 60%of discharge
+notes mentioned diabetes, and only 20 % of discharges
+included a plan for diabetes follow-up [54]. Similarly,
+in our small qualitative study of readmitted diabetic
+patients, very few discharge instructions included
+diabetes-specific information other than medications
+[34•]. Despite the recommendation to intensify diabetes
+therapy in poorly controlled patients upon discharge
+[55], such intervention is often deferred to the outpatient setting [56]. Adding to the complexity of discharge planning, most patients have an inpatient regimen that is very different from their outpatient regimen,
+in accordance with current guidelines to discontinue
+non-insulin diabetes medications upon admission [55].
+Furthermore, assessment of glycemic control and adjustment of diabetes therapy, especially insulin, should
+be performed much sooner after discharge than for
+most other chronic conditions [57••]. Lastly, providers
+may fail to provide outpatient follow-up within 30 days
+[56].
+In addition to these health system factors, there are
+several patient-related factors that impede efforts to minimize readmission. Poor health literacy may be of particular importance given that diabetes requires more engagement by patients than many other chronic conditions [34•]. Patients with lower health literacy may not
+remember or understand their discharge instructions. In
+addition, misperceptions about diabetes control may persist despite inpatient diabetes education [58]. Poor
+health literacy, along with lack of financial resources
+and feeling powerless to control one’s health, may contribute
+to medication nonadherence [34•]. Lack of financial resources, including transportation and health insurance,
+may impede the ability of patients to keep outpatient
+follow-up appointments [59]. Inadequate finances may
+also make it difficult to reach patients by phone, which
+limits the utility of phone-based interventions [43••, 58].
+Although many of these factors apply to hospitalized
+patients in general, the multiple causes of readmission
+and barriers to reducing readmission risk of diabetic
+patients are complex and merit specific consideration.
+
+Although a number of trials have tested strategies to reduce
+readmission rates in various hospital populations, few have
+focused on patients with diabetes [60–66]. Rather, most of
+these studies have enrolled unselected hospitalized patients,
+those on medical services, the elderly, or those admitted for
+heart failure or other specific conditions. These trials have
+shown significant relative reductions in 30-day readmission
+risk ranging from 30 to 75 %. With one exception, all of the
+successful studies tested multi-component discharge bundles,
+suggesting that bundled interventions may realize an additive
+effect beyond that seen with a single intervention. Common
+components of these interventions were patient-centered discharge education, peri-discharge coordination of care, and
+post-discharge support. Whether these strategies could be applied successfully to patients with diabetes is unknown.
+Evidence supporting readmission risk reduction interventions
+specifically in diabetic patients comes from several retrospective and small prospective studies. The data from randomized
+controlled trials of inpatient diabetes specialty care are mixed.
+One trial in 179 hospitalized patients with diabetes found that
+daily rounds by a nurse diabetes educator and an endocrinologist improved inpatient glycemic control and reduced allcause readmission rates at 3 months from32 to 15%
+(p=0.01) [67]. In contrast, however, a randomized controlled
+trial in 300 diabetic inpatients found that a diabetes specialist
+nurse decreased length of stay but did not affect readmission
+rates at 1 year [68]. Readmissions before 1 year were not
+assessed in this trial, and it is possible that diabetes specialty
+care may only affect readmission risk less than 1 year after
+discharge.
+Several studies have examined the effect of inpatient diabetes education on readmissions. A single-center retrospective
+cohort study in more than 2000 hospitalized diabetic patients
+with a baseline A1c >9 % found that inpatient diabetes education significantly reduced the risk of 30-day readmission by
+44 % and 180-day readmission by 20 % [29•]. In a one-arm
+pilot trial of inpatient diabetes education and post-discharge
+phone follow-up in 82 patients with a baseline A1c >9 %, the
+180-day readmission rate for uncontrolled hyperglycemia was
+3.2 %, down from 28 % of admissions due to hyperglycemia
+[43••]. Also in support of a beneficial effect of education,
+another randomized controlled trial of poorly controlled hospitalized patients with diabetes found that pharmacist discharge counseling improved medication adherence during
+the 150 days after discharge, increased the rate of follow-up
+visits, and lowered the A1c by 2 %. Although readmissions
+were not assessed in this study, it suggests some of the ways
+diabetes education may reduce readmission rates. Lastly, a
+randomized controlled trial in 65 diabetic patients admitted
+for hypoglycemia found that inpatient education, adjustment
+
+21 Page 6 of 9
+
+of medications, and discharge planning significantly reduced
+the incidence of 30- and 90-day readmissions for hypoglycemia while also reducing length of stay by more than 2 days
+[69].
+In addition to inpatient diabetes specialty care and education, a few studies have explored the effect of intensifying
+diabetes therapy on readmission rates. A retrospective cohort
+study of 1949 hospitalized patients with type 2 diabetes found
+that intensifying diabetes therapy was not associated with
+30-day readmission or emergency department visits [32•].
+Among medical patients with a baseline A1c ≥8 %,
+however, intensification of therapy was associated with
+a statistically significant 77 % lower odds of 30-day
+readmission/emergency department visits and a 1.8 %
+lower A1c. Similarly, a retrospective cohort study of insulin
+naïve patients with type 2 diabetes initiated on insulin during
+hospitalization reported a trend toward lower 1-year readmission risk for those with baseline A1c levels ≥8 % and a statistically significant lower risk in patients with baseline A1c
+levels ≥9 % [42]. Likewise, a smaller retrospective cohort
+study in patients with type 2 diabetes and baseline
+A1c levels ≥10% found a similar beneficial effect of
+diabetes therapy intensification on 90-day readmission
+rates [70]. Thus, intensification of diabetes therapy upon
+discharge may reduce readmission risk among poorly
+controlled patients.
+Another strategy for reducing readmission rates is dedicated outpatient support. A pilot randomized controlled trial in
+100 diabetic medically indigent patients who lacked primary
+care reported that follow-up visits in a diabetes transitional
+care clinic 2 to 5 days after hospital discharge significantly
+decreased the rate of 90-day diabetes-related readmissions
+among the subgroup of patients originally admitted for diabetes [57••]. In the entire cohort, the transitional care clinic was
+associated with a nonsignificant reduction in 90-day
+readmissions (20 vs. 28 %). Another study focused on
+diabetes-related readmissions explored the effect of outpatient
+support provided to 115 patients with type 1 diabetes admitted
+for diabetic ketoacidosis [71]. In this nonrandomized trial,
+patients who consented to the intervention received at least
+four clinic visits annually in a dedicated diabetes treatment
+unit, monthly phone calls, and 24-h access to a diabetologist
+by phone. The intervention was associated with a significantly
+lower rate of readmissions for diabetic ketoacidosis over the 2year study period, a 3 % lower A1c level, and a lower cost of
+diabetes-related care. Outpatient diabetes support therefore
+appears to decrease diabetes-related readmission risk.
+Although not formally tested, there are a number of ways to
+improve the hospital discharge process and potentially reduce
+readmission risk. Our qualitative study of readmissions
+discussed above led to the conclusion that better communication of discharge instructions, involving patients more in medication reconciliation and scheduling follow-up appointments,
+
+Curr Diab Rep (2018) 18: 21
+Table 2
+patients
+
+Potential strategies to reduce readmission risk of diabetic
+
+Inpatient diabetes education
+For patients who are poorly controlled, new to diabetes or insulin, or
+have severe hypoglycemia
+Inpatient diabetes consultation
+For poorly controlled patients or those with a history of readmissions or
+recent severe hypoglycemia
+Intensifying diabetes therapy based on admission A1c
+Diabetes discharge instructions
+Clearly written at an appropriate reading and health literacy level
+Include information on follow-up appointments
+Include contact information for providers
+Using teach back to optimize patient communication
+Follow-up planning
+Involving patients in appointment scheduling
+Assessing and addressing barriers to adherence
+Post-discharge support by phone or outpatient visit within 1 week
+Follow-up diabetes outpatient visit within 1 month after discharge
+
+and assessing barriers to following the discharge plan may
+decrease the risk of readmission [34•]. Discharge instructions
+should be written clearly at an appropriate reading and health
+literacy level [4]. Discharge paperwork should also include
+ways for patients to contact post-hospital care providers and
+information on follow-up appointments, which are best scheduled prior to discharge. Communication with patients can be
+optimized with the teach-back method, which has been used
+successfully for outpatient diabetes care [72]. A summary of
+strategies to reduce readmission risk among patients with diabetes is presented in Table 2.
+
+Conclusions
+Hospital readmission of patients with diabetes is an important
+health care quality measure and driver of costs. Major risk
+factors for readmission include lower socioeconomic status,
+racial/ethnic minority, greater burden of comorbidities, public
+insurance, emergent or urgent admission, and a history of
+recent prior hospitalization. Certain hospitalized patients with
+diabetes may be at higher risk of readmission than those without diabetes. Multiple health system and patient-related barriers to reducing readmission rates exist. A mix of expert
+opinion and a handful of mostly small studies provide a
+number of potential strategies for reducing readmission
+risk, including inpatient education, specialty care, better
+discharge instructions, coordination of care, and postdischarge support. The diabetes-specific strategies such
+as diabetes education, intensifying therapy, and outpatient diabetes care tend to be more effective in poorly
+controlled patients and tend to reduce.
+
+Curr Diab Rep (2018) 18: 21
+
+Compliance with Ethics Guidelines
+Conflict of Interest Daniel J. Rubin has received grant support from Merck for a subcontract for inpatient diabetes
+research.
+Human and Animal Rights and Informed Consent This
+article does not contain any studies with human or animal
+subjects performed by any of the authors.
+
+References
+Papers of particular interest, published recently, have been
+highlighted as:
+• Of importance
+•• Of major importance
+1.
+2.
+
+3.
+4.
+
+5.
+
+6.
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+12.
+
+13.
+
+14.
+
+Axon RN, Williams MV. Hospital readmission as an accountability
+measure. JAMA. 2011;305(5):504–5.
+Stone J, Hoffman G. Medicare hospital readmissions: issues, policy
+options and PPACA. Vol 7–5700, R40972: Congressional Research
+Service, Penny Hill Press; 2010.
+Epstein AM. Revisiting readmissions — changing the incentives
+for shared accountability. N Engl J Med. 2009;360(14):1457–9.
+Cook CB, Seifert KM, Hull BP, Hovan MJ, Charles JC, MillerCage V, et al. Inpatient to outpatient transfer of diabetes care: planing for an effective hospital discharge. Endocr Pract. 2009;15(3):
+263–9.
+Draznin B, Gilden J, Golden SH, Inzucchi SE, Baldwin D,
+Bode BW, et al. Pathways to quality inpatient management
+of hyperglycemia and diabetes: a call to action. Diabetes
+Care. 2013;36(7):1807–14.
+Dungan KM. The effect of diabetes on hospital readmissions. J
+Diabetes Sci Technol. 2012;6(5):1045–52.
+Benbassat J, Taragin M. Hospital readmissions as a measure of
+quality of health care: advantages and limitations. Arch Intern
+Med. 2000;160(8):1074–81.
+Kocher RP, Adashi EY. Hospital readmissions and the affordable
+care act: paying for coordinated quality care. JAMA. 2011;306(16):
+1794–5.
+PubMed. US National Library of Medicine. National Institutes of
+Health. http://www.ncbi.nlm.nih.gov/pubmed. Accessed 29
+Aug 2014.
+HCUP Nationwide Inpatient Sample (NIS). Agency for healthcare
+research and quality (AHRQ). 2014. http://hcupnet.ahrq.gov/
+HCUPnet.jsp (2012). Accessed 15 June 2014.
+Centers for Disease Control and Prevention. National Diabetes
+Statistics Report: Estimates of Diabetes and Its Burden in the
+United States, 2014. Atlanta: U.S. Department of Health and
+Human Services; 2014.
+HCUP Nationwide Inpatient Sample (NIS). Agency for healthcare
+research and quality (AHRQ); 2011. http://hcupnet.ahrq.gov/
+HCUPnet.jsp. Accessed 11 Aug 2013.
+Umpierrez GE, Isaacs SD, Bazargan N, You X, Thaler LM,
+Kitabchi AE. Hyperglycemia: an independent marker of inhospital mortality in patients with undiagnosed diabetes. J Clin
+Endocrinol Metab. 2002;87(3):978–82.
+CDC. Number (in Thousands) of Hospital Discharges with
+Diabetes as Any-Listed Diagnosis, United States, 1988–2009.
+Centers for Disease Control and Prevention (CDC), National
+
+Page 7 of 9 21
+Center for Health Statistics. http://www.cdc.gov/diabetes/
+statistics/dmany/fig1.htm. Accessed 7 Jan 2013.
+15. Increasing prevalence of diagnosed diabetes - United States and
+puerto rico, 1995–2010. MMWR Morb Mortal Wkly Rep.
+2012;61(45):918–921.
+16. Pennsylvania Health Care Cost Containment Council. Hospital
+Readmissions in Pennsylvania 2010. 2012:1–24. http://www.
+phc4.org/reports/readmissions/10/. Accessed 18 Dec 2012.
+17. Friedman B, Jiang HJ, Elixhauser A. Costly hospital readmissions
+and complex chronic illness. Inquiry. 2008;45(4):408–21.
+18. Robbins JM, Webb DA. Diagnosing diabetes and preventing
+rehospitalizations: the urban diabetes study. Med Care.
+2006;44(3):292–6.
+19. Bennett KJ, Probst JC, Vyavaharkar M, Glover SH. Lower rehospitalization rates among rural Medicare beneficiaries with diabetes.
+J Rural Health. 2012;28(3):227–34.
+20.• Rubin DJ, Handorf E, McDonnell M. Predicting early readmission
+risk among hospitalized patients with diabetes (7796). ENDO
+2013: The Endocrine Society’s 95th Annual Meeting. 2013.
+https://endo.confex.com/endo/2013endo/webprogram/Paper7796.
+html. Accessed September 24, 2013. Identifies novel set of factors
+predictive of early readmission of patients with diabetes.
+21. Chen JY, Ma Q, Chen H, Yermilov I. New bundled world: quality
+of care and readmission in diabetes patients. J Diabetes Sci Technol.
+2012;6(3):563–71.
+22. Rubin D, McDonnell M, Nelson D, Zhao H, Golden SH. Predicting
+hospital readmission risk with a novel tool: the diabetes early readmission risk index (DERRI). 1508-P. American Diabetes
+Association 74th Scientific Sessions, 06/2014. San Francisco,
+CA; 2014. Describes a novel tool to predict readmission risk of
+individual patients with diabetes prior to discharge.
+23. Kim H, Ross JS, Melkus GD, Zhao Z, Boockvar K. Scheduled and
+unscheduled hospital readmissions among patients with diabetes.
+Am J Manag Care. 2010;16(10):760–7.
+24. Jiang HJ, Stryer D, Friedman B, Andrews R. Multiple hospitalizations for patients with diabetes. Diabetes Care. 2003;26(5):1421–6.
+25. ADA: Economic Costs of Diabetes in the U.S. in 2012. Diabetes
+Care. 2013.
+26. Burke RE, Coleman EA. Interventions to decrease hospital
+readmissions: keys for cost-effectiveness. JAMA Intern Med.
+2013;173(8):695–8.
+27. Albrecht JS, Hirshon JM, Goldberg R, Langenberg P, Day HR,
+Morgan DJ, et al. Serious mental illness and acute hospital readmission in diabetic patients. Am J Med Qual. 2012;27(6):503–8.
+28. Jiang HJ, Andrews R, Stryer D, Friedman B. Racial/ethnic disparities in potentially preventable readmissions: the case of diabetes.
+Am J Public Health. 2005;95(9):1561–7.
+29.• Healy SJ, Black D, Harris C, Lorenz A, Dungan KM. Inpatient
+diabetes education is associated with less frequent hospital readmission among patients with poor glycemic control. Diabetes Care.
+2013;36(10):2960–7. Well-done retrospective study found that
+education is associated with lower risk of readmission
+30. Strack B, DeShazo JP, Gennings C, Olmo JL, Ventura S, Cios KJ,
+et al. Impact of HbA1c measurement on hospital readmission rates:
+analysis of 70,000 clinical database patient records. Biomed Res
+Int. 2014;781670:2014.
+31. Zapatero A, Gomez-Huelgas R, Gonzalez N, Canora J, Asenjo A,
+Hinojosa J, et al. Frequency of hypoglycemia and its impact on
+length of stay, mortality, and short-term readmission in patients with
+diabetes hospitalized in internal medicine wards. Endocr Pract.
+2014:1–15.
+32.• Wei NJ, Wexler DJ, Nathan DM, Grant RW. Intensification of diabetes
+medication and risk for 30-day readmission. Diabet Med. 2013;30(2):
+e56–62. This retrospective study reports that intensifying diabetes
+therapy was associated with lower readmission risk
+
+21 Page 8 of 9
+33.
+
+Engoren M, Schwann TA, Habib RH. Elevated hemoglobin A1c is
+associated with readmission but not complications. Asian
+Cardiovasc Thorac Ann. 2014;22(7):800–6.
+34.• Rubin D, Donnell-Jackson K, Jhingan R, Golden SH, Paranjape A.
+Early readmission among patients with diabetes: a qualitative assessment of contributing factors. J Diabetes Complicat. 2014. This
+study presents a construct of 5 themes to explain readmission
+risk that complements findings from quantitative studies;28:
+869–73. https://doi.org/10.1016/j.jdiacomp.2014.06.013.
+35. Dungan KM, Osei K, Nagaraja HN, Schuster DP, Binkley P.
+Relationship between glycemic control and readmission rates in patients hospitalized with congestive heart failure during implementation of hospital-wide initiatives. Endocr Pract. 2010;16(6):945–51.
+36. Smith DM, Giobbie-Hurder A, Weinberger M, Oddone EZ,
+Henderson WG, Asch DA, et al. Predicting non-elective hospital
+readmissions: a multi-site study. Department of veterans affairs
+cooperative study group on primary care and readmissions. J Clin
+Epidemiol. 2000;53(11):1113–8.
+37. Cramer S, Chapa G, Kotsos T, Jenich H. Assessing multiple hospitalizations for health-plan-managed Medicaid diabetic members. J
+Healthc Qual. 2010;32(3):7–14.
+38. Govan L, Wu O, Briggs A, Colhoun HM, Fischbacher CM, Leese
+GP, et al. Achieved levels of HbA1c and likelihood of hospital
+admission in people with type 1 diabetes in the Scottish population:
+a study from the Scottish diabetes research network epidemiology
+group. Diabetes Care. 2011;34(9):1992–7.
+39. Menzin J, Korn JR, Cohen J, Lobo F, Zhang B, Friedman M, et al.
+Relationship between glycemic control and diabetes-related hospital costs in patients with type 1 or type 2 diabetes mellitus. J Manag
+Care Pharm. 2010;16(4):264–75.
+40. Nichols GA, Rosales AG, Perrin NA, Fortmann SP: The association between different A1C-based measures of glycemia and risk of
+cardiovascular disease hospitalization. Diabetes Care. 2013.
+41. Wu EQ, Zhou S, Yu A, Lu M, Sharma H, Gill J, et al. Outcomes
+associated with insulin therapy disruption after hospital discharge
+among patients with type 2 diabetes mellitus who had used insulin
+before and during hospitalization. Endocr Pract. 2012;18(5):651–9.
+42. Wu EQ, Zhou S, Yu A, Lu M, Sharma H, Gill J, et al. Outcomes
+associated with post-discharge insulin continuity in US patients
+with type 2 diabetes mellitus initiating insulin in the hospital.
+Hosp Pract. 1995;40(4):40–48,2012.
+43.•• Dungan K, Lyons S, Manu K, Kulkarni M, Ebrahim K, Grantier C,
+Harris C, Black D, Schuster D. An individualized inpatient diabetes
+education and hospital transition program for poorly controlled
+hospitalized patients with diabetes. Endocr Pract. 2014;1–24. This
+one-arm pilot trial found that education and post-discharge
+support reduced diabetes-related readmission rates.
+44. Phillips RS, Safran C, Cleary PD, Delbanco TL. Predicting emergency readmissions for patients discharged from the medical service of a teaching hospital. J Gen Intern Med. 1987;2(6):400–5.
+45. Ferraris VA, Ferraris SP, Harmon RC, Evans BD. Risk factors for
+early hospital readmission after cardiac operations. J Thorac
+Cardiovasc Surg. 2001;122(2):278–86.
+46. Stewart RD, Campos CT, Jennings B, Lollis SS, Levitsky S, Lahey
+SJ. Predictors of 30-day hospital readmission after coronary artery
+bypass. Ann Thorac Surg. 2000;70(1):169–74.
+47. Keenan PS, Normand S-LT, Lin Z, Drye EE, Bhat KR, Ross JS,
+et al. An administrative claims measure suitable for profiling hospital performance on the basis of 30-day all-cause readmission rates
+among patients with heart failure. Circulation: Cardiovascular
+Quality and Outcomes. 2008;1(1):29–37.
+48. Greenberg BH, Abraham WT, Albert NM, Chiswell K, Clare R,
+Stough WG, et al. Influence of diabetes on characteristics and outcomes in patients hospitalized with heart failure: a report from the
+organized program to initiate lifesaving treatment in hospitalized
+
+Curr Diab Rep (2018) 18: 21
+patients with heart failure (OPTIMIZE-HF). Am Heart J.
+2007;154(2):277 e271–8.
+49. Dunlay SM, Weston SA, Killian JM, Bell MR, Jaffe AS, Roger VL.
+Thirty-day rehospitalizations after acute myocardial infarctiona cohort study. Ann Intern Med. 2012;157(1):11–8.
+50. Lichtman JH, Leifheit-Limson EC, Jones SB, Watanabe E,
+Bernheim SM, Phipps MS, et al. Predictors of hospital readmission after stroke: a systematic review. Stroke. 2010;41(11):
+2525–33.
+51. Berman K, Tandra S, Forssell K, Vuppalanchi R, Burton JR Jr,
+Nguyen J, et al. Incidence and predictors of 30-day readmission
+among patients hospitalized for advanced liver disease. Clin
+Gastroenterol Hepatol. 2011;9(3):254–9.
+52. Donzé J, Aujesky D, Williams D, Schnipper JL. Potentially avoidable 30-day hospital readmissions in medical patients: derivation
+and validation of a prediction model. JAMA Intern Med.
+2013;173(8):632–8.
+53. Shulan M, Gao K, Moore CD. Predicting 30-day all-cause hospital
+readmissions. Health Care Manag Sci. 2013;16(2):167–75.
+54. Knecht LA, Gauthier SM, Castro JC, Schmidt RE, Whitaker MD,
+Zimmerman RS, et al. Diabetes care in the hospital: is there clinical
+inertia? J Hosp Med. 2006;1(3):151–60.
+55. Umpierrez GE, Hellman R, Korytkowski MT, Kosiborod M,
+Maynard GA, Montori VM, et al. Management of hyperglycemia
+in hospitalized patients in non-critical care setting: an endocrine
+society clinical practice guideline. J Clin Endocrinol Metab.
+2012;97(1):16–38.
+56. Griffith ML, Boord JB, Eden SK, Matheny ME. Clinical inertia of
+discharge planning among patients with poorly controlled diabetes
+mellitus. J Clin Endocrinol Metab. 2012;97(6):2019–26.
+57.•• Seggelke SA, Hawkins RM, Gibbs J, Rasouli N, Wang C, Draznin
+B. Transitional care clinic for uninsured and medicaid-covered patients with diabetes mellitus discharged from the hospital: a pilot
+quality improvement study. Hosp Pract (1995). 2014;42(1):46–51.
+This RCT found that diabetes clinic visits within 5 days of discharge reduced diabetes-related readmission rates
+58. Kimmel B, Sullivan MM, Rushakoff RJ. Survey on transition from
+inpatient to outpatient for patients on insulin: what really goes on at
+home? Endocrine practice : official journal of the American College
+of Endocrinology and the American Association of Clinical
+Endocrinologists. 2010;16(5):785–91.
+59. Wheeler K, Crawford R, McAdams D, Robinson R, Dunbar VG,
+Cook CB. Inpatient to outpatient transfer of diabetes care: perceptions of barriers to postdischarge followup in urban African
+American patients. Ethn Dis. 2007;17(2):238–43.
+60. Hansen LO, Young RS, Hinami K, Leung A, Williams MV.
+Interventions to reduce 30-day rehospitalization: a systematic review. Ann Intern Med. 2011;(8):155, 520–528.
+61. Peikes D, Peterson G, Brown RS, Graff S, Lynch JP. How changes
+in Washington university’s medicare coordinated care demonstration pilot ultimately achieved savings. Health Aff. 2012;31(6):
+1216–26.
+62. Watkins L, Hall C, Kring D. Hospital to home: a transition program
+for frail older adults. Prof Case Manag. 2012;17(3):117–23; quiz
+124-115.
+63. Evans RL, Hendricks RD. Evaluating hospital discharge planning:
+a randomized clinical trial. Med Care. 1993;31(4):358–70.
+64. Koehler BE, Richter KM, Youngblood L, Cohen BA, Prengler ID,
+Cheng D, et al. Reduction of 30-day postdischarge hospital readmission or emergency department (ED) visit rates in high-risk elderly medical patients through delivery of a targeted care bundle. J
+Hosp Med. 2009;4(4):211–8.
+65. Coleman EA, Parry C, Chalmers S, Min S. The care transitions
+intervention: results of a randomized controlled trial. Arch Intern
+Med. 2006;166(17):1822–8.
+
+Curr Diab Rep (2018) 18: 21
+66.
+
+67.
+
+68.
+
+69.
+
+Jack BW, Chetty VK, Anthony D, Greenwald JL, Sanchez GM,
+Johnson AE, et al. A reengineered hospital discharge program to
+decrease rehospitalization: a randomized trial. Ann Intern Med.
+2009;150(3):178–87.
+Koproski J, Pretto Z, Poretsky L. Effects of an intervention by a
+diabetes team in hospitalized patients with diabetes. Diabetes Care.
+1997;20(10):1553–5.
+Davies M, Dixon S, Currie CJ, Davis RE, Peters JR. Evaluation of a
+hospital diabetes specialist nursing service: a randomized controlled
+trial. Diabet Med. 2001;18(4):301–7.
+Kampan P. Effects of counseling and implementation of clinical
+pathway on diabetic patients hospitalized with hypoglycemia. J
+Med Assoc Thail. 2006;89(5):619–25.
+
+Page 9 of 9 21
+70.
+
+71.
+
+72.
+
+Lee PH, Franks AS, Barlow PB, Farland MZ. Hospital readmission
+and emergency department use based on prescribing patterns in
+patients with severely uncontrolled type 2 diabetes mellitus.
+Diabetes Technol Ther. 2014;16(3):150–5.
+Maldonado MR, D'Amico S, Rodriguez L, Iyer D, Balasubramanyam
+A. Improved outcomes in indigent patients with ketosis-prone diabetes: effect of a dedicated diabetes treatment unit. Endocr Pract.
+2003;9(1):26–32.
+Schillinger D, Piette J, Grumbach K, Wang F, Wilson C, Daher C,
+et al. Closing the loop: physician communication with diabetic patients who have low health literacy. Arch Intern Med. 2003;163(1):
+83–90.
+
+

@@ -27,14 +27,14 @@ from sklearn.model_selection import (
 )
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.feature_selection import SelectFromModel
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import SelectFromModel, SelectKBest, f_classif
 from sklearn.dummy import DummyClassifier
 from sklearn.tree import DecisionTreeClassifier, export_text
 
 # Classification models
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 
@@ -140,9 +140,16 @@ CLASSIFICATION_MODELS: dict[str, object] = {
     "naive_bayes": GaussianNB(), # fast
     "logistic_regression": LogisticRegression(max_iter=1000, random_state=42), # fast
     "decision_tree": DecisionTreeClassifier(random_state=42), # fast
-    "knn": KNeighborsClassifier(n_neighbors=5), # fast 
-    "svm_linear": SVC(kernel="linear", probability=True, random_state=42), # slow
-    "svm_rbf": SVC(kernel="rbf", probability=True, random_state=42), # slow
+    "knn": KNeighborsClassifier(n_neighbors=5), # fast
+    "sgd_classifier": SGDClassifier(
+        loss="log_loss",
+        penalty="l2",
+        alpha=1e-4,
+        max_iter=5000,
+        random_state=42,
+        tol=1e-3,
+        class_weight="balanced",
+    ),
     # Ensemble models
     "random_forest": RandomForestClassifier(n_estimators=100, random_state=42), # pretty fast
     "gradient_boosting": GradientBoostingClassifier( # pretty fast
@@ -164,10 +171,14 @@ if CATBOOST_AVAILABLE:
     )
 
 # Models that benefit from feature scaling.
-SCALE_SENSITIVE_MODELS = {"logistic_regression", "svm_linear", "svm_rbf", "knn"}
+SCALE_SENSITIVE_MODELS = {
+    "logistic_regression",
+    "sgd_classifier",
+    "knn",
+}
 
-# CLASSIFICATION_MODELS_FAST: CLASSIFICATION_MODELS, but without svm_linear and svm_rbf
-CLASSIFICATION_MODELS_FAST = {k: v for k, v in CLASSIFICATION_MODELS.items() if k not in ["svm_linear", "svm_rbf"]}
+# Alias of the full registry (kept for notebooks that import FAST explicitly).
+CLASSIFICATION_MODELS_FAST = dict(CLASSIFICATION_MODELS)
 
 CLASSIFICATION_MODELS_ADVANCED = {k: v for k, v in CLASSIFICATION_MODELS.items() if k in ["random_forest", "gradient_boosting", "xgboost", "lightgbm", "catboost"]}
 
@@ -189,6 +200,10 @@ HYPERPARAM_GRIDS: dict[str, dict] = {
     "knn": {
         "classifier__n_neighbors": [3, 5, 7, 11, 15],
         "classifier__weights": ["uniform", "distance"],
+    },
+    "sgd_classifier": {
+        "classifier__alpha": [1e-5, 1e-4, 1e-3],
+        "classifier__learning_rate": ["optimal", "adaptive"],
     },
     "random_forest": {
         "classifier__n_estimators": [50, 100, 200],
@@ -268,17 +283,71 @@ def get_stratified_cv(
 # Fold-local pipeline builder
 # ---------------------------------------------------------------------------
 
+def make_reduction_step(
+    reduction: tuple[str, dict],
+    *,
+    random_state: int = 42,
+) -> tuple[str, object]:
+    """Build a sklearn feature-reduction step from a spec (unfitted).
+
+    Parameters
+    ----------
+    reduction : tuple[str, dict]
+        - ``("pca", kwargs)`` → :class:`~sklearn.decomposition.PCA` (dense
+          input). ``random_state`` defaults to *random_state* if omitted.
+        - ``("select_kbest", kwargs)`` → :class:`~sklearn.feature_selection.SelectKBest`.
+          If ``score_func`` is missing, :func:`~sklearn.feature_selection.f_classif`
+          is used.
+        - ``("select_from_model", kwargs)`` → :class:`~sklearn.feature_selection.SelectFromModel`.
+          ``kwargs`` must include ``estimator`` (cloned unfitted).
+
+    random_state : int
+        Default PCA random state.
+
+    Returns
+    -------
+    tuple[str, object]
+        ``("reducer", transformer)`` for use in a :class:`~sklearn.pipeline.Pipeline`.
+    """
+    kind, kw = reduction
+    kw = dict(kw)
+    if kind == "pca":
+        kw.setdefault("random_state", random_state)
+        return ("reducer", PCA(**kw))
+    if kind == "select_kbest":
+        kw.setdefault("score_func", f_classif)
+        return ("reducer", SelectKBest(**kw))
+    if kind == "select_from_model":
+        if "estimator" not in kw:
+            raise ValueError(
+                'select_from_model reduction requires kwargs["estimator"].'
+            )
+        estimator = clone(kw.pop("estimator"))
+        return ("reducer", SelectFromModel(estimator=estimator, **kw))
+    raise ValueError(
+        f"Unknown reduction kind {kind!r}; use 'pca', 'select_kbest', or "
+        "'select_from_model'."
+    )
+
+
 def build_fold_pipeline(
     estimator,
     scale: bool = True,
     imbalance_strategy: str = "none",
     random_state: int = 42,
+    reduction: tuple[str, dict] | None = None,
 ) -> Pipeline:
     """Build a leakage-safe fold-local pipeline.
 
-    Ordering: StandardScaler -> (optional SMOTE) -> Classifier.
-    The pipeline is returned *unfitted*; the caller fits it once per fold on
-    training data only.
+    Ordering: StandardScaler → optional dimensionality reduction → optional
+    SMOTE → classifier. The reducer is always fit on the training fold only
+    (same as the scaler). The pipeline is returned *unfitted*.
+
+    When both *reduction* and SMOTE are used, order is
+    **scaler → reducer → SMOTE → classifier**. SMOTE after PCA can distort
+    geometry in the reduced space; for linear classifiers on many features,
+    prefer ``imbalance_strategy="class_weight"`` (or ``"none"``) instead of
+    SMOTE, or use ``select_kbest`` without PCA.
 
     Parameters
     ----------
@@ -289,6 +358,8 @@ def build_fold_pipeline(
         ``"class_weight"`` sets ``class_weight='balanced'`` on the estimator
         (when supported).  ``"smote"`` inserts a SMOTE resampling step.
     random_state : int
+    reduction : tuple[str, dict] or None
+        See :func:`make_reduction_step`.
     """
     est = clone(estimator)
 
@@ -299,6 +370,9 @@ def build_fold_pipeline(
     steps: list[tuple] = []
     if scale:
         steps.append(("scaler", StandardScaler()))
+
+    if reduction is not None:
+        steps.append(make_reduction_step(reduction, random_state=random_state))
 
     use_smote = imbalance_strategy == "smote" and IMBLEARN_AVAILABLE
     if use_smote:
@@ -420,6 +494,7 @@ def run_cv_experiment(
     scale: bool = True,
     imbalance_strategy: str = "none",
     random_state: int = 42,
+    reduction: tuple[str, dict] | None = None,
 ) -> dict:
     """Run fold-local cross-validation for all candidate models.
 
@@ -445,6 +520,8 @@ def run_cv_experiment(
         Prepend a StandardScaler to every fold pipeline.
     imbalance_strategy : {"none", "class_weight", "smote"}
     random_state : int
+    reduction : tuple[str, dict] or None
+        Optional fold-local reduction; see :func:`make_reduction_step`.
 
     Returns
     -------
@@ -480,6 +557,7 @@ def run_cv_experiment(
                     scale=scale,
                     imbalance_strategy=imbalance_strategy,
                     random_state=random_state,
+                    reduction=reduction,
                 )
                 pipeline.fit(X_tr, y_tr)
 
@@ -1030,6 +1108,7 @@ def run_tuned_cv_experiment(
     scale: bool = True,
     scoring: str = "f1",
     random_state: int = 42,
+    reduction: tuple[str, dict] | None = None,
 ) -> dict:
     """Nested CV: inner loop tunes hyperparameters, outer loop evaluates.
 
@@ -1038,6 +1117,13 @@ def run_tuned_cv_experiment(
 
     Only models that have a corresponding entry in *param_grids* are tuned;
     others are silently skipped.
+
+    Parameters
+    ----------
+    reduction : tuple[str, dict] or None
+        Optional fold-local reduction; see :func:`make_reduction_step`.
+        Grid-search parameters for the reducer use the ``reducer__`` prefix
+        (e.g. ``reducer__n_components``).
     """
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
@@ -1067,7 +1153,10 @@ def run_tuned_cv_experiment(
             y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
             pipeline = build_fold_pipeline(
-                estimator, scale=scale, random_state=random_state,
+                estimator,
+                scale=scale,
+                random_state=random_state,
+                reduction=reduction,
             )
 
             inner_groups = (
@@ -1130,12 +1219,18 @@ def compare_imbalance_strategies(
     random_state: int = 42,
     groups: pd.Series | None = None,
     scoring: str = "f1",
+    reduction: tuple[str, dict] | None = None,
 ) -> dict[str, dict[str, float]]:
     """Compare baseline, class-weighted, and SMOTE-based training strategies.
 
     All estimates are computed with stratified CV on the training set only.
     Pipelines use the leakage-safe fold-local builder so scaling and SMOTE
     are fit strictly on training folds.
+
+    Parameters
+    ----------
+    reduction : tuple[str, dict] or None
+        Optional fold-local reduction; see :func:`make_reduction_step`.
     """
     if model_name not in CLASSIFICATION_MODELS:
         raise ValueError(
@@ -1151,8 +1246,11 @@ def compare_imbalance_strategies(
 
     # Baseline (no imbalance handling).
     baseline_pipe = build_fold_pipeline(
-        estimator, scale=use_scaler,
-        imbalance_strategy="none", random_state=random_state,
+        estimator,
+        scale=use_scaler,
+        imbalance_strategy="none",
+        random_state=random_state,
+        reduction=reduction,
     )
     baseline_scores = cross_val_score(
         baseline_pipe, X_train, y_train,
@@ -1166,8 +1264,11 @@ def compare_imbalance_strategies(
     # Class-weight balanced.
     if hasattr(estimator, "class_weight"):
         cw_pipe = build_fold_pipeline(
-            estimator, scale=use_scaler,
-            imbalance_strategy="class_weight", random_state=random_state,
+            estimator,
+            scale=use_scaler,
+            imbalance_strategy="class_weight",
+            random_state=random_state,
+            reduction=reduction,
         )
         cw_scores = cross_val_score(
             cw_pipe, X_train, y_train,
@@ -1181,8 +1282,11 @@ def compare_imbalance_strategies(
     # SMOTE (scaler -> SMOTE -> classifier, all fold-local).
     if IMBLEARN_AVAILABLE:
         smote_pipe = build_fold_pipeline(
-            estimator, scale=use_scaler,
-            imbalance_strategy="smote", random_state=random_state,
+            estimator,
+            scale=use_scaler,
+            imbalance_strategy="smote",
+            random_state=random_state,
+            reduction=reduction,
         )
         smote_scores = cross_val_score(
             smote_pipe, X_train, y_train,

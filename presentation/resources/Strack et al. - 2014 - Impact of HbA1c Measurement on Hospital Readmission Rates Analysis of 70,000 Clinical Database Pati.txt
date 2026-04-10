@@ -1,0 +1,1692 @@
+Hindawi Publishing Corporation
+BioMed Research International
+Volume 2014, Article ID 781670, 11 pages
+http://dx.doi.org/10.1155/2014/781670
+
+Research Article
+Impact of HbA1c Measurement on Hospital Readmission Rates:
+Analysis of 70,000 Clinical Database Patient Records
+Beata Strack,1 Jonathan P. DeShazo,2 Chris Gennings,3 Juan L. Olmo,4 Sebastian Ventura,4
+Krzysztof J. Cios,1,5 and John N. Clore6
+1
+
+Department of Computer Science, Virginia Commonwealth University, Richmond, VA 23284, USA
+Department of Health Administration, Virginia Commonwealth University, Richmond, VA 23298, USA
+3
+Department of Biostatistics, Virginia Commonwealth University, Richmond, VA 23298, USA
+4
+Department of Computer Science and Numerical Analysis, University of Cordoba, 14071 Cordoba, Spain
+5
+IITiS Polish Academy of Sciences, 44-100 Gliwice, Poland
+6
+Department of Medicine, Virginia Commonwealth University, Richmond, VA 23298, USA
+2
+
+Correspondence should be addressed to John N. Clore; jclore@mcvh-vcu.edu
+Received 19 November 2013; Revised 25 February 2014; Accepted 7 March 2014; Published 3 April 2014
+Academic Editor: Ali Rizvi
+Copyright © 2014 Beata Strack et al. This is an open access article distributed under the Creative Commons Attribution License,
+which permits unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.
+Management of hyperglycemia in hospitalized patients has a significant bearing on outcome, in terms of both morbidity and
+mortality. However, there are few national assessments of diabetes care during hospitalization which could serve as a baseline for
+change. This analysis of a large clinical database (74 million unique encounters corresponding to 17 million unique patients) was
+undertaken to provide such an assessment and to find future directions which might lead to improvements in patient safety. Almost
+70,000 inpatient diabetes encounters were identified with sufficient detail for analysis. Multivariable logistic regression was used to
+fit the relationship between the measurement of HbA1c and early readmission while controlling for covariates such as demographics,
+severity and type of the disease, and type of admission. Results show that the measurement of HbA1c was performed infrequently
+(18.4%) in the inpatient setting. The statistical model suggests that the relationship between the probability of readmission and the
+HbA1c measurement depends on the primary diagnosis. The data suggest further that the greater attention to diabetes reflected in
+HbA1c determination may improve patient outcomes and lower cost of inpatient care.
+
+1. Introduction
+It is increasingly recognized that the management of hyperglycemia in the hospitalized patient has a significant bearing
+on outcome, in terms of both morbidity and mortality [1, 2].
+This recognition has led to the development of formalized
+protocols in the intensive care unit (ICU) setting with rigorous glucose targets in many institutions [3]. However, the
+same cannot be said for most non-ICU inpatient admissions.
+Rather, anecdotal evidence suggests that inpatient management is arbitrary and often leads to either no treatment at
+all or wide fluctuations in glucose when traditional management strategies are employed. Although data are few,
+
+recent controlled trials have demonstrated that protocoldriven inpatient strategies can be both effective and safe [4, 5].
+As such, implementation of protocols in the hospital setting
+is now recommended [6, 7]. However, there are few national
+assessments of diabetes care in the hospitalized patient which
+could serve as a baseline for change. The present analysis of a
+large clinical database was undertaken to examine historical
+patterns of diabetes care in patients with diabetes admitted
+to a US hospital and to inform future directions which
+might lead to improvements in patient safety. In particular,
+we examined the use of HbA1c as a marker of attention to
+diabetes care in a large number of individuals identified as
+having a diagnosis of diabetes mellitus. We hypothesize that
+
+2
+measurement of HbA1c is associated with a reduction in
+readmission rates in individuals admitted to the hospital.
+Databases of clinical data contain valuable but heterogeneous and difficult data in terms of missing values,
+incomplete or inconsistent records, and high dimensionality
+understood not only by number of features but also their
+complexity. [8]. Additionally, analyzing external data is more
+challenging than analysis of results of a carefully designed
+experiment or trial, because one has no impact on how
+and what type of information was collected. Nonetheless, it
+is important to utilize these huge amounts of data to find
+new information/knowledge that is possibly not available
+anywhere.
+
+2. Materials and Methods
+2.1. Data Assembly. This study used the Health Facts database
+(Cerner Corporation, Kansas City, MO), a national data
+warehouse that collects comprehensive clinical records across
+hospitals throughout the United States. Health Facts is a
+voluntary program offered to organizations which use the
+Cerner Electronic Health Record System. The database contains data systematically collected from participating institutions electronic medical records and includes encounter data
+(emergency, outpatient, and inpatient), provider specialty,
+demographics (age, sex, and race), diagnoses and in-hospital
+procedures documented by ICD-9-CM codes, laboratory
+data, pharmacy data, in-hospital mortality, and hospital
+characteristics. All data were deidentified in compliance with
+the Health Insurance Portability and Accountability Act of
+1996 before being provided to the investigators. Continuity
+of patient encounters within the same health system (EHR
+system) is preserved.
+The Health Facts data we used was an extract representing
+10 years (1999–2008) of clinical care at 130 hospitals and
+integrated delivery networks throughout the United States:
+Midwest (18 hospitals), Northeast (58), South (28), and West
+(16). Most of the hospitals (78) have bed size between 100 and
+499, 38 hospitals have bed size less than 100, and bed size of
+14 hospitals is greater than 500.
+The database consists of 41 tables in a fact-dimension
+schema and a total of 117 features. The database includes
+74,036,643 unique encounters (visits) that correspond to
+17,880,231 unique patients and 2,889,571 providers. Because
+this data represents integrated delivery network health systems in addition to stand-alone hospitals, the data contains
+both inpatient and outpatient data, including emergency
+department, for the same group of patients. However, data
+from out-of-network providers is not captured.
+The dataset was created in two steps. First, encounters of
+interest were extracted from the database with 55 attributes.
+This dataset is available as a Supplementary Material available
+online at http://dx.doi.org/10.1155/2014/781670 and is also in
+the process of submission to the UCI Machine Learning
+Repository [9] so that it is easily available to other researchers.
+Second, preliminary analysis and preprocessing of the
+data were performed resulting in retaining only these features
+(attributes) and encounters that could be used in further
+
+BioMed Research International
+analysis, that is, contain sufficient information. Both steps are
+described in the following subsections.
+2.2. Extraction of the Initial Dataset from the Database.
+Information was extracted from the database for encounters
+that satisfied the following criteria.
+(1) It is an inpatient encounter (a hospital admission).
+(2) It is a “diabetic” encounter, that is, one during which
+any kind of diabetes was entered to the system as a
+diagnosis.
+(3) The length of stay was at least 1 day and at most 14
+days.
+(4) Laboratory tests were performed during the encounter.
+(5) Medications were administered during the encounter.
+Criteria 3-4 were applied to remove admissions for
+procedures and so forth, which were of less than 23 hours
+of duration and in which changes in diabetes management
+were less likely to have occurred. It should be noted that the
+diabetic encounters are not all encounters of diabetic patients
+but rather only these encounters where diabetes was coded as
+an existing health condition.
+101,766 encounters were identified to fulfill all of the
+above five inclusion criteria and were used in further analysis.
+Attribute/feature selection was performed by our clinical
+experts and only attributes that were potentially associated
+with the diabetic condition or management were retained.
+From the information available in the database, we extracted
+55 features describing the diabetic encounters, including
+demographics, diagnoses, diabetic medications, number of
+visits in the year preceding the encounter, and payer information. The full list of the features and their description is
+provided in Table 1.
+Since we are primarily interested in factors that lead to
+early readmission, we defined the readmission attribute (outcome) as having two values: “readmitted,” if the patient was
+readmitted within 30 days of discharge or “otherwise,” which
+covers both readmission after 30 days and no readmission at
+all. The values of the readmission attribute were determined
+by examination of all patient records in the database to determine the first inpatient visit after discharge. Note that 30 days
+was chosen based on criteria often used by funding agencies.
+Hemoglobin A1c (HbA1c) is an important measure of glucose
+control, which is widely applied to measure performance of
+diabetes care [10, 11]. The measurement of HbA1c at the time
+of hospital admission offers a unique opportunity to assess
+the efficacy of current therapy and to make changes in that
+therapy if indicated (e.g., HbA1c > 8.0% on current regimen).
+We considered the possibility that if an HbA1c test result
+was available from a measurement (outpatient or inpatient)
+done within three months prior to the sentinel admission, the
+test might not be repeated. In these cases (0.1% of the total),
+we used the measurement available from the previous visit.
+In all other cases, measurement of HbA1c was performed
+at the time of hospital admission. We examined both the
+frequency of HbA1c test ordering and the response to its
+
+BioMed Research International
+
+3
+
+Table 1: List of features and their descriptions in the initial dataset (the dataset is also available at the website of Data Mining and Biomedical
+Informatics Lab at VCU (http://www.cioslab.vcu.edu/)).
+Feature name
+Encounter ID
+Patient number
+Race
+Gender
+Age
+Weight
+
+Type
+Numeric
+Numeric
+Nominal
+Nominal
+Nominal
+Numeric
+
+Admission type
+
+Nominal
+
+Discharge disposition
+
+Nominal
+
+Admission source
+
+Nominal
+
+Time in hospital
+
+Numeric
+
+Payer code
+
+Nominal
+
+Medical specialty
+
+Nominal
+
+Number of lab
+procedures
+Number of
+procedures
+Number of
+medications
+Number of outpatient
+visits
+Number of
+emergency visits
+Number of inpatient
+visits
+Diagnosis 1
+Diagnosis 2
+
+% missing
+0%
+0%
+2%
+0%
+0%
+97%
+0%
+0%
+0%
+0%
+52%
+53%
+
+Numeric
+
+Number of lab tests performed during the encounter
+
+0%
+
+Numeric
+
+Number of procedures (other than lab tests) performed during the encounter
+
+0%
+
+Numeric
+
+Number of distinct generic names administered during the encounter
+
+0%
+
+Numeric
+
+Number of outpatient visits of the patient in the year preceding the encounter
+
+0%
+
+Numeric
+
+Number of emergency visits of the patient in the year preceding the encounter
+
+0%
+
+Numeric
+
+Number of inpatient visits of the patient in the year preceding the encounter
+
+0%
+
+Nominal
+Nominal
+
+The primary diagnosis (coded as first three digits of ICD9); 848 distinct values
+Secondary diagnosis (coded as first three digits of ICD9); 923 distinct values
+Additional secondary diagnosis (coded as first three digits of ICD9); 954 distinct
+values
+Number of diagnoses entered to the system
+Indicates the range of the result or if the test was not taken. Values: “>200,” “>300,”
+“normal,” and “none” if not measured
+Indicates the range of the result or if the test was not taken. Values: “>8” if the result
+was greater than 8%, “>7” if the result was greater than 7% but less than 8%, “normal”
+if the result was less than 7%, and “none” if not measured.
+Indicates if there was a change in diabetic medications (either dosage or generic
+name). Values: “change” and “no change”
+Indicates if there was any diabetic medication prescribed. Values: “yes” and “no”
+For the generic names: metformin, repaglinide, nateglinide, chlorpropamide,
+glimepiride, acetohexamide, glipizide, glyburide, tolbutamide, pioglitazone,
+rosiglitazone, acarbose, miglitol, troglitazone, tolazamide, examide, sitagliptin, insulin,
+glyburide-metformin, glipizide-metformin, glimepiride-pioglitazone,
+metformin-rosiglitazone, and metformin-pioglitazone, the feature indicates whether
+the drug was prescribed or there was a change in the dosage. Values: “up” if the dosage
+was increased during the encounter, “down” if the dosage was decreased, “steady” if the
+dosage did not change, and “no” if the drug was not prescribed
+Days to inpatient readmission. Values: “<30” if the patient was readmitted in less than
+30 days, “>30” if the patient was readmitted in more than 30 days, and “No” for no
+record of readmission.
+
+0%
+0%
+
+Diagnosis 3
+
+Nominal
+
+Number of diagnoses
+Glucose serum test
+result
+
+Numeric
+
+A1c test result
+
+Nominal
+
+Change of
+medications
+Diabetes medications
+
+Description and values
+Unique identifier of an encounter
+Unique identifier of a patient
+Values: Caucasian, Asian, African American, Hispanic, and other
+Values: male, female, and unknown/invalid
+Grouped in 10-year intervals: [0, 10), [10, 20), . . ., [90, 100)
+Weight in pounds.
+Integer identifier corresponding to 9 distinct values, for example, emergency, urgent,
+elective, newborn, and not available
+Integer identifier corresponding to 29 distinct values, for example, discharged to
+home, expired, and not available
+Integer identifier corresponding to 21 distinct values, for example, physician referral,
+emergency room, and transfer from a hospital
+Integer number of days between admission and discharge
+Integer identifier corresponding to 23 distinct values, for example, Blue Cross\Blue
+Shield, Medicare, and self-pay
+Integer identifier of a specialty of the admitting physician, corresponding to 84 distinct
+values, for example, cardiology, internal medicine, family\general practice, and
+surgeon
+
+Nominal
+
+Nominal
+Nominal
+
+24 features for
+medications
+
+Nominal
+
+Readmitted
+
+Nominal
+
+1%
+0%
+0%
+0%
+0%
+0%
+
+0%
+
+0%
+
+4
+result, which we defined as a change in diabetic medications.
+By a “change of medication” we understand any dosage
+change (increase or reduction) as well as change to a drug
+with a different generic name, for example, a change of the
+type of insulin or an introduction of a new drug. The database
+contains detailed information about dosage but is restricted
+only to medications administered during the encounter. It
+was not possible to track any preadmission and discharge
+medications.
+We considered four groups of encounters: (1) no HbA1c
+test performed, (2) HbA1c performed and in normal range,
+(3) HbA1c performed and the result is greater than 8%
+with no change in diabetic medications, and (4) HbA1c
+performed, result is greater than 8%, and diabetic medication
+was changed.
+2.3. Preliminary Analysis and the Final Dataset. The original
+database contains incomplete, redundant, and noisy information as expected in any real-world data. There were several
+features that could not be treated directly since they had
+a high percentage of missing values. These features were
+weight (97% values missing), payer code (40%), and medical
+specialty (47%). Weight attribute was considered to be too
+sparse and it was not included in further analysis. Payer
+code was removed since it had a high percentage of missing
+values and it was not considered relevant to the outcome.
+Medical specialty attribute was maintained, adding the value
+“missing” in order to account for missing values. Large
+percentage of missing values of the weight attribute can be
+explained by the fact that prior to the HITECH legislation
+of the American Reinvestment and Recovery Act in 2009
+hospitals and clinics were not required to capture it in a
+structured format.
+The preliminary dataset contained multiple inpatient
+visits for some patients and the observations could not
+be considered as statistically independent, an assumption
+of the logistic regression model. We thus used only one
+encounter per patient; in particular, we considered only the
+first encounter for each patient as the primary admission and
+determined whether or not they were readmitted within 30
+days. Additionally, we removed all encounters that resulted
+in either discharge to a hospice or patient death, to avoid
+biasing our analysis. After performing the above-described
+operations, we were left with 69,984 encounters that constituted the final dataset for analysis.
+The variables chosen to control for patient demographic
+and illness severity were gender, age, race, admission source,
+discharge disposition, primary diagnosis (see Table 2), medical specialty of the admitting physician, and time spent in
+hospital. Values of these variables and their distribution in the
+dataset are shown in Table 3.
+To summarize, our dataset consists of hospital admissions
+of length between one and 14 days that did not result in
+a patient death or discharge to a hospice. Each encounter
+corresponds to a unique patient diagnosed with diabetes,
+although the primary diagnosis may be different. During
+each of the analyzed encounters, lab tests were ordered and
+medication was administered.
+
+BioMed Research International
+2.4. Statistical Methods. The unit of our analysis is an
+encounter; however, in order to keep the observations independent, we only analyzed one encounter per patient. After
+preliminary analysis and taking into account the amount of
+data, the significance level was determined by a 𝑃 value of
+less than 0.01.
+Multivariable logistic regression was used to fit the
+relationship between the measurement of HbA1c and early
+readmission while controlling for covariates such as demographics, severity and type of the disease, and type of
+admission.
+To assess whether the candidate covariates were significantly associated with readmission, we created the model in
+four steps. Each step was followed by tests for significance
+of variables with higher degree of freedom, an analysis of
+deviance table, and sensitivity analysis which was done by
+removing one variable at the time and looking at changes of
+beta-coefficients.
+First, we fitted a logistic model with all variables but
+HbA1c. We refer to this model as the core model. Second, we
+added HbA1c to the core model. Third, we added pairwise
+interactions to the core model (without HbA1c) and kept only
+the significant ones. Finally, we added pairwise interactions
+with HbA1c, leaving only the significant ones in the final
+model.
+Graphics were used to help in the interpretation of interaction terms in the final model. The analysis was performed
+in R statistical software.
+2.5. Ethical and Legal Issues. This research is based on a preexisting HIPAA compliant dataset that contains no personally
+identifiable information. Due to the deidentified nature of
+the datasets obtained, this study was not considered human
+subjects research nor required consent per the Helsinki Declaration and was therefore exempt from VCU Institutional
+Review Board review.
+
+3. Results and Discussion
+As shown in Table 3, measurement of HbA1c was infrequent,
+occurring in only 18.4% of encounters where diabetes mellitus
+was included as an admission diagnosis. Of those in whom
+the test was ordered, 51.4% were less than 8%. When an
+HbA1c was not obtained, 42.5% of patients had a medication
+change during the hospitalization, whereas those providers
+who ordered the test appear to have been somewhat more
+responsive as determined by changes in medication (55.0%,
+𝑃 < 0.001). Of those in whom the test was ordered and found
+to be greater than 8%, 65.0% had a documented medication
+change. With respect to readmission and taken as a whole
+without adjusting for covariates, measurement of HbA1c was
+associated with a significantly reduced rate of readmission
+(9.4 versus 8.7%, 𝑃 = 0.007). This was true regardless of
+the outcome of the test. We then examined the relationship
+between readmission and HbA1c adjusting for covariates
+such as patient demographic and illness type and severity.
+Since the gender variable was not significant (𝑃 = 0.36)
+in the core model (without HbA1c), it was removed from
+
+BioMed Research International
+
+5
+
+Table 2: Values of the primary diagnosis in the final dataset. In the analysis, groups that covered less than 3.5% of encounters were grouped
+into “other” category.
+Group name
+
+icd9 codes
+
+Number of
+encounters
+
+% of
+encounter
+
+Circulatory
+
+390–459, 785
+
+21,411
+
+30.6%
+
+Diseases of the circulatory system
+
+Respiratory
+
+460–519, 786
+
+9,490
+
+13.6%
+
+Diseases of the respiratory system
+
+Digestive
+
+520–579, 787
+
+6,485
+
+9.3%
+
+Diseases of the digestive system
+
+Diabetes
+
+250.xx
+
+5,747
+
+8.2%
+
+Diabetes mellitus
+
+Injury
+
+800–999
+
+4,697
+
+6.7%
+
+Injury and poisoning
+
+Musculoskeletal
+
+710–739
+
+4,076
+
+5.8%
+
+Diseases of the musculoskeletal system and connective tissue
+
+Genitourinary
+
+580–629, 788
+
+3,435
+
+4.9%
+
+Diseases of the genitourinary system
+
+Neoplasms
+
+140–239
+
+2,536
+
+3.6%
+
+Neoplasms
+
+780, 781, 784, 790–799
+
+2,136
+
+3.1%
+
+240–279, without 250
+
+1,851
+
+2.6%
+
+Other symptoms, signs, and ill-defined conditions
+Endocrine, nutritional, and metabolic diseases and immunity
+disorders, without diabetes
+
+680–709, 782
+
+1,846
+
+2.6%
+
+Diseases of the skin and subcutaneous tissue
+
+001–139
+
+1,683
+
+2.4%
+
+Infectious and parasitic diseases
+
+290–319
+
+1,544
+
+2.2%
+
+Mental disorders
+
+E–V
+
+918
+
+1.3%
+
+External causes of injury and supplemental classification
+
+Other
+(17.3%)
+
+Description
+
+280–289
+
+652
+
+0.9%
+
+Diseases of the blood and blood-forming organs
+
+320–359
+
+634
+
+0.9%
+
+Diseases of the nervous system
+
+630–679
+
+586
+
+0.8%
+
+Complications of pregnancy, childbirth, and the puerperium
+
+360–389
+
+216
+
+0.3%
+
+Diseases of the sense organs
+
+740–759
+
+41
+
+0.1%
+
+Congenital anomalies
+
+further analysis. When tested for sensitivity, the values of
+beta-coefficients in the model changed by less than 35%, with
+an exception of the time in the hospital, medical specialty,
+age, and primary diagnosis that changed by 77%, 47%,
+49%, and 65%, respectively, when the discharge disposition
+was removed. This suggests a relationship between these
+variables.
+The significant pairwise interactions between the covariates were discharge disposition with race (𝑃 < 0.001),
+medical specialty of the admitting physician (𝑃 = 0.001),
+primary diagnosis (𝑃 = 0.005), and time in hospital (𝑃 <
+0.001); the specialty of the admitting physician with time in
+hospital (𝑃 = 0.001) and age (𝑃 < 0.001); and the primary
+diagnosis with time in the hospital (𝑃 < 0.001) and HbA1c
+(𝑃 = 0.004). Only these interactions were included in the final
+model.
+The final model (Tables 4 and 5) suggests that the
+relationship between the probability of readmission and the
+HbA1c measurement significantly depends on the primary
+diagnosis (note that diabetes is always one of the secondary
+diagnoses). Specifically, the profile of readmission of patients
+with a primary diagnosis of diabetes mellitus, after adjusting
+for covariates, differs significantly from those with a primary
+diagnosis of circulatory diseases (𝑃 < 0.001) and approaches
+significance for those with a primary diagnosis of respiratory
+diseases (𝑃 = 0.02). Figure 1 shows predicted (adjusted for
+covariates) readmission rates for these three conditions which
+
+accounted for 52.4% of all encounters. The predictions were
+calculated with the mean value of the time in hospital and at
+reference levels of other covariates. There was no significant
+interaction with other primary diagnoses (see Figure 3).
+The present study provides a striking cross-sectional view
+of inpatient diabetes care for more than 70,000 admissions
+in 54 hospitals in the USA. We have designed our analysis
+using highly conservative criteria. Out of a total of 5 million
+inpatient admissions in the database, only about 500,000
+encounters (just under 10%) were clearly documented as
+occurring in individuals with diabetes and only almost 70,000
+satisfied our inclusion criteria. This is certainly an underestimate given the widespread lack of designation of diabetes
+mellitus in hospital discharges [12] as well as the prevalence
+in the USA [13]. Nevertheless, the database permitted us to
+examine clinical practice over a 10-year period of over 5,000
+providers.
+First and foremost, the data indicate that, despite
+widespread recognition of the utility of HbA1c as a performance measure of diabetes care [14, 15], the test is ordered
+infrequently (18.4%) in the inpatient setting even when test
+results within the previous 3 months are included (0.1%
+of the total). It is possible that HbA1c values not in our
+dataset were available to the practitioners and influenced
+treatment patterns. However, unlikely, this could be the result
+of a dual charting system where diagnosis was stored in the
+electronic health record but these specific laboratory results
+
+6
+
+BioMed Research International
+Table 3: Distribution of variable values and readmissions (population size is 69,984).
+
+Variable
+
+Readmitted
+Number of
+% in group
+encounters
+
+Number of
+encounters
+
+% of the
+population
+
+57,080
+4,071
+2,196
+6,637
+
+81.6%
+5.8%
+3.1%
+9.5%
+
+5,342
+361
+166
+590
+
+9.4%
+8.9%
+7.6%
+8.9%
+
+37,234
+32,750
+
+53.2%
+46.8%
+
+3,462
+2,997
+
+9.3%
+9.2%
+
+44,339
+25,645
+
+63.4%
+36.6%
+
+3,184
+3,275
+
+7.2%
+12.8%
+
+37,277
+22,800
+9,907
+
+53.3%
+32.6%
+14.2%
+
+3,563
+2,032
+846
+
+9.6%
+8.9%
+8.5%
+
+10,642
+4,213
+3,541
+4,984
+33,641
+12,963
+
+15.2%
+6.0%
+5.1%
+7.1%
+48.1%
+18.5%
+
+1,044
+309
+284
+492
+3,237
+1,093
+
+9.8%
+7.3%
+8.0%
+9.9%
+9.6%
+8.4%
+
+21,411
+5,747
+9,490
+6,485
+4,697
+4,076
+3,435
+2,536
+12,107
+
+30.6%
+8.2%
+13.6%
+9.3%
+6.7%
+5.8%
+4.9%
+3.6%
+17.3%
+
+2,129
+529
+710
+532
+524
+354
+313
+239
+1,129
+
+9.9%
+9.2%
+7.5%
+8.2%
+11.2%
+8.7%
+9.1%
+9.4%
+9.3%
+
+HbA1c
+No test was performed
+Result was high and the diabetic medication was changed
+Result was high but the diabetic medication was not changed
+Normal result of the test
+Gender
+Female
+Male
+Discharge disposition
+Discharged to home
+Otherwise
+Admission source
+Admitted from emergency room
+Admitted because of physician/clinic referral
+Otherwise
+Specialty of the admitting physician
+Internal Medicine
+Cardiology
+Surgery
+Family/general practice
+Missing or unknown
+Other
+Primary diagnosis
+A disease of the circulatory system (icd9: 390–459, 785)
+Diabetes (icd9: 250.xx)
+A disease of the respiratory system (icd9: 460–519, 786)
+Diseases of the digestive system (icd9: 520–579, 787)
+Injury and poisoning (icd9: 800–999)
+Diseases of the musculoskeletal system and connective tissue (icd9: 710–739)
+Diseases of the genitourinary system (icd9: 580–629, 788)
+Neoplasms (icd9: 140–239)
+Other
+Race
+African American
+Caucasian
+Other
+Missing
+Agea
+30 years old or younger
+30–60 years old
+Older than 60
+
+12,626
+52,300
+3,138
+1,920
+
+18.0%
+74.7%
+4.5%
+2.7%
+
+1,116
+4,943
+256
+144
+
+8.8%
+9.5%
+8.2%
+7.5%
+
+1,808
+21,871
+46,305
+
+2.6%
+31.3%
+66.2%
+
+112
+1,614
+4,733
+
+6.2%
+7.4%
+10.2%
+
+Age (numeric)
+
+mean
+
+median
+
+1st Qu.
+
+3rd Qu.
+
+Age in years
+Time in hospital
+Days between admission and discharge (1–14)
+
+64.9
+
+67
+
+55
+
+77
+
+4.3
+
+3
+
+2
+
+6
+
+a
+
+After the preliminary analysis of the relationship between age and the logistic transformation of the readmission rate. See Figure 2.
+
+Probability of readmission
+
+BioMed Research International
+0.11
+0.10
+0.09
+0.08
+0.07
+0.06
+0.05
+0.04
+0.03
+0.02
+
+7
+Table 4: Coefficients of noninteraction terms estimated from the
+final logistic regression model.
+
+None
+
+Normal
+
+High, med.
+changed
+
+High, med.
+not changed
+
+HbA1c
+
+Diabetes
+Respiratory
+Circulatory
+
+−1.0
+
+−1.2
+−1.4
+
+[80–90)
+
+[70–80)
+
+[90–100)
+
+Age (years)
+
+[60–70)
+
+[50–60)
+
+[40–50)
+
+[30–40)
+
+[20–30)
+
+[10–20)
+
+−1.6
+[0–10)
+
+Logit of probability
+of readmission
+
+Figure 1: Adjusted for covariates readmission rates by the primary
+diagnosis and HbA1c measurement. Blue denotes diabetes (icd9:
+250.xx), green denotes diseases of the respiratory system (icd9: 460–
+519, 786), and red denotes diseases of the circulatory system (icd9:
+390–459, 785). Readmission rates were predicted on the reference
+values of other predictors and the mean value of time in hospital
+(Table 3). The error bars represent the 95% confidence intervals for
+the predicted values. Three-degree-of-freedom tests show that the
+profile of readmission in the group with the primary diagnosis of
+diabetes is different than the primary diagnoses being circulatory
+(significant, 𝑃 < 0.001) or respiratory (borderline significant, 𝑃 =
+0.02) conditions.
+
+Figure 2: The relationship of age (grouped into intervals of 10 years)
+and the logistic function of the readmission rate. One can notice
+that there are three distinct intervals ([0, 30), [30, 60), and [60,
+100)) where the relationship has noticeably distinct behavior. This
+preliminary plot was the motivation to divide the age variable into
+three categories (Table 3).
+
+were not. We recognize this as a potential limitation to our
+interpretation of the data. But similar analyses by others have
+confirmed a low rate of HbA1c determinations [16]. We were
+also surprised at the apparent reluctance of providers to make
+changes in antihyperglycemic medications during hospitalizations. It should be pointed out that the data considered
+span a 10-year period (1999–2008). Recommended standards
+of care which encourage discontinuation of medications on
+admission and might prompt changes in medications based
+on glucose control were only recently adopted [17]. When an
+HbA1c was not obtained, less than half of patients (42.5%)
+
+Intercept∗
+Home
+Discharge
+Other
+African American
+Caucasian
+Race
+Missing
+Other∗
+Emergency
+Admission
+Other∗
+referral
+Cardiology
+General practice
+Internal medicine
+Medical specialty
+Missing∗
+Other
+Surgery
+Time in hospital∗
+[30, 60)
+Age
+[60, 100)
+<30
+Diabetes
+Circulatory
+Digestive
+Genitourinary
+Diagnosis
+Injury
+Musculoskeletal∗
+Neoplasms
+Other
+Respiratory
+Not measured
+High, changed∗
+HbA1c
+High, not changed∗
+Normal
+
+Estimate
+−3.180
+Reference
+0.302
+Reference
+0.015
+−0.335
+−0.267
+Reference
+−0.155
+−0.020
+Reference
+0.388
+0.377
+0.463
+0.306
+0.443
+0.130
+reference
+0.286
+1.833
+reference
+0.143
+−0.066
+−0.288
+0.022
+−0.627
+0.146
+0.065
+−0.299
+reference
+−0.398
+−0.579
+0.003
+
+𝑃 value
+<2e − 16
+0.119
+0.760
+0.012
+0.009
+<0.001
+0.517
+0.035
+0.022
+0.002
+0.059
+0.032
+0.000
+0.041
+0.031
+0.171
+0.604
+0.056
+0.878
+0.000
+0.375
+0.558
+0.013
+0.004
+0.009
+0.982
+
+“Diagnosis” stands for a primary diagnosis with possible values: “circulatory”
+for icd9: 390–459, 785, “digestive” for icd9: 520–579, 787, “genitourinary”
+for icd9: 580–629, 788, “diabetes” for icd9: 250.xx, “injury” for icd9: 800–
+999, “musculoskeletal” for icd9: 710–739, “neoplasms” for icd9: 140–239,
+“respiratory” for icd9: 460–519, 786, and “other” for otherwise.
+“HbA1c” variable has four values: “not measured” when the test was not
+measured, “normal” if the test was measured and the result was normal,
+“high, changed” when the result of HbA1c test was high and diabetic
+mediations were changed, and “high, not changed” when the result of HbA1c
+test was high but diabetic mediations were not changed.
+∗
+Coefficients significant at the 0.01 significance level.
+
+had a medication change during the hospitalization, whereas
+those providers who ordered the test appear to have been
+somewhat more responsive to the data as determined by
+changes in medication (55.0%, 𝑃 < 0.001). Unfortunately, we
+are not able to determine what drove the medication changes
+by providers in those patients in whom an HbA1c was not
+obtained but persistently elevated glucose readings may well
+
+8
+
+BioMed Research International
+Table 5: Coefficients of the interaction terms estimated from the final logistic regression model.
+
+Attribute name
+
+Value
+
+Attribute name
+
+[60, 100)
+Age
+
+Medical specialty
+
+<30
+
+Circulatory
+Digestive
+Genitourinary
+Injury
+Musculoskelet
+Neoplasms
+Other
+Respiratory
+Caucasian
+Missing
+Other∗
+
+Diagnosis
+
+Race
+
+𝑃-value
+0.732
+0.910
+0.446
+0.423
+0.306
+
+General Practice
+Internal Medicine
+Missing
+Other∗
+Surgery
+
+General Practice
+Internal Medicine
+Missing∗
+Other
+Surgery∗
+General Practice
+Internal Medicine
+Missing
+Other
+Surgery
+
+−2.465
+−1.980
+−1.490
+−2.419
+−2.715
+−0.073
+−0.004
+−0.188
+0.253
+0.325
+−0.137
+0.182
+0.079
+0.030
+0.320
+0.514
+−0.030
+0.340
+0.211
+0.237
+0.391
+0.733
+−0.0591
+−0.0357
+−0.0575
+−0.0517
+−0.1179
+0.061
+−0.018
+−0.112
+−0.127
+−0.202
+
+0.013
+0.028
+0.083
+0.006
+0.041
+0.510
+0.980
+0.235
+0.086
+0.057
+0.435
+0.124
+0.540
+0.678
+0.087
+<0.001
+0.001
+0.057
+0.199
+0.121
+0.018
+0.000
+0.023
+0.121
+0.007
+0.027
+0.000
+0.732
+0.910
+0.446
+0.423
+0.306
+
+General Practice
+Internal Medicine
+Missing
+Other∗
+Surgery
+Circulatory
+Digestive
+Genitourinary
+Injury
+Musculoskelet
+Neoplasms
+Other∗
+Respiratory
+
+−2.465
+−1.980
+−1.490
+−2.419
+−2.715
+−0.036
+−0.032
+0.043
+−0.043
+0.020
+−0.047
+−0.060
+−0.009
+
+0.013
+0.028
+0.083
+0.006
+0.041
+0.032
+0.144
+0.084
+0.056
+0.457
+0.071
+<0.001
+0.651
+
+Other
+
+Discharge
+
+Other
+Time in hospital∗
+
+General Practice
+Internal Medicine
+Missing
+Other
+Surgery∗
+
+Time in hospital
+
+Discharge
+
+Medical Specialty
+
+[60, 100)
+Age
+
+Medical specialty
+
+<30
+
+Time in hospital
+
+Estimate
+0.061
+−0.018
+−0.112
+−0.127
+−0.202
+
+Discharge
+
+Discharge
+
+Medical Specialty
+
+Value
+General Practice
+Internal Medicine
+Missing
+Other
+Surgery
+
+Diagnosis
+
+Other
+
+BioMed Research International
+
+9
+Table 5: Continued.
+
+Attribute name
+
+HbA1c
+
+Value
+Circulatory∗a
+Digestive
+Genitourinary
+Injury
+Musculoskelet
+Neoplasms
+Other
+Respiratoryb
+
+Estimate
+0.573
+0.487
+0.428
+−0.183
+0.754
+0.122
+0.305
+0.313
+
+𝑃-value
+<0.001
+0.092
+0.164
+0.612
+0.037
+0.806
+0.129
+0.175
+
+High, not changed
+
+Circulatorya
+Digestive
+Genitourinary
+Injury
+Musculoskelet
+Neoplasms
+Other
+Respiratoryb
+
+0.578
+0.215
+0.000
+0.316
+0.799
+1.046
+0.646
+0.435
+
+0.024
+0.616
+1.000
+0.517
+0.132
+0.075
+0.029
+0.191
+
+Normal
+
+Circulatorya
+Digestive
+Genitourinary
+Injury
+Musculoskelet
+Neoplasms
+Other
+Respiratoryb
+
+−0.066
+0.010
+0.189
+−0.595
+−0.100
+0.362
+−0.060
+−0.484
+
+0.694
+0.965
+0.441
+0.020
+0.719
+0.215
+0.742
+0.021
+
+Value
+
+Attribute name
+
+High, changed
+
+Diagnosis
+
+“Diagnosis” stands for a primary diagnosis with possible values: “circulatory” for icd9: 390–459, 785, “digestive”—icd9: 520–579, 787; “genitourinary”—icd9:
+580–629, 788, “diabetes”—icd9: 250.xx, “injury” icd9: 800–999, “musculoskeletal”—icd9: 710–739; “neoplasms”—icd9: 140–239,“ respiratory” icd9: 460–519,
+786, and “other” otherwise.
+“HbA1c” variable has four values: “Not measured”, when the test was not measured, “Normal” if the test was measured and the result was normal, “High,
+changed” when the result of HbA1c test was high and diabetic mediations were changed, and “High, not changed” when the result of HbA1c test was high but
+diabetic mediations were not changed.
+a
+Denotes 𝑃 value less than 0.001 for a three degree of freedom test.
+b
+Denotes 𝑃 value equal to 0.02 for a three degree of freedom test.
+∗
+Denotes coefficients significant at the 0.01 significance level.
+
+explain the practice. It is of interest that a recent analysis
+of 1274 patients with diabetes admitted for acute myocardial
+infarction demonstrated only a 31% rate of glucose therapy
+intensification when a clinical HbA1c result was available
+[18]. With respect to readmission rate, our data suggest that,
+regardless of the result, simply measuring HbA1c is associated
+with a lower rate of readmission in individuals with a
+primary diagnosis of diabetes mellitus, whereas those with
+the frequently observed primary diagnoses of circulatory
+or respiratory diseases are not. It may not be surprising
+that the attention given to diabetes care in individuals with
+admitting diagnoses of circulatory or respiratory diseases
+may have been less than those with a primary diagnosis of
+diabetes mellitus. However, our findings strongly suggest that
+greater attention to diabetes care during the hospitalization
+for these high-risk individuals may have a significant impact
+on readmission. Our analysis cannot address cause and effect,
+but the data provide strong support for development of
+
+protocols to examine this hypothesis directly. Hospitalization
+is a unique opportunity for providers to influence change
+to patient’s health outcome trajectories. Resources available
+in the inpatient setting are often much greater than those
+available to practitioners in the outpatient setting and could
+be leveraged to impact care. On average, inpatient stays
+in the present dataset were 4.27 days which would permit
+examination of diabetes care and development of a plan for
+change should it be warranted. The importance of this is
+emphasized by the readmission data provided.
+We recognize that the results from the present analysis
+represent a preliminary observation with limitations intrinsic
+to such large health records. In addition to the limitations
+of working with large clinical datasets discussed earlier, this
+study is also limited by a nonrandomized study design.
+Nevertheless, our data appear to support the contention
+that greater attention to glucose homeostasis during hospital
+admission may be warranted.
+
+10
+
+BioMed Research International
+
+1c
+
+1c
+
+(a)
+
+(b)
+
+Figure 3: Predicted (adjusted for covariates) readmission rates by the primary diagnosis and HbA1c measurement. Readmission rates were
+predicted on the reference values of other predictors and the mean value of time in hospital (Table 3). The error bars represent the 95%
+confidence intervals for the predicted values. The following abbreviations are used for particular icd9 codes: “circulatory” for icd9: 390–
+459, 785, “digestive” for icd9: 520–579, 787, “genitourinary” for icd9: 580–629, 788, “diabetes” for icd9: 250.xx, “injury” for icd9: 800–999,
+“musculoskeletal” for icd9: 710–739, “neoplasms” for icd9: 140–239, “respiratory” for icd9: 460–519, 786, and “other” for otherwise.
+
+4. Conclusions
+In conclusion, the decision to obtain a measurement of
+HbA1c for patients with diabetes mellitus is a useful predictor
+of readmission rates which may prove valuable in the development of strategies to reduce readmission rates and costs for
+the care of individuals with diabetes mellitus. For instance,
+our analysis showed that the profile of readmission differed
+significantly in patients where Hba1c was checked in the setting of a primary diabetes diagnosis, when compared to those
+with a primary circulatory disorder. While readmission rates
+remained the highest for patients with circulatory diagnoses,
+readmission rates for patients with diabetes appeared to be
+associated with the decision to test for HbA1c, rather than the
+values of the HbA1c result.
+
+Conflict of Interests
+The authors declare that they have no conflict of interests.
+
+Acknowledgments
+The authors thank Cerner Corp. and the VCU Center
+for Clinical and Translational Research (CTSA Grant no.
+UL1TR000058) for the data used in the study. Sebastian Ventura acknowledges the support of the Ministry of Science and
+Technology of Spain (Project no. TIN-2011-22408) and the
+FEDER funds. Krzysztof J. Cios acknowledges the support of
+the National Institutes of Health (Grant no. 1R01HD056235).
+
+References
+[1] G. E. Umpierrez, S. D. Isaacs, N. Bazargan, X. You, L. M. Thaler,
+and A. E. Kitabchi, “Hyperglycemia: an independent marker
+of in-hospital mortality in patients with undiagnosed diabetes,”
+Journal of Clinical Endocrinology and Metabolism, vol. 87, no. 3,
+pp. 978–982, 2002.
+
+[2] C. S. Levetan, M. Passaro, K. Jablonski, M. Kass, and R. E. Ratner, “Unrecognized diabetes among hospitalized patients,” Diabetes Care, vol. 21, no. 2, pp. 246–249, 1998.
+[3] S. E. Siegelaar, J. B. L. Hoekstra, and J. H. Devries, “Special
+considerations for the diabetic patient in the ICU; targets
+for treatment and risks of hypoglycaemia,” Best Practice and
+Research: Clinical Endocrinology and Metabolism, vol. 25, no. 5,
+pp. 825–834, 2011.
+[4] A. G. Pittas, R. D. Siegel, and J. Lau, “Insulin therapy for critically ill hospitalized patients: a meta-analysis of randomized
+controlled trials,” Archives of Internal Medicine, vol. 164, no. 18,
+pp. 2005–2011, 2004.
+[5] A. C. Tricco, N. M. Ivers, J. M. Grimshaw et al., “Effectiveness of
+quality improvement strategies on the management of diabetes:
+a systematic review and meta-analysis,” The Lancet, vol. 379, no.
+9833, pp. 2252–2261, 2012.
+[6] M. C. Lansang and G. E. Umpierrez, “Management of inpatient
+hyperglycemia in noncritically ill patients,” Diabetes Spectrum,
+vol. 21, no. 4, pp. 248–255, 2008.
+[7] R. Vinik and J. Clements, “Management of the hyperglycemic
+inpatient: tips, tools, and protocols for the clinician,” Hospital
+Practice, vol. 39, no. 2, pp. 40–46, 2011.
+[8] K. J. Cios and G. W. Moore, “Uniqueness of medical data
+mining,” Artificial Intelligence in Medicine, vol. 26, no. 1-2, pp.
+1–24, 2002.
+[9] A. Frank and A. Asuncion, UCI Machine Learning Repository,
+University of California, School of Information and Computer
+Science, 2010.
+[10] R. M. Bergenstal, J. L. Fahrbach, S. R. Iorga, Y. Fan, and S. A.
+Foster, “Preadmission glycemic control and changes to diabetes
+mellitus treatment regimen after hospitalization,” Endocrine
+Practice, vol. 18, no. 3, pp. 371–375, 2012.
+[11] D. Baldwin, G. Villanueva, R. McNutt, and S. Bhatnagar, “Eliminating inpatient sliding-scale insulin: a reeducation project with
+medical house staff,” Diabetes Care, vol. 28, no. 5, pp. 1008–1011,
+2005.
+[12] H. Anwar, C. M. Fischbacher, G. P. Leese et al., “Assessment of
+the under-reporting of diabetes in hospital admission data: a
+
+BioMed Research International
+study from the Scottish diabetes research network epidemiology group,” Diabetic Medicine, vol. 28, no. 12, pp. 1514–1519, 2011.
+[13] L. S. Geiss, L. Pan, B. Cadwell, E. W. Gregg, S. M. Benjamin,
+and M. M. Engelgau, “Changes in Incidence of Diabetes in
+U.S. Adults, 1997–2003,” The American Journal of Preventive
+Medicine, vol. 30, no. 5, pp. 371–377, 2006.
+[14] R. V. Shah, R. K. Altman, M. Y. Park et al., “Usefulness of
+hemoglobin A(1c) to predict outcome after cardiac resynchronization therapy in patients with diabetes mellitus and heart
+failure,” The American Journal of Cardiology, vol. 110, no. 5, pp.
+683–688, 2012.
+[15] M. E. Halkos, J. D. Puskas, O. M. Lattouf et al., “Elevated
+preoperative hemoglobin A1c level is predictive of adverse
+events after coronary artery bypass surgery,” Journal of Thoracic
+and Cardiovascular Surgery, vol. 136, no. 3, pp. 631–640, 2008.
+[16] K. A. Britton, V. Aggarwal, A. Y. Chen et al., “No association
+between hemoglobin A1c and in-hospital mortality in patients
+with diabetes and acute myocardial infarction,” The American
+Heart Journal, vol. 161, no. 4, pp. 657.e1–663.e1, 2011.
+[17] E. S. Moghissi, M. T. Korytkowski, M. DiNardo et al., “American
+association of clinical endocrinologists and American diabetes
+association consensus statement on inpatient glycemic control,”
+Diabetes Care, vol. 32, no. 6, pp. 1119–1131, 2009.
+[18] J. M. Stolker, J. A. Spertus, D. K. McGuire et al., “Relationship between glycosylated hemoglobin assessment and glucose
+therapy intensification in patients with diabetes hospitalized for
+acute myocardial infarction,” Diabetes Care, vol. 35, no. 5, pp.
+991–993, 2012.
+
+11
+
+

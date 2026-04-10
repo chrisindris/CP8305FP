@@ -1,0 +1,51 @@
+------------- INITIAL DRAFT PROPOSAL -------------
+
+**TORONTO METROPOLITAN UNIVERSITY CP8305 KNOWLEDGE DISCOVERY PROJECT REPORT**
+**Cost-Sensitive Knowledge Discovery for 30-Day Hospital Readmission in Diabetic Patients**
+**Christopher Indris, Mojtaba Mohammadi, and Mohammad Al Batayneh**
+
+# I. INTRODUCTION
+
+The Hospital Readmissions Reduction Program (HRRP) financially penalizes healthcare facilities for excessive patient readmissions at 30-days, making early risk detection a primary operational challenge. Although modern predictive modeling often relies on opaque machine learning techniques to maximize raw accuracy, clinical environments require transparent, actionable insights. This project uses the Diabetes 130-US Hospitals dataset to bridge this gap. By applying interpretable Knowledge Discovery algorithms and cost-sensitive evaluation metrics, our objective is to identify the core clinical drivers of early readmission and provide decision-makers with scalable, human-readable intervention strategies.
+
+# II. BUSINESS PROBLEM & OBJECTIVE
+
+  * **The Industry Challenge:** The shift toward value-based healthcare and the Affordable Care Act's Hospital Readmissions Reduction Program (HRRP) heavily penalize hospitals for excessive 30-day patient readmissions.
+  * **Project Goal:** To apply Knowledge Discovery (KD) techniques to Electronic Health Record (EHR) data to identify high-risk diabetic patients at the time of discharge, enabling targeted and cost-effective preventive care.
+
+# III. DATA STRATEGY
+
+  * **Dataset:** Diabetes 130-US Hospitals dataset (1999-2008), which covers 10 years of clinical care from the Cerner Health Facts database.
+  * **Target Variable Formulation:** The target will be formulated as a binary classification problem, grouping NO and \> 30 days into the negative class, and isolating \<30 days as the positive (high-risk) class. This aligns the analytical model directly with the 30-day HRRP financial penalty window.
+
+# IV. LITERATURE BENCHMARK & IDENTIFIED GAPS
+
+Our approach is grounded in the following core literature:
+
+  * **The Clinical Baseline:** Strack et al. (2014) established the foundational multivariable logistic regression baseline for this specific dataset.
+  * **The Business Context:** Graham et al. (2019) provided the framework for evaluating model success through the lens of HRRP financial penalties rather than raw accuracy.
+  * **The Methodological Gap:** While modern studies such as Emi-Johnson & Nkrumah (2025) achieve strong predictive power using black-box ensemble methods (XGBoost), they lack the clinical interpretability required for actionable healthcare decisions. Furthermore, studies like Hu & Sokolova (2020) highlight the necessity of aggressively addressing the 11% minority class imbalance.
+
+# V. PROPOSED ANALYTICAL METHODOLOGY
+
+To bridge the gap between predictive accuracy and actionable Knowledge Discovery, the project will execute the following phases:
+
+  * **Data Preprocessing:** Cleaning ambiguous records, scaling clinical features, and engineering new variables (e.g., medication change velocity).
+  * **Addressing Imbalance:** Implement class balancing techniques (e.g., SMOTE or cost-sensitive reweighting) to ensure the model accurately captures the minority \< 30 readmission class.
+  * **Modeling:** Comparing "vanilla" interpretable algorithms (Logistic Regression, Decision Trees) against rule-induction methods (PRISM/Association Rules) to extract human-readable logic.
+  * **Evaluation (Credibility):** Benchmarking models using 10-Fold Stratified Cross-Validation, AUC-ROC, Precision-Recall curves, and a custom Cost-Benefit matrix to evaluate financial viability.
+
+# VI. IMMEDIATE NEXT STEPS
+
+1.  Complete exploratory data analysis (EDA) and handle missing/leaky variables (e.g. discharge\_disposition\_id indicating mortality).
+2.  Establish the data preprocessing pipeline in Python (Jupyter Notebook) for reproducibility.
+
+------------- FEEDBACK FROM PROFESSOR -------------
+
+Good job on framing the problem around HRRP and cost-sensitive evaluation. Overall, you are on the right track, just focus on these points.
+
+Clearly state which evaluation metric is most important and why
+
+Provide a simple example of the cost-sensitive framework (e.g., cost of false negative vs false positive)
+
+Briefly explain how you will handle the trade-off between interpretability and model performance

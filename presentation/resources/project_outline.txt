@@ -1,0 +1,54 @@
+Project Outline	
+
+The project is worked out in teams of two students. You are free to propose any topic of interest. Think of an industry or business. Identify a problem or area that can be improved or resolved through the application of information systems. The goal is to provide actionable insights and recommendations to improve the business's operations, decision-making, or strategy.
+Explore various industries, including but not limited to:
+
+Real Estate
+Healthcare
+Retail
+Finance
+Energy
+Transportation
+Manufacturing
+And other sectors of interest.
+
+Project Tasks:
+Business Selection: Each team will carefully choose an industry or specific business that aligns with their interests, passions, or existing knowledge. This choice should motivate and engage the team throughout the project.
+Data Collection: Teams will collect relevant data. This may include sales data, customer data, financial data, operational data, or any other data sources that are critical for analysis.
+Data Analysis: Apply appropriate data mining and analytics techniques learned in the course to analyze the collected data. This may involve descriptive analytics, predictive modeling, clustering, optimization, or any other relevant techniques.
+Business Problem Identification: Identify specific business challenges or questions that the analytics can help address. These could be related to improving sales, optimizing marketing strategies, reducing costs, or enhancing customer satisfaction.
+Analytics Solution: Deliver scalable analytical solutions that translate business challenges into actionable insights for decision-making.
+Recommendations: Provide actionable recommendations to the client based on the insights 
+gained from the analysis. Explain how these recommendations can benefit the client's business.
+Presentation and Reporting: Prepare a professional report and presentation summarizing the entire analytics process, findings, recommendations, and the potential impact on the client's business.
+
+Deliverables:
+Comprehensive Final Project Report: A detailed report summarizing the entire project, including findings, recommendations, and the potential impact on the chosen industry or business. This report should be in PDF format.
+Data Sources Documentation: A document outlining the data sources used in the project, providing context, descriptions, and any necessary metadata for the collected data.
+Data Analysis and Modeling Artifacts: This includes the relevant files and materials used for data analysis and modeling, such as data preprocessing scripts, code used for modeling, and any other tools employed. This may be organized into a dedicated folder or file repository.
+Final Presentation: A PowerPoint (PPT) presentation (between 10 and 20 slides) summarizing key project aspects, including objectives, data analysis methods, findings, and actionable recommendations. Additionally, provide a PDF version of the presentation for reference.
+
+Report Format:
+I. Abstract: Provide a concise summary of the project, including system requirements at a high level, the proposed model and solution, key results, and noteworthy observations.
+II. Introduction: Introduce the selected topic of interest, provide a brief literature survey, and present the historical context of the chosen industry or business. Clearly outline the problem statement and describe the proposed approach for making recommendations to improve the system.
+III. Data: Detail the data sources used in the project, explaining their relevance and any data preprocessing steps taken. Include information on data collection, cleaning, and any transformations.
+IV. Model: Explain the analytical models, methodologies, and techniques employed in the project. Discuss the rationale behind the chosen models and how they were implemented.
+V. Analysis and Findings: Present the results of the analysis, including data visualizations, insights gained, and any statistical or machine learning outcomes. Use clear and concise language to communicate the project's findings.
+VI. Conclusions: Summarize the overall work done, emphasizing the significance of your findings and recommendations. Avoid directly copying more than 10 consecutive words from the body of your report to maintain originality.
+VII. References: Include a list of references used in your project, with a minimum of five sources, including at least two journal papers. Follow a consistent citation style (e.g., APA, MLA, Chicago) for your references.
+
+Evaluation Criteria:
+The project will be assessed based on the following criteria:
+Data Management: Proficiency in collecting, cleaning, and effectively analyzing real-world data, demonstrating the ability to work with messy or incomplete datasets.
+Analytical Proficiency: The depth and quality of analytics techniques used, showcasing the team's aptitude in applying advanced analytical methods to solve complex business problems.
+Problem-Solving Capability: The demonstrated relevance of analytics in effectively addressing specific and practical business challenges, highlighting the project's ability to provide valuable insights.
+Recommendation Impact: The assessment of recommendations for their practicality and potential impact on enhancing the client's business operations or strategy.
+Communication Skills: The clarity and effectiveness of both the final written report and the presentation, emphasizing the team's ability to convey complex findings and recommendations to various stakeholders.
+Business Acumen: The level of in-depth investigation into the selected industry or business, including a keen understanding of its unique dynamics and challenges, which enhances the credibility and relevance of the project's insights.
+
+IMPORTANT:
+All project reports and presentations will be checked with Turnitin for plagiarism, therefore, any sources (open source online, books, etc.) for material used in your project must be referenced, including web sources, and your contributions must be clearly stated in your report. 
+You will have a 10-minute presentation slot scheduled during the final lecture class. 
+All team members must be present. 
+
+The final project must be submitted in D2L. The project constitutes 40% of the total final grade.

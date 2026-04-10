@@ -1,0 +1,276 @@
+Table of Contents
+Overview	2
+Goals	3
+Prior Analysis	4
+Specifications	5
+Technical Stack	5
+Marketing	5
+Discord server	6
+Google Drive	6
+Timing and Events	6
+Deliverable Rules and Judging	7
+Contingencies and Privacy	8
+Leadership Roles	8
+Director	8
+Production Lead	8
+Data Analytics Lead	9
+Judging Lead	9
+Coaching Lead	9
+Integrity Lead	9
+Communications Lead	9
+Finance Lead	10
+Financial Support	10
+Possibility of Direct Funding	10
+Grant Acceleration Clinic (toward indirect funding)	11
+Risks and Mitigation	11
+Technology reliability and access	11
+Time zones, fatigue, and pacing	12
+Low turnout or uneven team formation	12
+Mentor and judge availability	12
+Evaluation fairness across disciplines	12
+AI misuse, plagiarism, and fabricated citations	12
+Code of Conduct, safety, and moderation	13
+Privacy and data protection	13
+Schedule overrun and scale	13
+Accessibility gaps	13
+Budget and sponsor uncertainty	13
+Continuity after the event	13
+Marketing campaign	14
+Timeline	15
+T-4 Months: Define the spine	15
+T-3 Months: Lock the format and seed the pipeline.	16
+T-2 Months: Open registration and rehearse the machinery.	16
+T-1 Month: Convert interest into complete teams.	16
+Event Month: Final prep, then showtime.	16
+T+1 Month: Deliver value quickly.	17
+T+2 Months: Convert proposals into pilots.	17
+T+3 Months: Close the loop and plan the next cycle.	17
+Conclusion	17
+
+Overview
+
+The Research-A-Thon is a multi-week, hackathon-style event that harnesses the energy of a build sprint to create concise, fundable research proposals. Designed for STEM graduate students, the event is a fully supported, vibrant virtual hub that allows students with caregiving, work, or mobility constraints to participate on equal footing. This event is proposed by the Computer Science Graduate Student Union (CSGSU) to the Toronto Met Graduate Student Union (TMGSU, student representation) and the Yeates School of Graduate and Postdoctoral Studies (YSGPS, departmental representation). However, the event itself can be run on a minimal or even zero budget, and the leadership roles, tailored to mirror common positions in student unions, can be handled by any STEM graduate student. Rather than prototyping code or conducting experiments, teams focus on formulating a compelling problem, outlining a feasible approach, and communicating the anticipated impact—skills that directly map to scholarships, grants, and thesis work.
+
+Across the lead-up period (and the two-week competition period), small teams form, ideate, and draft with structure and support: a proposal template keeps efforts focused; short mentor consultations provide rapid feedback; and a mandatory LLM usage statement encourages responsible, transparent use of AI for brainstorming, organization, or editing. The minimum viable product (MVP) is a research project proposal, submitted as a PDF. The event culminates in discipline-neutral judging—human-led via peer-review as well as LLM review. Intellectual property remains with the participants, and proposals are reviewed using anonymized PDFs whenever feasible to minimize bias.
+
+Beyond the competition period, the Research-A-Thon is a community engine. It creates structured opportunities for cross-lab collaboration, helps break down silos between departments, and offers students a concrete output—a polished mini-proposal—that can be refined into a conference abstract, a pilot grant application, or a thesis chapter plan. Post-event pathways (symposium slots, mentorship connections, and introductions to seed-funding programs) extend impact, while an ongoing Discord/Slack space and a follow-up sustain momentum and counter graduate-school isolation.
+
+For the graduate department, the Research-A-Thon is a high-visibility, high-value initiative that aligns with core mandates: improving student experience, advancing professional development, and strengthening equitable access. The online design, accessibility measures, and a clear Code of Conduct ensure that no discipline or participation mode is disadvantaged. The event is scalable—with budget tiers suited to pilot or flagship launches—and attractive to campus and industry sponsors who want to showcase support for student research.
+
+Goals
+The Research-A-Thon is conceived as a coherent intervention in the graduate research lifecycle: two well-orchestrated weeks that simultaneously strengthen community, accelerate ideation, elevate scholarly rigour, and translate effort into tangible or even researchable career and funding outcomes. Its goals are deliberately interdependent. By designing an environment in which students can form new intellectual partnerships, test ambitious ideas safely, receive rapid, high-quality feedback, and leave with credible scholarly artifacts, the event converts a constrained block of time into lasting momentum for students, laboratories, and the wider graduate ecosystem.
+First, the event addresses community and culture. Graduate training can be isolating, and laboratories often operate in parallel rather than in concert. The Research-A-Thon creates structured, low-friction encounters across labs and subfields, establishing a psychologically safe forum in which participants can articulate unconventional hypotheses without reputational risk. This shared experience lays the groundwork for continued engagement—through regular seminars, volunteer speakers, and ad-hoc collaborations—by helping labs view themselves as part of a larger intellectual community rather than as discrete silos.
+We seek a disciplined approach for generating ideas and fostering interdisciplinarity. Novel contributions are frequently discovered in the niches between fields, yet students rarely enjoy protected time or scaffolding to explore those intersections. Through intentional team formation, clear problem prompts, and expectations that reward thoughtful cross-pollination rather than breadth for its own sake, the Research-A-Thon increases the likelihood of surfacing tractable, high-leverage research questions. It normalizes the exploration of unfamiliar methods and data—precisely the conditions under which original, field-advancing concepts emerge.
+There is a need to elevate research quality while accelerating progress. Competitive venues expect rigorously scrutinized work at the graduate level. To meet this standard, participants write to a concise, discipline-neutral template and are evaluated against a transparent rubric that emphasizes significance, feasibility, and clarity. Early triage—through structured feedback and mock review—enables students to “fail fast” on weak directions and pivot before sunk costs accumulate. The format also trains essential scholarly skills, including concise scientific communication through a tightly scoped proposal, as well as the responsible and effective use of AI with explicit disclosure. This approach enables tools to support brainstorming, organization, and language without supplanting scientific judgment.
+Fourth, the event enhances career readiness and access to resources. Many students seek legitimate portfolio enhancements but have limited time for activities that do not advance their research. In two weeks, participants will produce a proposal—an artifact that strengthens applications for fellowships, RA roles, internships, and conference submissions. The event also creates credible pathways to support: where funding is available, awards function as seed grants; where cash is constrained, winners receive a structured grant-acceleration package (including editing clinics, mock reviews, and mentor pairing) to improve competitiveness for internal or external calls. In either case, the event includes mechanisms to spotlight student work to faculty sponsors and industry partners, aligning recognition with recruitment.
+To address the familiar weaknesses of ad-hoc peer review—misaligned expertise, limited attention, and competitive incentives—we will pilot a triangulated, human–AI evaluation. Each proposal will receive 1) structured scores from cross-team peers, 2) an advisory score from an LLM that rapidly checks clarity, completeness, and coherence at scale, and 3), optionally and if convenient, scoring from the leadership team as a small, neutral, and diverse panel for the highest scorers from the previous step. These signals are normalized and combined into a transparent composite. No single actor is decisive, turnaround time improves, and every team receives auditable, text-based feedback. Anonymized PDFs, conflict-of-interest checks, brief calibration, and outlier controls ensure the process remains fair and hard to game.
+Ultimately, the Research-A-Thon provides enduring institutional value. It generates measurable outputs—such as submissions, reviews, awards, and follow-on applications—and leaves behind a backlog of vetted mini-proposals that departments can cultivate in seminars, reading groups, or capstone efforts. By convening students in a formal, equitable process that rewards rigour and collaboration, the event models a research culture that is inclusive, methodical, and outward-looking. In summary, the goals of the Research-A-Thon are not merely to generate ideas quickly, but to produce better ideas—supported by the community, disciplined by scrutiny, and connected to real opportunities for impact.
+Prior Analysis
+Classic hackathons are a proven vehicle for energizing participants and sharpening teamwork; in computer science in particular, they double as an upskilling mechanism that simulates job-like, project-based work beyond the classroom (rapid scoping, version control, staged demos). Yet, the very features that make them successful for undergraduates often misalign with the needs of graduate research. Overnight marathons and demo-centric judging favour quick wins and spectacle; compressed timelines, uneven evaluation, and ad-hoc logistics can privilege code-heavy projects while sidelining theory, methodology, or feasibility. The result is that “flashy demos” can overshadow deeper, field-appropriate inquiry. A Research-A-Thon reframes the deliverable from prototype to mini-grant-style proposal—novel question, methods, feasibility, and impact—so theory, computation, and wet-lab fields compete on equal footing without needing a demo. Consistent with recent syntheses of experiential learning, it replaces loosely structured sprinting with a clear template and rubric, which improves clarity, comparability, and learning outcomes.
+Accessibility and equity are decisive at the graduate level. Many students are caregivers, commuters, employed, or simply uninterested in all-night events. Fully in-person formats struggle to reach a dispersed cohort and can depress participation from those who would benefit most. A fully online, conference-like ambience with humane hours, captioned and recorded plenaries, and explicit low-bandwidth norms widens the tent while maintaining professional tone. Structured facilitation—time-boxed sprints, mirrored activities, moderated help desks, and bookable mentor consultations—offsets the engagement risks that can accompany virtual delivery. Crucially, savings from venue and catering are reallocated to what students value: prizes, mentorship, and post-event follow-through (editing clinics, mock review, mapping to internal seed calls). Expanding on the concept of asynchronicity, the timeline must permit hardcore speedrunners, those with prior commitments, and those desiring a longer-term opportunity to fully develop their research to all get the maximum out of the opportunity. Heuristically, a two-week timeline is a fair timeline and one not unreasonable for many hackathons. 
+The format also addresses the community and well-being gap documented across graduate programs. Isolation and siloing are common; informal mixers and pub nights help belonging but seldom produce durable scholarly outputs or sustained cross-lab engagement. By coupling social mechanisms (speed networking, themed problem rooms) with scholarly structure (team formation tied to a concise proposal), a Research-A-Thon creates psychologically safe conditions to test “wild,” interdisciplinary ideas without reputational risk. The tangible artifact—the proposal—becomes a shared reference point that sustains seminar culture, volunteer speakers, and cross-lab networks after the event.
+Finally, the model confronts well-known weaknesses in peer assessment and the emerging realities of AI. Graduate authors frequently encounter reviewers with misaligned expertise, limited attention, or conflicted incentives. We therefore pilot a triangulated evaluation: 1) structured, double-blind cross-team peer scoring normalized for leniency; 2) an LLM assessor that rapidly checks clarity, completeness, and coherence at scale with transparent, limited weight; and 3) an optional small, neutral mini-panel to provide depth on the strongest proposals and a random audit sample. This arrangement enhances speed and consistency without relinquishing final authority to any single actor—human or machine—and provides auditable, text-based feedback to every team. In parallel, the event teaches responsible AI use: participants disclose how models assisted with brainstorming, organization, or language while maintaining scientific judgment alongside the authors. In sum, the Research-A-Thon preserves the motivational energy of hackathons, but aligns it with graduate priorities—rigour, equity, interdisciplinarity, and real pathways to funding and publication.
+
+Specifications 
+Technical Stack
+The Research-A-Thon will run fully online to maximize accessibility and cross-departmental participation, with a conference-like atmosphere that is both professional and amicable. We aim to ensure that people who are not used to Discord can still enjoy the full experience. All plenary sessions will be auto-captioned, recorded, and posted in Discord for those joining late or in different time zones. The Code of Conduct and safety policies are pinned in #announcements and referenced in every welcome message and calendar invite.
+Marketing
+
+Prior to opening, the event will be marketed through a variety of channels, including but not limited to:
+•	TMGSU, graduate department and other mailing lists (including the CSGSU mailing list) 
+•	D2L groups, including GRADCentral and CSGSU
+•	The TMU Graduate Events Calendar
+
+The advertisements will link to both the Discord server and the Google Drive.
+
+Discord server
+
+The Discord server acts as the persistent ‘virtual venue’ and links to a Google Drive folder with details. The Discord server will be opened well in advance of the event and will initially function as a team-forming space, as well as a space for rules and guidelines (linked to the aforementioned Google Drive folder); it will continue to be open throughout the event for chatting, announcements, help desk, team rooms and mentoring.
+
+Google Drive
+The Google Drive folder will contain the following: 
+•	Overall rules and guidelines
+•	 Links to calendar events on Zoom (Google Calendar events will be published, with the link shared)
+•	Supplementary materials, such as tips for success sourced externally
+•	a Google Form for submission of the PDFs that enforces required fields and time-stamps entries.
+Timing and Events
+The Discord server will open in advance of the start of the Research-A-Thon. For this portion, the main directive is to get the vying participants to bond and form teams. This would include a channel for people to introduce themselves, and interest channels for a wide variety of interests. The intention with these interest channels is to balance the desire of students to speak about their current research interest (having expertise helps the conversations begin) while also including other areas of research that are intended to be outside of the normal scope to encourage cross-lab collaboration (for example, there might be a linguistics/writing channel; this would encourage people from different disciplines to converge on a discipline they have in common).
+The first day would feature an “opening ceremony,” a 1-hour Zoom call where the event organizers review the Research-A-Thon details, outline expectations, and provide guidance on how to succeed at the Research-A-Thon. They would also stay past the hour to answer any questions. Naturally, the session would be recorded with slides shared. 
+Intermittently, and pending the availability of volunteers, several workshops, talks, or fun icebreaker-type events may be held within the two weeks of the Research-A-Thon. These would be announced in advance. These may include: existing publicly-announced seminars that are also announced through the event to boost interest in them; casual “open-mic night” type talks, where people can sign up to give a five-or-ten-minute talk about their interests (screened ahead of time and moderated, of course); participants who are willing to be a guest speaker are welcome to do so; challenging icebreaker games, where students may be divided into Zoom rooms and given logic games to try and solve together. The intention here is to maintain engagement and appeal to those who want a fun, friendly experience from the Research-A-Thon, with events scheduled based on the availability of hosts.
+Submissions will be accepted until 11:59 pm on the day that falls exactly two weeks after the opening ceremony. Following this, a two-day judging period will take place, during which the judging will be conducted. During this period, participants will be asked to score (based on a simple rubric) the submissions of two other participants. It will be made clear from the opening ceremony that the task should not take very long for them to do. In addition, during this time, an AI system will also be grading every submission, but with a much more in-depth rubric, including checking if the AI attestation was truthful. The next day, if the situation permits, the top 10% of submissions based on their combined human and AI scores will be given a more in-depth assessment by the event organizers, and this will factor into the score.
+At the closing ceremony, on the evening of the third day, the winners will be announced. In addition to an overall top three based on scores, there will also be “most creative” and “best multi-disciplinary” as scored based on a subset of the rubric aimed at measuring these areas.
+Time zones and pacing matter online. The official schedule anchors in America/Toronto; all invitations include both local and UTC times, and plenaries are recorded for late joiners. Breaks are explicit (at least 30 minutes midday). A “low-bandwidth mode” is documented (camera-off participation, dial-in audio numbers, PDF slide backup) to keep teams engaged despite connectivity constraints.
+
+Deliverable Rules and Judging
+Deliverables and rules are tuned for online efficiency. Each team submits a ≤3-page proposal. Required sections: 200–250 word abstract; problem & knowledge gap; research question/hypothesis (or conjecture for theoretical work); novelty; field-appropriate methods; expected outcomes & impact. A short LLM Usage Statement is mandatory (bullet points on how AI-assisted brainstorming, organization, or language polishing). Teams retain IP; by submitting, they grant permission for title/abstract to appear in event publicity.
+Judging is human-led with LLM assessment to keep things on schedule. Upon submission, each submitter is required to peer-review two other submissions based on a shared, simple rubric. An AI assessor is used for an advisory pre-screen to ensure clarity, completeness, and coherence, and tags keywords for domain routing—this does not determine winners. Each proposal above a certain cutoff is then scored by at least two judges against a discipline-neutral rubric: Novelty & Originality (25%), Significance/Impact (20%), Feasibility & Rigour (20%), Clarity (writing) (20%), and Field-appropriate Merit (15%). Judges receive anonymized PDFs, where feasible, and declare any conflicts. 
+
+Contingencies and Privacy
+Security and privacy are proactive. Zoom access utilizes authenticated links and waiting rooms; screen sharing is restricted to hosts and the active team members. Discord uses role-gated channels, with DMs discouraged for official business so moderation can occur in-channel. We minimize data collection to essentials (names, emails, program, and consent flags) and clearly state retention periods upfront. The Integrity Lead maintains an anonymous reporting form and clear consequence ladders for violations.
+Contingencies are planned. If Zoom fails, we will pivot to Google Meet using pre-generated backup links in #announcements. If Discord experiences an outage, team voice rooms will transition to Zoom breakouts. Between the Discord server and the Google Drive folder, communication can persist.
+Finally, quality assurance comes from rehearsal. The week prior, we run a tech dry run with staff (Discord roles, Zoom settings, timer overlays), a brief mentor/judge briefing, and a writing clinic where teams can test screenshares and captions. From opening to closing, the Director drives the script; the Production Lead keeps the venue running smoothly; the Communications Lead responds within minutes; and the Judging Lead leaves deliberation with clear, defensible outcomes. 
+
+Leadership Roles
+To keep a fully online event crisp and equitable, we will staff it with clear roles and explicit responsibilities, ensuring smooth handoffs. More than one person can hold each role; a minimum of 5 total would be realistic. Although we would have a recruiting process (through advertising, we would ask potential volunteers to contact the CSGSU), as a backup, it could be run completely by the CSGSU executives (although this is less than ideal due to the CS bias). Any STEM graduate student is encouraged to apply for a leadership position.
+Director
+
+Overall executive: Sets scope, timeline, success criteria, and the risk register; approves the budget and prize model (cash if available or the Grant Acceleration Clinic) and signs off on post-event reporting. Designs the minute-by-minute run-of-show (welcome → team-making → sprints → mentor windows → submissions → awards), writes the MC script, manages timekeeping and visible countdowns, coordinates speaker hand-offs, and triggers contingencies if volumes exceed plan. 
+
+Production Lead
+
+Builds and operates the online venue end-to-end: Zoom plenaries with live captions/recordings/waiting rooms/screen-share control and a role-gated Discord with team text/voice rooms, help/mentor desks, bots, and clear navigation. Runs timer overlays, speaker spotlighting, and failover links; owns recording consent, editing, and posting; and leads QA/rehearsals (full tech dry-runs, judge/mentor briefings, writing clinic checks) with documented settings so sessions are reproducible.
+
+Data Analytics Lead
+
+Designs the submissions pipeline (intake form, Drive structure, file naming, timestamps), runs compliance checks (page limits, required sections, LLM Usage Statement, PDF integrity), anonymizes proposals, and routes packets to peers/panel/AI. Operates the LLM assessor with a fixed, transparent prompt for clarity/completeness/coherence; exports structured justifications/flags and conducts simple bias audits; defines key performance indicators (KPIs), builds lightweight dashboards, and compiles the analytics section of the post-event report.
+
+Judging Lead
+
+Assigns each submitter 2 anonymized proposals, excluding obvious overlaps, with conflict checks, and implements comparative ranking within assigned sets. Normalizes scores per reviewer (z-scores), trims outliers, detects collusion or strategic down-scoring, and moderates weights by review quality. In parallel, recruits a diverse mini-panel across STEM areas, collects conflict-of-interest (COI) disclosures, runs a brief calibration with anchor examples, chairs deliberation, applies tie-break rules (panel score → novelty sub-score → discussion), performs random audits from non-top sets, documents rationales, and signs off on the final composite consistent with the rubric.
+
+Coaching Lead
+
+Recruits mentors across methods and domains, publishes a booking matrix with time-zone coverage, and hosts a short calibration on giving fast, field-appropriate feedback. Provides the “how to use a 15-minute consult” guide, monitors utilization to reduce bottlenecks, ensures equitable access for teams, and tracks mentor hours for reporting.
+
+Integrity Lead
+
+Guarantees accessibility (live captions, camera-optional norms, dial-in numbers, low-bandwidth tips, PDF slide backups) and asynchronous access to recordings; manages accommodation requests and inclusive language/contrast guidance. Owns Code-of-Conduct execution and the anonymous reporting channel, maintains moderation logs, and coordinates incident response across Zoom/Discord to safeguard psychological safety. Designs and delivers the 3–4-week Grant Acceleration Clinic for winners/high-potential teams: funder mapping, methods/feasibility deep-dive, impact language, budget/justification, data-management/ethics checklists, and a mock review; ensures confidentiality/COI within the clinic; and follows up on submissions within 6–8 weeks with measurable outcomes.
+
+Communications Lead
+
+Runs the live help desk in Discord and a walk-in Zoom for rapid triage of platform, teaming, and submission issues; maintains an evolving FAQ; sets response SLAs during plenaries; escalates to the appropriate owner when issues exceed first-line support; and tracks ticket patterns to inform mid-event fixes. Delivers the email and social cadence, faculty-champion outreach, and postings to union/department lists and calendars; manages winner spotlights and the post-event recap. Keeps the Discord active post-event (e.g., reading groups, seminar sign-ups, volunteer speakers) so that one-day momentum becomes a durable cross-lab network.
+
+Finance Lead
+
+Seeks funding opportunities, both directly (cash or internship prizes) or indirectly (finding relevant grants); leads sponsor outreach and recognition; coordinates cash/award disbursement or clinic resourcing; handles purchasing/invoices; and compiles sponsor impact metrics for reporting.
+
+Financial Support 
+Students have been clear: meaningful incentives increase participation and signal that their ideas matter. Our first-choice model is to offer monetary or career-advancing prizes that directly help winners turn proposals into real projects. We propose a set of Research Catalyst Awards sized to our funding tier: for example, a top award that functions like a small seed grant (e.g., $3,000), plus runner-up awards (e.g., $1,000 and $500) and a modest People’s Choice prize. Because the Research-A-Thon is fully online, funds that would otherwise be spent on venue and catering can be reallocated to prizes. Where feasible, the top award can be deposited into a supervised research account (via a faculty sponsor) to purchase materials, cloud credits, or participant compensation. If that’s impractical, the award can be disbursed as a student honorarium/award to support research time, conference fees, or equipment. Realistically, the event would run without direct funding, though the Finance Lead would still manage the search for external grants for the winners. Hence, in the absence of available funds, the prize designations would remain the same, but the prizes would be notoriety and access to the Grant Acceleration Clinic (to enhance the winning proposals for the purposes of external grants).
+
+Possibility of Direct Funding
+
+To reflect what many students have asked for—career opportunities as prizes—we will also pursue Career Catalyst options alongside, or instead of, cash prizes. These can include guaranteed interviews for relevant RA/industry roles, a short paid research externship with a partner lab or company, or admission to an innovation incubator or campus seed-fund program. These opportunities are announced upfront with clear eligibility criteria and time commitments, and they are awarded based on the same rubric as the main prizes. The point is to convert a strong proposal into a concrete pathway, not to create an unrelated raffle.
+If assembling cash or job-linked prizes proves challenging, we will still make the winners’ next steps tangible through a Grant Acceleration Package. This package is a structured follow-through: a dedicated faculty or research-office mentor; two focused editing clinics to tailor the proposal to a specific internal seed grant or external call; a mock review with written scores; guidance on ethics/REB planning where applicable; and a public showcase slot (seminar or research symposium). The YSGPS, TMGSU and partners can also provide letters of support and introductions to likely faculty sponsors. In practice, this package is often as valuable as cash because it shortens the road from idea to award.
+
+Funding for prizes could be assembled from multiple sources. Should the TMGSU provide a base allocation, perhaps matched by Graduate Studies or the Office of Research, this would, of course, be embraced. Departments can co-sponsor “challenge tracks” (e.g., Best Life Sciences, Best Engineering) for a named contribution of $500–$1,000. The library can underwrite elements of the Acceleration Package (literature services, data management consults), while industry partners can contribute in-kind support such as cloud credits, software licenses, or gift cards. Sponsors receive recognition during the livestream, on the event site, and in post-event coverage; named awards are available where appropriate.
+
+Prize disbursement procedures will follow university policy to ensure fairness and transparency. Cash awards are paid as student awards or honoraria (not wages), with any required tax forms handled by the TMGSU or the Finance department. Seed-grant style awards can be placed in a departmental research account under the supervision of a willing faculty sponsor. Career prizes are framed as guaranteed interviews or externship offers (not employment guarantees) arranged with partner units. All winners—regardless of whether they are remote or local—receive identical access, and we aim to disburse or activate prizes within 30 days of the event.
+
+Grant Acceleration Clinic (toward indirect funding)
+
+
+Baseline (no external cash required). The Grant Acceleration Clinic provides targeted follow-through over three to four weeks: funder mapping and “fit” analysis; methods/feasibility deep-dive; impact language, budget/justification, and data-management/ethics checklists; and a mock review (paired with the event’s feedback packet). Each winning team leaves with a submission-ready two-page summary, a basic budget with justification, a short Gantt chart, and a dated filing plan, all within 6–8 weeks. This pathway directly serves the event’s goals—career readiness, rigour, and speed—by shortening the road from idea to award without relying on cash. The Grant Acceleration Clinic would have the Research-A-Thon leads assist in reviewing the project further to provide advice and, if funding permits, engage experts (such as professors) for additional review.
+
+In short, we are prepared with three viable incentive paths—cash, career, or grant-acceleration support—and can scale among them based on sponsor interest. This flexibility allows us to meet students where they are, while ensuring the Research-A-Thon consistently produces real, next-step value for the winners and the broader graduate community.
+
+Risks and Mitigation
+The following section outlines various potential contingencies and our proposed resolution in the event they occur.
+
+Technology reliability and access 
+
+Risk: Platform outages, unstable connections, and unfamiliarity with Discord/Zoom can derail participation and increase stress.
+Mitigation: Utilize a dual-platform design (Zoom for plenaries; Discord as the persistent venue) with pre-generated failover links (e.g., Meet), a documented “low-bandwidth mode” (camera-optional, dial-in numbers, and PDF slide backups), and a staffed help desk. Provide concise onboarding guides and conduct a comprehensive technical rehearsal the week prior. Record all plenaries and post promptly for late joiners. 
+
+Time zones, fatigue, and pacing 
+
+Risk: Online events can overtax attention, exclude distant time zones, and create cognitive overload.
+Mitigation: Anchor the schedule in America/Toronto while listing UTC on all invites; record plenaries; enforce humane hours and explicit breaks; encourage camera-optional participation; and keep segments time-boxed with visible countdowns to reduce fatigue.
+
+Low turnout or uneven team formation
+
+Risk: Small or uneven cohorts can leave participants stranded or create imbalanced teams.
+Mitigation: Open the Discord weeks early, host pre-event mixers (e.g., Idea Fair, speed networking, mentor office hours), and require “team cards” several days before kickoff so moderators can proactively match participants. Provide solo-friendly pathways while still nudging cross-lab teaming.
+
+Mentor and judge availability 
+
+Risk: Last-minute cancellations or inadequate coverage can degrade the quality and fairness of feedback.
+Mitigation: Over-recruit by ~25%, publish a booking matrix with time-zone coverage, run quick calibration briefings for mentors/judges, and keep a standby bench. Shift to parallel judging rooms or Day+1 awards if volumes spike.
+
+Evaluation fairness across disciplines
+
+Risk: Demo bias, ad-hoc criteria, and field idiosyncrasies can skew results.
+Mitigation: Use a discipline-neutral template (gap → question → method → impact) and a transparent rubric; triangulate scores via normalized cross-team peer review, a neutral mini-panel, and an advisory AI check limited to clarity/completeness/coherence. Anonymize PDFs, run COI checks, and perform brief calibration.
+
+AI misuse, plagiarism, and fabricated citations
+
+Risk: LLMs can accelerate drafting but also introduce non-attributed text or hallucinated references. 
+Mitigation: We require a concise LLM Usage Statement, remind teams that intellectual contributions must be their own, and scan PDFs for basic plagiarism indicators. Judges are briefed to spot suspect references and request clarifications during Q&A. Scoring weights originality and methodological soundness over surface polish, discouraging over-reliance on generated prose.
+
+Code of Conduct, safety, and moderation
+
+Risk: Online spaces can invite inappropriate behaviour or DM harassment. 
+Mitigation: A clear Code of Conduct is pinned in #announcements and reiterated in the welcome; the Integrity Lead maintains an anonymous reporting form and a documented response ladder. Official communications are posted in public channels to facilitate moderation, with role-based access controlling visibility. Repeated or severe violations will trigger removal from the event and a notice to the relevant body (i.e., the YSGPS) as per policy. 
+
+Privacy and data protection 
+
+Risk: privacy concerns, especially considering the intellectual property (IP) being shared. Students may be concerned that, at this early stage of their idea, it could be poached.
+Mitigation: Participants must trust how their information and recordings are used. We minimize the collection of personal information (name, email, program, and consent flags), clearly state retention periods in the registration form, and restrict internal access to the Integrity Lead. Recording notices appear in all plenaries; team channels are not recorded. Teams retain IP; by submitting, they grant permission only for title/abstract and approved images in post-event publicity. By default, we use a double-blind cross-team peer review, plus advisory LLM scoring, and a mini-panel. If IP concerns arise in a particular cohort, we can instead rely on LLM + panel review only, removing the cross-team peer component so that ideas are never shared between teams.
+
+Schedule overrun and scale 
+
+Risk: Many teams can push submissions past the end time. 
+Mitigation: The submissions to Google Drive have time stamps.
+
+Accessibility gaps 
+
+Risk: Even online, students can face barriers (captioning, screen-reader compatibility, colour contrast, sensory load). 
+Mitigation: The Integrity Lead verifies live captions, provides alt-text guidance for slides, offers a quiet-participation text channel, and publishes a short accessibility checklist for presenters. Dietary needs are irrelevant online, but we preserve inclusive practices by scheduling breaks and allowing camera-off participation without penalty.
+
+Budget and sponsor uncertainty 
+
+Risk: Prize pools or career opportunities may fluctuate with sponsor commitments. 
+Mitigation: We propose tiered prize scenarios (cash, career catalysts, or a Grant Acceleration Package) and clearly communicate which tier is confirmed by three weeks prior to the event. If funding is tight, we prioritize follow-through value—editing clinics, mock reviews, and mentorship—over swag or production frills, preserving participant impact.
+
+Continuity after the event 
+
+Risk: Online events can fizzle once the stream ends. 
+Mitigation: To avoid this, winners receive next-step meetings within two weeks (mentor pairing and funding pathway review). All teams receive template-aligned feedback, and a follow-up mixer at approximately T+8 weeks invites progress updates and pairing with relevant grant calls. Keeping the Discord open (with archived resources and a monthly “office hour”) turns a two-week sprint into an ongoing community.
+
+Marketing campaign 
+
+Our marketing emphasizes two promises: two online weeks can launch real research and no discipline is disadvantaged. The campaign leads with a clear landing page (a simple site built and deployed on Github, which can be reached by a QR code) that centralizes the registration form, schedule-at-a-glance, proposal template, judging rubric, Code of Conduct, accessibility notes, and an FAQ (“Do I need a team?” “Can I participate from another time zone?” “How are LLMs used?”). Every message points back to this page with one primary call to action: Register and join the Discord. The page includes alt-texted graphics, a high-contrast title card, and a 30-second captioned teaser video that explains the event in plain language. All of this can be created very quickly using modern web development tools.
+
+We will run a three-wave email cadence through Graduate Studies and departmental lists: a save-the-date (explaining its importance), a launch (describing how it works and providing a template link), and a last-call (emphasizing the urgency, prizes, and mentor/judge reveal). Each message includes a two-sentence “why attend” hook (“Turn two weeks into a seed grant and new collaborators”) and a one-click “I’m in” button. In the emails, students will be encouraged to spread the word during their lab meetings to reduce the likelihood that the emails will be overlooked. To capture interest that doesn’t immediately convert, we’ll offer an “I’m curious” link that sends reminders to students about the virtual team-forming social.
+
+Because this is fully online, community channels do the heavy lifting. Department Discord and Slack workspaces receive tailored posts (biology, engineering, CS, math), each with discipline-specific examples (“theoretical conjecture welcome,” “wet-lab roadmaps welcome,” “simulation pilots welcome”), so no field is self-excluded. The event’s Discord opens early for Q&A, #looking-for-team, and a #writing-clinic channel; early entrants get a lightweight “early-bird badge” and are entered into a small raffle (e.g., bookstore gift card or cloud credits provided by a sponsor). Throughout the campaign, we’ll post “mentor/judge spotlights” with short quotes and availability times to make the event feel human and accessible.
+Our social media plan will consist of general, modular content, allowing the same content to be used on any channel that accepts posts. Whether the content is posted to our website as images or we reach out to existing Instagram accounts, such as @tmugraduate, we can adapt with minimal work. We will publish two success stories to make the benefit concrete—short quotes like “We turned our mini-proposal into an internal seed grant in 6 weeks.” After the event, we share a winners' reel and public abstracts (with consent), closing the loop and priming next year’s pipeline.
+
+Accessibility and inclusion are baked into the campaign itself. All images have alt text; videos are captioned; colour palettes meet contrast ratios; and posts avoid jargon. This can be easily incorporated into the website and PDFs using modern tools. Every call-to-action reiterates that solo participants are welcome and that teams can be interdisciplinary or single-discipline. We explicitly state that LLM use is allowed with disclosure, which both normalizes up-to-date research systems and reduces anxiety about “doing it wrong.” Time-zone friendliness is communicated early: plenaries are recorded; schedules display both local and UTC times; and we publish a “how to participate on low bandwidth” guide (including camera-off norms, dial-in numbers, and PDF slide backups). Regarding disclosure, we follow the practices within large conferences; this not only piggybacks on the research and decisions they have made on how to integrate, but this also ensures that our encouragement of AI usage in research is tailored and kept within the boundaries of what is acceptable for the deliverables of graduate students.
+
+To maintain momentum, we host lightweight activations: a 30-minute virtual information session one week after launch (recorded and posted), a “Meet Your Mentors” office hour, and a micro-challenge on Discord (“Write a 1-sentence problem statement—best three win a shout-out”). These touchpoints provide value even to fence-sitters and gently encourage them to form or join a team. Meanwhile, direct outreach continues: the Coaching Lead sends short, personalized nudges to registrants without teams and to labs with known interest areas (“Your lab’s work on [X] would shine here—here’s how to scope it to 3 pages”).
+
+We will measure and adapt. Weekly, we compare registrants to actual team cards and adjust messaging (e.g., push solo-friendly framing if we see many individuals but few teams). On event day, we monitor attendance across plenaries to refine pacing for future runs. Post-event, we ask, “What would have convinced you to join earlier?” and compile testimonials for the next cycle.
+
+Finally, our tone stays warm, practical, and outcomes-oriented: “Spend two weeks. Leave with collaborators, a polished mini-proposal, and a real next step.” By aligning channels (email, faculty, Discord/Slack, social media), assets (templates, rubrics, teasers), and incorporating a human touch (ambassadors, mentors), the campaign reduces friction at every step and ensures that students perceive the Research-A-Thon as both achievable and worthwhile.
+
+Timeline
+T-4 Months: Define the spine
+Secure departmental approval for a fully online Research-A-Thon. Create the marketing materials. Draft the Code of Conduct, privacy/retention notes, and IP language. Stand up a simple landing page skeleton (registration placeholder, schedule-at-a-glance, and FAQ) to unify messaging.
+
+T-3 Months: Lock the format and seed the pipeline. 
+Reach out to recruit the leadership. Finalize the discipline-neutral rubric, the ≤3-page proposal template, and the mandatory LLM Usage Statement format. Build Discord’s channel architecture (announcements, help desk, mentor desk, team rooms, social spaces) with roles and permissions; configure Zoom webinar/meeting templates with auto-captions and recording defaults. Launch “save-the-date” and faculty-champion outreach (slide + script for lab meetings). Longlist and begin confirming judges (collect conflicts-of-interest) and mentors (postdocs/faculty across STEM). Draft the sponsor deck and recognition plan. Communications drafts the three-wave email and social media cadence; The Integrity Lead publishes preliminary participation guidance, including tips for low-bandwidth users.
+
+T-2 Months: Open registration and rehearse the machinery. 
+Finalize the core team. Open registration and the event Discord; publish the template, rubric, and proposal examples. Announce the virtual team-forming social (a 90-minute session with 60-second problem/skill pitches) and create an interest form to match time zones and skills. Coaching Lead sets up Calendly blocks and posts “how to use a 15-minute consult.” Production Lead runs a first tech shakedown (captions, recording, screen-share permissions, timer overlays, backup links). The Data Analytics Lead prototypes the intake workflow (including Google Form required fields, automated filename checks, and packaging for judges) and tests an anonymization script. Judging Lead drafts calibration anchors and the scoring sheet; the Integrity Lead finalizes the reporting form and response ladder.
+
+T-1 Month: Convert interest into complete teams. 
+Push marketing wave #2 with discipline-specific examples (“theory welcome,” “wet-lab roadmaps welcome,” “simulation pilots welcome”) so no field self-excludes. Run the team-forming social and open #looking-for-team with topic-tagged voice rooms staffed by volunteers who nudge matches. Confirm keynote speakers, judges, and mentors; schedule a brief judge briefing and a mentor orientation. Lock prize tier(s) based on confirmed sponsors; if cash is thin, highlight the Grant Acceleration Package (editing clinics, mock review, mentorship, showcase slot). Publish the low-bandwidth participation guide, accessibility checklist for presenters (contrast, alt-text, captions), and a one-page “how to scope to 3 pages.” Communications releases a captioned 30-second teaser; Director drafts the minute-by-minute run-of-show. Finalize the schedule of secondary activities throughout the period.
+
+Event Month: Final prep, then showtime. 
+Two weeks out, run a full tech rehearsal with staff (Zoom + Discord failover), then a judge calibration (rubric anchors, tie-break rules) and a mentor orientation (how to give fast, constructive feedback online). One week out, send registrants the “final pack” (calendar invite with local/UTC times, links, team card instructions, and submission checklist). Three days out, the Director freezes the run-of-show and contingency tree. Have the opening ceremony on the first day. Provide support and activities throughout. End the sessions. Judging Lead leads deliberation; Comms runs a People’s Choice poll; awards and next-steps are announced in the closing plenary once decisions are made. All plenaries are captioned and recorded.
+
+T+1 Month: Deliver value quickly. 
+Disburse prizes or activate career catalysts within university timelines; if using the Acceleration Package, book winners into a two-session editing clinic and a mock review within four weeks. Publish a winners’ reel and public abstracts (with consent), thank sponsors, and send personalized feedback (scores + short comments) to all teams. Collect a post-event survey (NPS, channel effectiveness, barriers) and compile metrics (registrations → complete teams → submissions → attendance; mentor/judge utilization; Discord engagement). Finance closes the budget; Communications drafts a recap for TMGSU channels; the Director leads an after-action review with clear keep/stop/start decisions.
+
+T+2 Months: Convert proposals into pilots. 
+Host a follow-up mixer for all teams to share progress and pair with relevant internal seed calls or RA opportunities. Library partners and the research office offer brief clinics (data management, REB/ethics readiness, budgeting). Judging Lead and Coaching Lead match strong but unfunded teams to potential faculty sponsors; Comms highlights two or three “in flight” stories to sustain momentum and recruit next cycle’s committee.
+
+T+3 Months: Close the loop and plan the next cycle. 
+Issue a concise sponsor impact report (reach, outputs, testimonials, next-step commitments) and a public summary to the graduate department. Archive artifacts (templates, run-of-show, tech settings, anonymization scripts, moderation logs) in a shared drive so the next committee inherits a working playbook. If demand warrants, announce tentative dates for the next Research-A-Thon. The result is a clean handoff and a community that views the event not as a one-off livestream, but as the beginning of ongoing research.
+Conclusion 
+
+The Research-A-Thon provides the YSGPS and the TMGSU with a high-impact, low-overhead approach to accomplish three key objectives simultaneously: launch new research, foster a cross-lab community, and deliver practical career value to STEM graduate students. In a well-structured two-week period, participants leave with a polished mini-proposal and a clear next step—whether that is a cash/career prize or a Grant Acceleration Package that helps convert ideas into funded pilots. Because the event is fully online, resources are directed toward what students value most: incentives, mentorship, and follow-through—not venue costs.
+
+For the YSGPS and the TMGSU, the return is visible and immediate: a flagship, field-neutral program that is inclusive by design, showcases student excellence, and is easy to repeat annually. The format is disciplined (utilizing templates, a rubric, and timeboxes), fair (with anonymized reviews, diverse judges, and advisory-only AI triage), and accessible (offering captioning, low-bandwidth options, and a clear Code of Conduct). It is also scalable: we can run a lean pilot this term or a larger edition with sponsors next term, using the same playbook and roles.
+
+Our request is straightforward: approve the concept, select a funding tier (cash/career prizes, or the Grant Acceleration Package), and authorize a date hold so we can open registration within two weeks. We will report back with clear metrics (registrations, team formation, submissions, attendance, satisfaction/NPS, and post-event progress) and a concise brief on the sponsor's impact. With your endorsement, the Research-A-Thon becomes a signature YSGPS TMGSU initiative—turning one focused two-week period into months of momentum for graduate research and community.

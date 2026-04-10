@@ -1,0 +1,231 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{liu_comparison_2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=66d9dba3f5e83a41bd73ce7e5c6d1e4e}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Vincent\bibnamedelima B.},
+           giveni={V\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0c9c5aa2f3f63184f772a7377492ab59}{%
+           family={Sue},
+           familyi={S\bibinitperiod},
+           given={Laura\bibnamedelima Y.},
+           giveni={L\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e893c47b605063df736643297bcdeff6}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Yingnian},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{b8603b5442644bdb48d4d90a97b7c8e0}
+      \strng{fullhash}{571d3a69a7e377ff7b703edda0014e1f}
+      \strng{fullhashraw}{571d3a69a7e377ff7b703edda0014e1f}
+      \strng{bibnamehash}{b8603b5442644bdb48d4d90a97b7c8e0}
+      \strng{authorbibnamehash}{b8603b5442644bdb48d4d90a97b7c8e0}
+      \strng{authornamehash}{b8603b5442644bdb48d4d90a97b7c8e0}
+      \strng{authorfullhash}{571d3a69a7e377ff7b703edda0014e1f}
+      \strng{authorfullhashraw}{571d3a69a7e377ff7b703edda0014e1f}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Background: Affecting over 25.5 million individuals in the United States, diabetes is linked to increased hospital readmission rates, almost double that of patients without diabetes. Previous research suggested the predictive superiority of deep learning (DL) models, particularly long short-term memory (LSTM) models, compared to traditional machine learning (ML) models, in forecasting diabetes-related hospital readmissions. The objective of this study was to compare one DL and 10 ML methods for predicting 30-day readmission rates in patients with diabetes. Methods: The dataset was obtained from “Diabetes 130-US Hospitals for Years 1999–2008” in the University of California Irvine (UCI) Machine Learning Repository and consisted of 101,766 unique encounters from 130 hospitals and integrated delivery networks across the United States. Encounters were included if they were an inpatient encounter (i.e., hospital admission) during which diabetes was entered in the system as a diagnosis. Predictors of readmission included demographic variables (age, race, gender), admission and discharge type, number of procedures and medications, diagnosis, and hemoglobin A1c (HbA1c) testing, a measure of the last 3 months of glycemic control. The outcome was the rate of readmission within 30 days. This study built upon traditional ML algorithms by incorporating the Grey Wolf Optimizer (GWO), a swarm intelligence-based optimization algorithm, for feature selection. Data preprocessing involved handling missing values, encoding categorical variables, and converting the target variable into a binary classification task. Feature engineering included creating service utilization variables, age group midpoints, and grouping admission types. Categorical features were one-hot encoded, and the dataset underwent standard scaling. Feature selection was conducted using the GWO algorithm, and class imbalance was addressed with synthetic minority over-sampling technique (SMOTE) during group k-fold cross-validation. Eleven ML algorithms, including random forest (RF), extreme gradient boosting (XGBoost), decision tree, support vector machine (SVM), and LSTM were employed for model training and evaluation. Results: RF emerged as the most favorable model, consistently outperforming others in F1 score, accuracy, precision score, and recall score. The RF model achieved the highest F1 score (0.83) and accuracy (0.88), indicating its superior predictive ability, especially in balancing precision and recall. XGBoost showed comparable results, achieving the second highest F1 score (0.84) and accuracy (0.88). Conclusions: The RF and XGBoost models with GWO outcompeted previous DL predictive modeling in diabetes hospital readmission scenarios. However, ML with GWO adoption should be carefully considered based on specific hospital needs, patient populations, and available resources, acknowledging ongoing advancements in predictive analytics for healthcare. Other advanced algorithms, including DL, still play a pivotal role. ML with GWO represents progress in predictive analytics for hospital readmission scenarios.}
+      \field{issn}{26172496}
+      \field{journaltitle}{Journal of Medical Artificial Intelligence}
+      \field{month}{9}
+      \field{title}{Comparison of machine learning models for predicting 30-day readmission rates for patients with diabetes}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{7}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \field{pages}{23\bibrangedash 23}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.21037/jmai-24-70
+      \endverb
+      \verb{file}
+      \verb PDF:/Users/chrisindris/Zotero CP8305-KD-Chris/storage/952IBSY7/Liu et al. - 2024 - Comparison of machine learning models for predicting 30-day readmission rates for patients with diab.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://jmai.amegroups.com/article/view/9179/html
+      \endverb
+      \verb{url}
+      \verb https://jmai.amegroups.com/article/view/9179/html
+      \endverb
+    \endentry
+    \entry{rubin_correction_2018}{article}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=2f565a8f12613a6e22344d95a1eb3ffd}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={Daniel\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{fullhash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{fullhashraw}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{bibnamehash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{authorbibnamehash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{authornamehash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{authorfullhash}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \strng{authorfullhashraw}{2f565a8f12613a6e22344d95a1eb3ffd}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Hospital readmission is a high-priority health care quality measure and target for cost reduction. Despite broad interest in readmission, relatively little research has focused on patients with diabetes. The burden of diabetes among hospitalized patients, however, is substantial, growing, and costly, and readmissions contribute a significant portion of this burden. Reducing readmission rates of diabetic patients has the potential to greatly reduce health care costs while simultaneously improving care. Risk factors for readmission in this population include lower socioeconomic status, racial/ethnic minority, comorbidity burden, public insurance, emergent or urgent admission, and a history of recent prior hospitalization. Hospitalized patients with diabetes may be at higher risk of readmission than those without diabetes. Potential ways to reduce readmission risk are inpatient education, specialty care, better discharge instructions, coordination of care, and postdischarge support. More studies are needed to test the effect of these interventions on the readmission rates of patients with diabetes.}
+      \field{issn}{1534-4827, 1539-0829}
+      \field{journaltitle}{Current Diabetes Reports}
+      \field{month}{4}
+      \field{number}{4}
+      \field{shorttitle}{Correction to}
+      \field{title}{Correction to: {Hospital} {Readmission} of {Patients} with {Diabetes}}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{18}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \field{pages}{21}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1007/s11892-018-0989-1
+      \endverb
+      \verb{file}
+      \verb PDF:/Users/chrisindris/Zotero CP8305-KD-Chris/storage/RRK27F9Y/Rubin - 2018 - Correction to Hospital Readmission of Patients with Diabetes.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s11892-018-0989-1
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s11892-018-0989-1
+      \endverb
+    \endentry
+    \entry{strack_impact_2014}{article}{}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=103fd95765ed163826f2de56f85438a4}{%
+           family={Strack},
+           familyi={S\bibinitperiod},
+           given={Beata},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=910bdc8580394960a5b00906e3b51d66}{%
+           family={DeShazo},
+           familyi={D\bibinitperiod},
+           given={Jonathan\bibnamedelima P.},
+           giveni={J\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd53a1c57f585af212bfcedf86d5ea86}{%
+           family={Gennings},
+           familyi={G\bibinitperiod},
+           given={Chris},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=74a858c5e89bf8dd52fbed906db13fea}{%
+           family={Olmo},
+           familyi={O\bibinitperiod},
+           given={Juan\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a3de8d4fa8a3181c079c4958bb9d27e8}{%
+           family={Ventura},
+           familyi={V\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4af8c44e0b4b754ac4cda7b5f568cc8a}{%
+           family={Cios},
+           familyi={C\bibinitperiod},
+           given={Krzysztof\bibnamedelima J.},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1dd678a0173b4cf9cf52214d481e7897}{%
+           family={Clore},
+           familyi={C\bibinitperiod},
+           given={John\bibnamedelima N.},
+           giveni={J\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{ffab943ae429aca448bebdbaf64d4c70}
+      \strng{fullhash}{08b11ca3bc0199bc4df8dc67b313d8f2}
+      \strng{fullhashraw}{08b11ca3bc0199bc4df8dc67b313d8f2}
+      \strng{bibnamehash}{ffab943ae429aca448bebdbaf64d4c70}
+      \strng{authorbibnamehash}{ffab943ae429aca448bebdbaf64d4c70}
+      \strng{authornamehash}{ffab943ae429aca448bebdbaf64d4c70}
+      \strng{authorfullhash}{08b11ca3bc0199bc4df8dc67b313d8f2}
+      \strng{authorfullhashraw}{08b11ca3bc0199bc4df8dc67b313d8f2}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Management of hyperglycemia in hospitalized patients has a significant bearing on outcome, in terms of both morbidity and mortality. However, there are few national assessments of diabetes care during hospitalization which could serve as a baseline for change. This analysis of a large clinical database (74 million unique encounters corresponding to 17 million unique patients) was undertaken to provide such an assessment and to find future directions which might lead to improvements in patient safety. Almost 70,000 inpatient diabetes encounters were identified with sufficient detail for analysis. Multivariable logistic regression was used to fit the relationship between the measurement of HbA1c and early readmission while controlling for covariates such as demographics, severity and type of the disease, and type of admission. Results show that the measurement of HbA1c was performed infrequently (18.4\%) in the inpatient setting. The statistical model suggests that the relationship between the probability of readmission and the HbA1c measurement depends on the primary diagnosis. The data suggest further that the greater attention to diabetes reflected in HbA1c determination may improve patient outcomes and lower cost of inpatient care.}
+      \field{issn}{2314-6133, 2314-6141}
+      \field{journaltitle}{BioMed Research International}
+      \field{shorttitle}{Impact of {HbA1c} {Measurement} on {Hospital} {Readmission} {Rates}}
+      \field{title}{Impact of {HbA1c} {Measurement} on {Hospital} {Readmission} {Rates}: {Analysis} of 70,000 {Clinical} {Database} {Patient} {Records}}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2026}
+      \field{volume}{2014}
+      \field{year}{2014}
+      \field{urldateera}{ce}
+      \field{pages}{1\bibrangedash 11}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1155/2014/781670
+      \endverb
+      \verb{file}
+      \verb PDF:/Users/chrisindris/Zotero CP8305-KD-Chris/storage/6X6TGQWH/Strack et al. - 2014 - Impact of HbA1c Measurement on Hospital Readmission Rates Analysis of 70,000 Clinical Database Pati.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.hindawi.com/journals/bmri/2014/781670/
+      \endverb
+      \verb{url}
+      \verb http://www.hindawi.com/journals/bmri/2014/781670/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

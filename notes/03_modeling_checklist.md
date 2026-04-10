@@ -8,7 +8,7 @@ This markdown document serves as a strict technical checklist for a code-generat
 - [ ] **Integrate Imbalance Handling:** Within the pipeline, include the chosen class imbalance strategies for comparison (e.g., SMOTE for synthetic oversampling, or algorithm-level cost-sensitive weights like `class_weight='balanced'` and `scale_pos_weight`).
 
 #### Phase 2: Model Initialization
-- [ ] **Initialize Baseline & Interpretable Models:** Instantiate 0R, 1R, Naïve Bayes, Logistic Regression, Decision Trees (e.g., C4.5/CART), k-Nearest Neighbors (kNN), and Support Vector Machines (SVM with Linear and RBF kernels).
+- [ ] **Initialize Baseline & Interpretable Models:** Instantiate 0R, 1R, Naïve Bayes, Logistic Regression, Decision Trees (e.g., C4.5/CART), k-Nearest Neighbors (kNN), and **SGDClassifier** (scalable linear model; e.g. log loss) for high-dimensional inputs—optionally after fold-local dimensionality reduction (PCA, univariate selection, or SelectFromModel).
 - [ ] **Initialize Advanced Ensemble Models:** Instantiate Random Forest, XGBoost, LightGBM, and CatBoost. These gradient boosting and bagging algorithms are the state-of-the-art benchmarks for tabular data.
 - [ ] **Initialize Rule-Induction Models:** Implement PRISM (Covering Rules) and Association Rule Mining algorithms (e.g., Apriori or FP-Growth) designed to extract actionable, human-readable "If-Then" rules.
 - [ ] **Initialize Deep Learning (Optional/Comparison):** Instantiate an LSTM or DNN model to capture sequential/temporal patient data (if applicable to the sequence format) to compare against the tree-based models.

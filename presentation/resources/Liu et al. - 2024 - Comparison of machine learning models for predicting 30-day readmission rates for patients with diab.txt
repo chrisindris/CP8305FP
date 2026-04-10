@@ -1,0 +1,1933 @@
+Original Article
+
+Page 1 of 16
+
+Comparison of machine learning models for predicting 30-day
+readmission rates for patients with diabetes
+Vincent B. Liu1^, Laura Y. Sue2, Yingnian Wu1
+1
+
+Department of Statistics & Data Science, University of California, Los Angeles (UCLA), Los Angeles, CA, USA; 2Division of Endocrinology,
+
+Diabetes, and Metabolism, Department of Medicine, UCLA David Geffen School of Medicine, Los Angeles, CA, USA
+Contributions: (I) Conception and design: VB Liu; (II) Administrative support: VB Liu; (III) Provision of study materials or patients: VB Liu; (IV)
+Collection and assembly of data: VB Liu; (V) Data analysis and interpretation: VB Liu; (VI) Manuscript writing: All authors; (VII) Final approval of
+manuscript: All authors.
+Correspondence to: Vincent B. Liu, PhD Candidate. Department of Statistics & Data Science, University of California, Los Angeles (UCLA), 8125
+Math Sciences Bldg., Box 951554, Los Angeles, CA 90095-1554, USA. Email: vincebliu@ucla.edu.
+
+Background: Affecting over 25.5 million individuals in the United States, diabetes is linked to increased
+hospital readmission rates, almost double that of patients without diabetes. Previous research suggested the
+predictive superiority of deep learning (DL) models, particularly long short-term memory (LSTM) models,
+compared to traditional machine learning (ML) models, in forecasting diabetes-related hospital readmissions.
+The objective of this study was to compare one DL and 10 ML methods for predicting 30-day readmission
+rates in patients with diabetes.
+Methods: The dataset was obtained from “Diabetes 130-US Hospitals for Years 1999–2008” in the
+University of California Irvine (UCI) Machine Learning Repository and consisted of 101,766 unique
+encounters from 130 hospitals and integrated delivery networks across the United States. Encounters
+were included if they were an inpatient encounter (i.e., hospital admission) during which diabetes was
+entered in the system as a diagnosis. Predictors of readmission included demographic variables (age, race,
+gender), admission and discharge type, number of procedures and medications, diagnosis, and hemoglobin
+A1c (HbA1c) testing, a measure of the last 3 months of glycemic control. The outcome was the rate of
+readmission within 30 days. This study built upon traditional ML algorithms by incorporating the Grey
+Wolf Optimizer (GWO), a swarm intelligence-based optimization algorithm, for feature selection. Data
+preprocessing involved handling missing values, encoding categorical variables, and converting the target
+variable into a binary classification task. Feature engineering included creating service utilization variables,
+age group midpoints, and grouping admission types. Categorical features were one-hot encoded, and the
+dataset underwent standard scaling. Feature selection was conducted using the GWO algorithm, and class
+imbalance was addressed with synthetic minority over-sampling technique (SMOTE) during group k-fold
+cross-validation. Eleven ML algorithms, including random forest (RF), extreme gradient boosting (XGBoost),
+decision tree, support vector machine (SVM), and LSTM were employed for model training and evaluation.
+Results: RF emerged as the most favorable model, consistently outperforming others in F1 score, accuracy,
+precision score, and recall score. The RF model achieved the highest F1 score (0.83) and accuracy (0.88),
+indicating its superior predictive ability, especially in balancing precision and recall. XGBoost showed
+comparable results, achieving the second highest F1 score (0.84) and accuracy (0.88).
+Conclusions: The RF and XGBoost models with GWO outcompeted previous DL predictive modeling in
+diabetes hospital readmission scenarios. However, ML with GWO adoption should be carefully considered
+based on specific hospital needs, patient populations, and available resources, acknowledging ongoing
+advancements in predictive analytics for healthcare. Other advanced algorithms, including DL, still play a
+pivotal role. ML with GWO represents progress in predictive analytics for hospital readmission scenarios.
+
+^ ORCID: 0000-0001-6887-9910.
+
+© AME Publishing Company.
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 2 of 16
+
+Journal of Medical Artificial Intelligence, 2024
+Keywords: Diabetes readmission; predictive modeling; Grey Wolf Optimizer (GWO); machine learning
+algorithms (ML algorithms); random forest (RF)
+Received: 03 April 2024; Accepted: 04 July 2024; Published online: 05 August 2024.
+doi: 10.21037/jmai-24-70
+View this article at: https://dx.doi.org/10.21037/jmai-24-70
+
+Introduction
+Background
+Affecting over 25.5 million people in the United States,
+with the prevalence increasing over time (1), diabetes is
+associated with an increased hospital readmission rate of
+14.4–22.7%, almost twice that of patients without diabetes
+(8.5–13.5%) (2,3). Readmission for this study was defined
+as the all-cause re-hospitalization of a patient to any of the
+130 hospitals and integrated delivery networks within the
+system, both planned and unplanned (4). Higher hospital
+
+Highlight box
+Key findings
+• To predict diabetes-related hospital readmissions, this study
+compared traditional machine learning (ML) algorithms using
+Grey Wolf Optimizer (GWO). The random forest (RF) model
+consistently outperformed others, with the extreme gradient
+boosting (XGBoost) classifier also showcasing competitive
+performance. These findings emphasize the relevance of advanced
+modeling techniques, feature selection, and addressing class
+imbalance for accurate predictions.
+What is known and what is new?
+• Previous research explored models such as deep learning long
+short-term memory and traditional classifiers for diabetes
+readmissions.
+• This study introduces the GWO algorithm and comprehensively
+compares 10 ML algorithms. It contributes to the existing
+literature by demonstrating the superiority of the RF model and
+the XGBoost classifier’s F1 score, revealing that deep learning is
+not the only predictive modeling useful for diabetes readmissions.
+What is the implication, and what should change now?
+• The study’s implications for healthcare providers and policymakers
+are significant. The success of the RF model and the competitive
+performance of the XGBoost classifier when combined with
+GWO suggest that hospitals should consider adopting advanced
+ML algorithms to enhance risk assessments and improve patient
+outcomes. The findings underscore the need for an evolving
+approach to predictive analytics, encouraging healthcare
+institutions to incorporate advanced algorithms for more effective
+and personalized patient care.
+
+© AME Publishing Company.
+
+readmission rates indicate an increased disease burden
+for patients with diabetes and have important medical,
+social, quality of life, and financial implications (5). In one
+study, poor glycemic control was found to be the most
+significant predictor for hospitalization among people with
+diabetes (6), while another study found male sex, longer
+duration of prior hospitalization, number of previous
+hospitalizations, number and severity of comorbidities, and
+lower socioeconomic and/or educational status to be risk
+factors for readmission (2). Another study also found that
+an increased number of prior hospital admissions was the
+most important predictor of readmission, emphasizing the
+importance of longitudinal data (4).
+Several studies have attempted to predict diabetes-related
+hospital readmissions. In a recent study by Hai et al., the
+researchers employed deep learning (DL) long short-term
+memory (LSTM) models to predict unplanned, all-cause,
+30-day readmissions among 36,641 diabetes patients (4).
+They compared these DL models with traditional models,
+and the LSTM model demonstrated significantly higher
+performance, with an area under the receiver operating
+characteristic (ROC) curve (AUROC) of 0.79 compared to
+random forest (RF) at 0.72 (P<0.0001). The study highlights
+the superiority of DL models in predicting readmission
+risk (4). The LSTM model’s performance improved with
+an increasing number of prior encounters, showcasing its
+potential for robust predictions.
+DL models leverage deep neural architectures to
+automatically learn hierarchical representations from data,
+whereas traditional machine learning (ML) models often
+rely on explicit feature engineering and may not handle
+complex patterns as effectively in certain scenarios (7). The
+choice between them depends on the nature of the data, the
+size of the dataset, and the specific requirements of the task
+at hand.
+Shang et al.’s study focused on predicting 30-day hospital
+readmission risk in patients with diabetes using traditional
+ML classifiers (8). The dataset included over 100,000
+records, and the researchers applied various classifiers such
+as RF, Naïve Bayes, and decision tree ensemble. The RF
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+Page 3 of 16
+
+Table 1 Strengths and weaknesses of ML models
+ML model
+
+Description
+
+SVM linear
+kernel
+
+SVMs with a linear kernel are effective in high-dimensional spaces and resistant to overfitting. However, they may struggle
+with noisy data and large datasets
+
+SVM with RBF SVM with an RBF kernel can handle non-linear decision boundaries but requires careful hyperparameter tuning and can
+kernel
+be computationally demanding. Several kernel functions are available, designed for different data types
+XGBoost
+classifier
+
+XGBoost classifier excels in predictive accuracy and performs well on structured data. It is robust to outliers and can
+handle missing data effectively. Nevertheless, it may require extensive hyperparameter tuning and can be computationally
+expensive
+
+Decision tree
+
+Decision trees offer simplicity and interpretability but are susceptible to overfitting and can be unstable due to small
+changes in the data
+
+RF
+
+RFs address the overfitting issue of individual decision trees and are robust across various data types. They provide
+insights into feature importance but might be computationally expensive and struggle with highly imbalanced datasets
+
+Logistic
+regression
+
+Logistic regression is a powerful and interpretable method for binary classification, suitable for modeling the probability of
+an event and efficient for linearly separable problems; however, its assumptions of linearity and independence might be
+restrictive in capturing complex relationships in the data where a linear decision boundary does not suffice
+
+KNN
+
+KNN is simple and intuitive, but it becomes computationally expensive during prediction, particularly with large datasets
+because it stores the entire training dataset without undergoing a separate training stage. It is also sensitive to irrelevant
+or redundant features
+
+Naïve Bayes
+
+Naïve Bayes, known for its simplicity and efficiency, assumes independence between features, which might limit its
+performance on data with complex dependencies
+
+AdaBoost
+
+AdaBoost combines weak learners to form a strong learner, offering resilience against overfitting. However, it can be
+sensitive to noisy data and outliers, and training time may be relatively high
+
+MLP
+
+The MLP excels at capturing complex relationships in data and is adaptable to various types of problems. However,
+its disadvantages include vulnerability to overfitting, dependence on large datasets, and the need for careful tuning of
+hyperparameters. MLP is known for its capability to model complex non-linear relationships, making it effective in tasks
+like image and speech recognition. However, it is prone to overfitting and demands careful tuning of hyperparameters.
+Additionally, it is sensitive to feature scaling
+
+ML, machine learning; SVM, support vector machine; RBF, radial basis function; XGBoost, extreme gradient boosting; RF, random forest;
+KNN, k-nearest neighbor; AdaBoost, adaptive boosting; MLP, multilayer perceptron.
+
+model exhibited the best performance, achieving a higher
+AUROC compared to other algorithms (8).
+Both studies contribute valuable insights into the factors
+influencing hospital readmission in diabetes patients.
+Hai et al.’s research emphasized the superiority of DL
+models (4), while Shang et al.’s study demonstrated that
+traditional ML classifiers, particularly the RF model, are still
+viable and effective for predicting readmission risk (8). These
+findings collectively underscore the importance of advanced
+modeling techniques and comprehensive feature selection
+in enhancing the accuracy of readmission risk prediction for
+patients with diabetes, thereby facilitating more targeted and
+effective interventions to improve patient outcomes.
+
+© AME Publishing Company.
+
+Rationale and knowledge gap
+Using hospital admission data from 130 hospitals and
+integrated delivery networks throughout the United
+States (9), we examined differences in hospital readmissions
+for diabetes-related conditions. Our study expands on past
+prognostic studies examining 30-day readmission rates. Fifty
+patient variables were available for analysis [see Table 1 of
+Strack et al. (9)]. According to prior literature, readmissions
+observed over a longer period of time are primarily related
+to progression of chronic disease, such as diabetes, and thus
+serve as a measure of the quality of outpatient care, whereas
+readmissions occurring shortly after a hospital stay are
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 4 of 16
+
+related to quality-of-care issues during the initial admission
+(10,11).
+While several studies have endeavored to forecast
+diabetes-related hospital readmissions, a notable gap exists
+in comparing the predictive capabilities of traditional ML
+models with emerging DL techniques. Recent research
+by Hai et al. (4) employed DL LSTM models to forecast
+unplanned, all-cause, 30-day readmissions among a sizable
+cohort of diabetes patients. Their findings highlighted
+the superior performance of DL models, particularly the
+LSTM model, compared to conventional approaches such
+as RF. However, the potential of traditional ML classifiers,
+particularly in predicting readmission risk, warrants further
+exploration.
+Additionally, the incorporation of innovative optimization
+algorithms, such as the Grey Wolf Optimizer (GWO),
+presents an opportunity to enhance the predictive accuracy
+of traditional ML models in this domain. A tradeoff exists
+between including all features in a model, which results in
+high dimensionality and more computationally expensive
+models, and involving a domain expert to select a subset
+of variables, which can be costly and less feasible (4).
+Automatic feature selection can strike a balance between the
+two goals of a parsimonious and a complete set of variables.
+GWO, a metaheuristic, nature-inspired optimization
+algorithm, has been used for feature selection in other
+contexts with promising results (12). The importance of a
+robust feature selection method in the preprocessing stage
+was emphasized by Cui et al., who found that a novel feature
+selection technique in combination with SVM produced
+their best model (13).
+There has been broad interest in readmission, but
+relatively little research has focused specifically on
+readmission of patients with diabetes (2). This contrasts
+with the great potential that reducing diabetes-related
+readmissions has to decrease healthcare expenditures:
+Agency for Healthcare Research and Quality Nationwide
+Inpatient Sample data from 2012 indicated that a modest
+5% reduction in the 30-day readmission rate would result
+in 82,754 fewer admissions per year and an annual cost
+savings of $1.2 billion (2,8). As it is already clear that
+diabetic patients have an increased 30-day readmission rate
+of 14.4–22.7% vs. 8.5–13.5% for the overall readmission
+rate of hospitalized patients, this study focuses on predicting
+readmission for diabetes patients, rather than comparing
+patients with and without diabetes.
+
+© AME Publishing Company.
+
+Journal of Medical Artificial Intelligence, 2024
+
+Objective
+The primary objective of this study was to evaluate and
+compare the predictive performance of DL and traditional
+ML algorithms in forecasting diabetes-related hospital
+readmissions using a primary measure of F1 score. In
+developing and validating 10 ML models, we aimed to
+assess the efficacy of DL LSTM models against a selection
+of traditional ML classifiers, including support vector
+machine (SVM), extreme gradient boosting (XGBoost),
+decision tree, RF, logistic regression, k-nearest neighbor
+(KNN), Naïve Bayes, adaptive boosting (AdaBoost),
+multilayer perceptron (MLP), and SVM with radial basis
+function (RBF) kernel. Furthermore, we sought to integrate
+the GWO optimization algorithm into traditional ML
+frameworks to ascertain its impact on predictive accuracy.
+By elucidating the strengths and limitations of both DL
+and traditional ML approaches, this study aimed to provide
+insights into optimizing readmission risk prediction models
+for patients with diabetes, thereby facilitating more targeted
+interventions and improved patient outcomes.
+Non-standardized inpatient and outpatient diabetes
+care can lead to poor glycemic control, which increases
+management and care costs and can contribute to patient
+readmissions. In the United States in 2022, the cost of care
+for people diagnosed with diabetes accounted for one in
+four healthcare dollars, with patients with diabetes spending
+$19,736 per year on medical expenses, about 2.6 times
+higher than patients without diabetes (1). Diabetes-related
+problems, such as microvascular complications (neuropathy,
+nephropathy, retinopathy) and macrovascular complications
+(such as cardiovascular disease and stroke) may also increase
+patients’ morbidity and death. The study seeks to address
+these concerns and enhance patient care results. We present
+this article in accordance with the TRIPOD reporting
+checklist (available at https://jmai.amegroups.com/article/
+view/10.21037/jmai-24-70/rc).
+Methods
+Description of dataset and variables
+Our study focused primarily on predictive modeling
+for hospital readmissions, utilizing a dataset obtained
+from the University of California Irvine (UCI) Machine
+Learning Repository titled “Diabetes 130-US hospitals
+for years 1999–2008” (14). The dataset includes a decade
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+of clinical treatment data [1999–2008] from the Health
+Facts Database, with a specific focus on patients with
+diabetes, from 130 United States hospitals and integrated
+delivery networks in the Midwest (18 hospitals), Northwest
+(58 hospitals), South (28 hospitals), and West (16 hospitals).
+The original dataset comprises 74,036,643 unique
+encounters for 17,880,231 unique patients and 2,889,571
+providers. The encounter satisfied the inclusion criteria if
+it was an inpatient encounter (i.e., hospital admission), any
+kind of diabetes was entered in the system as a diagnosis, the
+length of stay was between 1 and 14 days, and laboratory
+tests and medications were administered. Each entry in the
+dataset from the UCI ML repository thus included hospital
+information test results, prescriptions, and up to 14-day
+hospitalization records for the patients.
+Our main objective was to predict the rates of early
+readmissions, defined as within 30 days after discharge.
+30 days is a criterion usually used by funding agencies (9).
+Inadequate diabetes care in hospitals can lead to worse
+glycemic control, increased management costs due to more
+frequent patient readmissions and an increased risk of
+morbidity and mortality among these patients, and hospitals
+have been fined for having greater than expected 30-day
+readmission rates (2,8).
+Factors included in modeling were demographics (age,
+race, gender), admission and discharge type, number of
+procedures and medications, diagnosis, and hemoglobin
+A1c (HbA1c) testing, a measure of the preceding 3 months
+of glycemic control. These were measured and stored in the
+Health Facts electronic health records system at the time
+of the encounter and included encounter data (emergency,
+inpatient), provider specialty, demographics (age, sex, and
+race), diagnoses and in-hospital procedures documented by
+the International Classification of Diseases, 9th Revision,
+Clinical Modification (ICD-9-CM) codes, laboratory
+data, pharmacy data, in-hospital mortality, and hospital
+characteristics (9). The ‘diabetes medication’ variable was
+a binary variable indicating whether any of the 24 generic
+medications (metformin, repaglinide, etc.) was prescribed.
+Each of the medications was associated with value ‘up’ if the
+dosage was increased during the encounter, ‘down’ if the
+dosage was decreased, ’steady’ if the dosage did not change,
+and ‘no’ if the drug was not prescribed (9). All records
+were deidentified. Table 1 of Strack et al. contains a detailed
+description of all these inputs (9).
+
+© AME Publishing Company.
+
+Page 5 of 16
+
+ML models and preprocessing
+We selected 10 ML algorithms, including SVM with linear
+kernel, SVM with RBF kernel, XGBoost classifier, decision
+tree, RF, logistic regression, KNN, Naïve Bayes, AdaBoost,
+and MLP. We also selected one DL algorithm, which was
+LSTM.
+The above-selected ML models vary in their strengths
+and weaknesses. Table 1 contains a summary of each ML
+model’s strengths and weaknesses (15-20). XGBoost
+classifier excels in predictive accuracy and performs well
+on structured data (21). It is robust to outliers and can
+handle missing data effectively. Nevertheless, it may
+require extensive hyperparameter tuning and can be
+computationally expensive.
+Decision trees offer simplicity and interpretability but are
+susceptible to overfitting and can be unstable due to small
+changes in the data (22). RFs address the overfitting issue of
+individual decision trees and are robust across various data
+types (23). They provide insights into feature importance
+but might be computationally expensive and struggle with
+highly imbalanced datasets.
+Logistic regression is a powerful and interpretable
+method for binary classification, suitable for modeling the
+probability of an event and efficient for linearly separable
+problems (24); however, its assumptions of linearity and
+independence might be restrictive in capturing complex
+relationships in the data where a linear decision boundary
+does not suffice.
+For this research, we employed the zoofs library version
+0.1.26 to implement the GWO algorithm for feature
+selection (25). The library and its dependencies were
+installed using the pip package manager.
+We conducted several data preprocessing steps, including
+handling missing values, encoding categorical variables, and
+converting the target variable into a binary classification
+task. Additionally, we performed various transformations
+and mappings on the dataset, such as re-encoding admission
+type, discharge type, and admission source into fewer
+categories. We converted age intervals into mid-values
+and eliminated duplicate patient records based on the
+‘patient_nbr’ column. Feature engineering techniques were
+employed to process diagnosis columns, resulting in the
+creation of two sets of diagnostic levels. Each diagnosis
+level was then mapped to a numerical representation based
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 6 of 16
+
+on specific conditions. Further modifications to the dataset
+involved calculating the total number of medications used
+by each patient and removing some granular diagnosis
+columns. Notably, we created a service utilization variable
+based on the sum of outpatient visits, emergency visits, and
+inpatient visits. Additionally, we grouped admission type
+and admission source into similar categories. Moreover,
+we performed data preprocessing tasks such as removing
+columns with high missing values and only one unique
+value, as well as grouping the categories of “30-day+” and
+“non-readmitted” into a single category labeled “nonreadmitted within 30 days”.
+Categorical features were one-hot encoded, and
+the dataset was divided into numerical and categorical
+components. Subsequently, standard scaling was applied
+to the numerical features. Feature selection was carried
+out using the GWO algorithm from the zoofs library.
+The selected features were utilized for model training
+and evaluation. To avoid biasing the results, we employed
+group k-fold cross-validation to group encounters for the
+same patient within the same fold. Synthetic minority oversampling technique (SMOTE) was applied on the training
+set of each fold to address class imbalance, resulting in a
+balanced representation of readmitted and non-readmitted
+cases (26).
+A sequential LSTM model was specified with two
+LSTM layers with 50 units followed by dropout layers
+with a dropout rate of 0.2. These were followed by a dense
+layer with a single unit and a sigmoid activation function.
+The model was compiled using binary cross entropy as
+the loss function and the Adam optimizer. The default
+hyperparameters were used for most traditional ML models.
+For the MLP classifier and logistic regression, a maximum
+of 1,000 iterations was specified. The XGBoost classifier
+was configured to use the log loss evaluation metric. The
+Keras classifier for the LSTM model was trained for 10
+epochs with a batch size of 32.
+The performance of various ML models, including MLP,
+XGBoost classifier, decision tree, RF, logistic regression,
+SVM (linear and RBF kernel), KNN, Naïve Bayes, and
+AdaBoost, was evaluated. Performance metrics such as F1
+score, accuracy, precision score, recall score, false negatives,
+and AUROC were computed for each model across 5 folds.
+The average metrics were summarized in a table, providing
+insights into the comparative performance of the models in
+predicting hospital readmission.
+
+© AME Publishing Company.
+
+Journal of Medical Artificial Intelligence, 2024
+
+Statistical analysis
+Figure 1 illustrates a comprehensive overview of a decadelong dataset spanning from 1999 to 2008, consisting of
+electronic health records gathered from 130 hospitals across
+the United States. This extensive dataset comprises 117
+distinct features and encompasses a staggering 74,036,643
+unique patient encounters.
+The progression of data refinement and processing
+stages, started with the establishment of inclusion criteria
+focused on features associated with diabetes. The dataset
+was preprocessed to remove duplicates and handle missing
+values, culminating in the extraction of 55 pertinent
+features from 101,776 encounters, some of which represent
+readmissions.
+Following data preprocessing, feature engineering
+further refined the dataset by dropping columns with
+excessive missing values, only one unique value, and
+creating a new variable called service utilization. Utilizing
+the Greywolf optimizer for feature selection from the
+zoofs package, the dataset was streamlined to 43 features,
+yet retained the same number of encounters. Figure 1 also
+illustrates the stratification of the data into folds for model
+training and testing purposes, with the dataset divided into
+5 folds. Notably, each fold comprises varying numbers of
+training and testing instances.
+We built upon traditional ML algorithms to see if
+we could achieve comparable or better results than the
+DL algorithms in predicting diabetes readmission by
+incorporating the GWO, a swarm intelligence-based
+optimization algorithm, that was developed by Mirjalili
+et al. in 2014 (25). It is inspired by the social hierarchy and
+hunting behavior of grey wolves in nature. The algorithm
+mimics the leadership progression of wolves, where the
+alpha wolf is responsible for making decisions, and the
+beta and delta wolves assist the alpha in fundamental
+administration. The remaining wolves are considered
+omega wolves. In GWO, the fitness solution is known as
+the alpha, and the second, third, and fourth most excellent
+solutions are named beta, delta, and omega, respectively.
+The algorithm has been successfully applied in various
+optimization problems, including feature selection.
+Ultimately, Figure 1 shows that the results were averaged
+across 5 folds to derive a more accurate, less biased estimate
+of a model’s performance, and aid in model selection. These
+comprehensive evaluations of model performance included
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+10 years of electronic health
+records data [1999–2008] of
+130 hospitals and integrated
+delivery networks throughout
+the US 117 features 74,036,643
+encounters
+
+Page 7 of 16
+
+Data preprocessing, including
+feature engineering and feature
+selection using GWO
+43 features
+96,446 encounters
+
+SVM RBF kernel
+
+K-nearest neighbor
+
+Random forest
+
+Decision tree
+
+Train test-split
+
+XGBoost
+Inclusion criteria & selection
+of features associated with
+diabetes
+UCI ML Repository “Diabetes
+130-US Hospitals for years
+1999–2008” (Strack et al., 2014)
+55 features
+101,776 encounters
+
+Obtain final models
+
+Training set
+
+Validation set
+
+n1=86,801
+
+n2=9,645
+
+AdaBoost
+
+Logistic regression
+
+Obtain confidence intervals
+for F1, precision, recall,
+accuracy, and AUROC from
+the cross-validation stage
+
+Obtain F1, precision, recall,
+accuracy, and AUROC from
+the validation set
+
+Naïve Bayes
+
+Multilayer perceptron
+
+SVM linear kernel
+
+Long short-term memory
+
+Work done by previous studies
+
+Data preprocessing and
+train-test split
+
+Hyperparameter selection
+through 5-fold cross-validation
+
+Obtaining metrics
+
+Figure 1 Patient inclusion criteria and distribution into train and test fold datasets. US, United States; UCI, University of California Irvine;
+ML, machine learning; GWO, Grey Wolf Optimizer; SVM, support vector machine; RBF, radial basis function; XGBoost, extreme gradient
+boosting; AUROC, area under the receiver operating characteristic curve.
+
+F1 score, accuracy, precision, recall, and AUROC for
+each ML algorithm evaluated. The statistical analysis was
+conducted in Python programming language.
+Results
+Information about patient demographics, hospital
+admission details, lab testing, and medication use among
+the 101,766 patients included in this study are shown in
+Table 2, presented overall and also broken down by early
+readmission (within 30 days) and later readmission (more
+than 30 days) or not readmitted. Notably, most patients
+were above 60 years of age (>65%), Caucasian (>75%),
+female (53.8%), and admitted through the emergency
+department (53%). On average, patients spent just over
+4 days (4.4 days) in the hospital before being discharged
+home. Information on hospital department, discharge
+disposition, mean number of medications taken, lab tests,
+
+© AME Publishing Company.
+
+procedures done, and HbA1c are also included. In total,
+11,357 of the 101,766 patients were readmitted within
+30 days of discharge.
+The results of applying various ML models to
+predict diabetes readmissions are presented in Table 3, a
+comprehensive overview of the ML models’ performance
+across different evaluation metrics. Each row corresponds
+to a specific model, and the columns represent key metrics
+of F1 score, accuracy, precision score, recall score, and
+AUROC. The overall results in Table 3 were obtained
+by averaging the score across the 5 folds for each of the
+metrics F1 score, accuracy, precision, recall, and AUROC.
+Regression coefficients were not available, but by following
+the preprocessing steps, the ML models may be fully
+reproducible. The small width of the confidence intervals
+(CIs) underscores the reliability of the estimates.
+The F1 score, a metric that balances precision and recall
+and the primary outcome measure of the study, ranged
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 8 of 16
+
+Journal of Medical Artificial Intelligence, 2024
+
+Table 2 Patient demographics, admission/discharge and lab test characteristics
+Variables
+
+Overall, n (%)
+
+Readmitted in <30 days,
+n (%)
+
+Readmitted in >30 days or not readmitted,
+n (%)
+
+Total
+
+101,766 (100.0)
+
+11,357 (100.0)
+
+90,409 (100.0)
+
+Female
+
+54,708 (53.8)
+
+6,152 (54.2)
+
+48,556 (53.7)
+
+Male
+
+47,055 (46.2)
+
+5,205 (45.8)
+
+41,850 (46.3)
+
+0–9
+
+161 (0.2)
+
+3 (0.03)
+
+158 (0.2)
+
+10–19
+
+691 (0.7)
+
+40 (0.4)
+
+651 (0.7)
+
+20–29
+
+1,657 (1.6)
+
+236 (2.1)
+
+1,421 (1.6)
+
+30–39
+
+3,775 (3.7)
+
+424 (3.7)
+
+3,351 (3.7)
+
+40–49
+
+9,685 (9.5)
+
+1,027 (9.0)
+
+8,658 (9.6)
+
+50–59
+
+17,256 (17.0)
+
+1,668 (14.7)
+
+15,588 (17.2)
+
+60–69
+
+22,483 (22.1)
+
+2,502 (22.0)
+
+19,981 (22.1)
+
+70–79
+
+26,068 (25.6)
+
+3,069 (27.0)
+
+22,999 (25.4)
+
+80–89
+
+17,197 (16.9)
+
+2,078 (18.3)
+
+15,119 (16.7)
+
+90–99
+
+2,793 (2.7)
+
+310 (2.7)
+
+2,483 (2.7)
+
+Caucasian
+
+76,099 (74.8)
+
+8,592 (75.7)
+
+67,507 (74.7)
+
+African American
+
+19,210 (18.9)
+
+2,155 (19.0)
+
+17,055 (18.9)
+
+Asian
+
+641 (0.6)
+
+65 (0.6)
+
+576 (0.6)
+
+Hispanic
+
+2,037 (2.0)
+
+212 (1.9)
+
+1,825 (2.0)
+
+Other
+
+1,506 (1.5)
+
+145 (1.3)
+
+1,361 (1.5)
+
+Emergency
+
+53,990 (53.1)
+
+6,221 (54.8)
+
+47,769 (52.8)
+
+Urgent
+
+18,480 (18.2)
+
+2,066 (18.2)
+
+16,414 (18.2)
+
+Elective
+
+18,869 (18.5)
+
+1,961 (17.3)
+
+16,908 (18.7)
+
+Diseases of the circulatory system
+
+30,437 (29.9)
+
+3,485 (30.7)
+
+26,952 (29.8)
+
+Diseases of the respiratory system
+
+14,423 (14.2)
+
+1,403 (12.4)
+
+13,020 (14.4)
+
+Diseases of the digestive system
+
+9,475 (9.3)
+
+1,015 (8.9)
+
+8,460 (9.4)
+
+Endocrine, nutritional and metabolic
+diseases, and immunity disorders
+
+8,757 (8.6)
+
+1,137 (10.0)
+
+7,620 (8.4)
+
+Injury and poisoning
+
+6,974 (6.9)
+
+854 (7.5)
+
+6,120 (6.8)
+
+Diseases of the musculoskeletal system
+and connective tissue
+
+4,957 (4.9)
+
+471 (4.1)
+
+4,486 (5.0)
+
+Diseases of the genitourinary system
+
+5,117 (5.0)
+
+555 (4.9)
+
+4,562 (5.0)
+
+Neoplasms
+
+3,433 (3.4)
+
+346 (3.0)
+
+3,087 (3.4)
+
+Gender
+
+Age (years)
+
+Race
+
+Admission type
+
+Primary diagnosis
+
+Table 2 (continued)
+
+© AME Publishing Company.
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+Page 9 of 16
+
+Table 2 (continued)
+Overall, n (%)
+
+Readmitted in <30 days,
+n (%)
+
+Readmitted in >30 days or not readmitted,
+n (%)
+
+4.4
+
+4.8
+
+4.3
+
+Home
+
+60,234 (59.2)
+
+5,602 (49.3)
+
+54,632 (60.4)
+
+Skilled nursing facility
+
+13,954 (13.7)
+
+2,046 (18.0)
+
+11,908 (13.2)
+
+Home health service
+
+12,902 (12.7)
+
+1,638 (14.4)
+
+11,264 (12.5)
+
+Internal medicine
+
+14,635 (14.38)
+
+1,646 (14.49)
+
+12,989 (14.37)
+
+Family/general practice
+
+7,440 (7.31)
+
+883 (7.77)
+
+6,557 (7.25)
+
+Surgery-general
+
+3,099 (3.05)
+
+342 (3.01)
+
+2,757 (3.05)
+
+Number of procedures done, mean
+
+1.3
+
+1.3
+
+1.3
+
+Number of diagnoses, mean
+
+7.4
+
+7.7
+
+7.4
+
+Number of lab procedures, mean
+
+43.1
+
+44.2
+
+42.7
+
+>8%
+
+8,216 (8.1)
+
+811 (7.1)
+
+7,405 (8.2)
+
+>7%
+
+3,812 (3.7)
+
+383 (3.4)
+
+3,429 (3.8)
+
+Normal (4.0–5.6%)
+
+4,990 (4.9)
+
+482 (4.2)
+
+4,508 (5.0)
+
+None
+
+84748 (83.3)
+
+9,681 (85.2)
+
+75,067 (83.0)
+
+>300 mg/dL
+
+1,264 (1.2)
+
+181 (1.6)
+
+1,083 (1.2)
+
+>200 mg/dL
+
+1,485 (1.5)
+
+185 (1.6)
+
+1,300 (1.4)
+
+Normal (70–140 mg/dL)
+
+2,597 (2.6)
+
+295 (2.6)
+
+2,302 (2.5)
+
+None
+
+96,420 (94.7)
+
+10,696 (94.2)
+
+85,724 (94.8)
+
+Yes
+
+78,363 (77.0)
+
+9,111 (80.2)
+
+69,252 (76.6)
+
+No
+
+23,403 (23.0)
+
+2,246 (19.8)
+
+21,157 (23.4)
+
+16
+
+16.9
+
+15.9
+
+Variables
+Time in hospital (days), mean
+Discharge disposition
+
+Department
+
+HbA1c
+
+Serum glucose
+
+Diabetes meds
+
+Medications, mean
+HbA1c, hemoglobin A1c.
+
+from 0.03 for Naïve Bayes (95% CI: 0.03, 0.03) to 0.83 for
+RF (95% CI: 0.83, 0.84) and 0.84 for XGBoost (95% CI:
+0.83, 0.84). This metric reflects the models’ effectiveness in
+achieving a balance between minimizing false positives and
+false negatives. The highest F1 score was observed for the
+RF model, indicating its superior ability to provide accurate
+predictions while maintaining a good balance between
+precision and recall.
+Accuracy, which measures overall correctness, mirrors
+
+© AME Publishing Company.
+
+the trends in the F1 score. Again, RF achieved the highest
+accuracy (0.88, 95% CI: 0.88, 0.89), emphasizing its
+proficiency in making correct predictions across the dataset.
+Logistic regression and Naïve Bayes exhibited lower
+accuracy, indicating a higher rate of misclassifications in
+their predictions.
+Precision score, representing the ability to correctly
+identify positive instances among predictions, ranged from
+0.81 (MLP, decision tree, and KNN) to 0.83 for RF (95%
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 10 of 16
+
+Journal of Medical Artificial Intelligence, 2024
+
+Table 3 Performance of the eleven ML models for predicting diabetes hospital readmissions with 95% CIs
+ML model
+
+F1 (95% CI)
+
+Accuracy (95% CI)
+
+Precision score (95% CI)
+
+Recall score (95% CI)
+
+AUROC (95% CI)
+
+MLP
+
+0.79 (0.78, 0.8)
+
+0.77 (0.77, 0.78)
+
+0.81 (0.81, 0.82)
+
+0.77 (0.77, 0.78)
+
+0.58 (0.57, 0.59)
+
+XGBoost classifier
+
+0.84 (0.83, 0.84)
+
+0.88 (0.88, 0.89)
+
+0.83 (0.83, 0.84)
+
+0.88 (0.88, 0.89)
+
+0.64 (0.64, 0.65)
+
+Decision tree
+
+0.80 (0.8, 0.8)
+
+0.79 (0.79, 0.79)
+
+0.81 (0.8, 0.81)
+
+0.79 (0.79, 0.79)
+
+0.52 (0.52, 0.53)
+
+RF
+
+0.83 (0.83, 0.84)
+
+0.88 (0.88, 0.89)
+
+0.83 (0.82, 0.83)
+
+0.88 (0.88, 0.89)
+
+0.63 (0.63, 0.64)
+
+Logistic regression
+
+0.70 (0.7, 0.7)
+
+0.64 (0.63, 0.64)
+
+0.83 (0.83, 0.83)
+
+0.64 (0.63, 0.64)
+
+0.63 (0.62, 0.63)
+
+SVM linear kernel
+
+0.7 (0.7, 0.7)
+
+0.63 (0.63, 0.63)
+
+0.83 (0.83, 0.83)
+
+0.63 (0.63, 0.63)
+
+0.49 (0.46, 0.52)
+
+SVM RBF kernel
+
+0.74 (0.74, 0.74)
+
+0.69 (0.69, 0.69)
+
+0.82 (0.82, 0.82)
+
+0.69 (0.69, 0.69)
+
+0.48 (0.46, 0.49)
+
+KNN
+
+0.69 (0.69, 0.69)
+
+0.63 (0.62, 0.63)
+
+0.81 (0.81, 0.81)
+
+0.63 (0.62, 0.63)
+
+0.55 (0.55, 0.55)
+
+Naïve Bayes
+
+0.03 (0.03, 0.03)
+
+0.12 (0.12, 0.12)
+
+0.82 (0.77, 0.86)
+
+0.12 (0.12, 0.12)
+
+0.50 (0.5, 0.5)
+
+AdaBoost
+
+0.84 (0.83, 0.84)
+
+0.86 (0.85, 0.86)
+
+0.82 (0.82, 0.82)
+
+0.86 (0.85, 0.86)
+
+0.62 (0.61, 0.63)
+
+LSTM
+
+0.79 (0.77, 0.81)
+
+0.77 (0.74, 0.8)
+
+0.82 (0.82, 0.82)
+
+0.77 (0.74, 0.8)
+
+0.61 (0.61, 0.61)
+
+ML, machine learning; CI, confidence interval; AUROC, area under the receiver operating characteristic curve; MLP, multilayer perceptron;
+XGBoost, extreme gradient boosting; RF, random forest; SVM, support vector machine; RBF, radial basis function; KNN, k-nearest
+neighbor; AdaBoost, adaptive boosting; LSTM, long short-term memory.
+
+ROC curve
+1.0
+
+True positive rate
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+RF (AUROC =0.64)
+XGBoost (AUROC =0.66)
+LSTM (AUROC =0.61)
+
+0.0
+0.0
+
+0.2
+
+0.4
+0.6
+False positive rate
+
+0.8
+
+1.0
+
+Figure 2 ROC curves for RF, XGBoost, and LSTM. ROC,
+receiver operating characteristic; RF, random forest; AUROC,
+area under the receiver operating characteristic curve; XGBoost,
+extreme gradient boosting; LSTM, long short-term memory.
+
+CI: 0.82, 0.83) and 0.83 for XGBoost (95% CI: 0.83, 0.84).
+High precision values were observed for XGBoost classifier
+and RF, suggesting their effectiveness in minimizing false
+positives. The RF model, with the highest precision, stands
+out as particularly adept at correctly classifying positive
+instances.
+Recall score, assessing a model’s capacity to capture
+
+© AME Publishing Company.
+
+all positive instances, exhibits similar trends to precision.
+XGBoost classifier and RF achieved high recall scores,
+indicating their ability to correctly identify a significant
+portion of actual positive cases. Naïve Bayes, on the other
+hand, displays lower recall, suggesting a higher likelihood of
+missing positive instances in its predictions.
+AUROC, a measure of a model’s performance across
+various threshold settings, demonstrated similar trends
+to recall score and the other metrics. RF achieved high
+AUROC (0.63, 95% CI: 0.63, 0.64), indicating its superior
+ability to distinguish between positive and negative classes.
+In summary, by comparing the F1 score, accuracy,
+precision score, recall score, and AUROC, the RF model
+emerged as the most favorable choice for predicting
+diabetes readmissions in this context. It consistently
+outperformed other models across multiple performance
+metrics, showcasing a robust balance between precision
+and recall, ultimately contributing to the most accurate and
+reliable predictions.
+ROC curves were plotted for RF, XGBoost, and LSTM
+models in Figure 2. The proximity of the ROC for RF
+to the upper left corner indicated its ability to correctly
+identify positive and negative cases correctly, indicating
+high discriminative ability. RF and XGBoost had AUROCs
+of 0.63 (95% CI: 0.63, 0.64) and 0.64 (95% CI: 0.64, 0.65)
+respectively, superior to the LSTM model (0.61, 95% CI:
+0.61, 0.61).
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+Page 11 of 16
+
+Feature
+
+Feature importance from random forest mode
+Discharge_disposition_id
+Service_utilization
+Number_inpatient
+Time_in_hospital
+Age
+Level1_diag1
+Num_procedures
+Number_diagnoses
+Patient_nbr
+Encounter_id
+Num_medications
+Num_lab_procedures
+Number_outpatient
+Number_emergency
+Nummed
+Admission_source_id
+Gender
+Admission_type_id
+A1Cresult
+Numchange
+Insulin
+Change
+Caucasian
+AfricanAmerican
+Glipizide
+Glyburide
+Pioglitazone
+Max_glu_serum
+Rosiglitazone
+Glimepiride
+Repaglinide
+Hispanic
+Asian
+Nateglinide
+Glyburide-metformin
+Acarbose
+Tolazamide
+Miglitol
+Glipizide-metformin
+Tolbutamide
+Troglitazone
+Metformin-pioglitazone
+Acetohexamide
+Metformin-rosiglitazone
+Glimepiride-pioglitazone
+
+0.00
+
+0.02
+
+0.04
+
+0.06
+Importance
+
+0.08
+
+0.10
+
+Figure 3 Graphical representation of features ranked by importance in RF model using Gini gain. RF, random forest.
+
+Partial dependence of HbA1c result and max_glu_serum
+4
+
+Max_glu_serum
+
+3
+
+2
+
+1
+
+0
+0.0
+
+0.5
+
+1.0
+HbA1c result
+
+1.5
+
+2.0
+
+Figure 4 Partial dependence plot of HbA1c and serum glucose
+on readmission rate. Darker, purple shades represent lower
+readmission and lighter, bluer shades represent higher. HbA1c,
+hemoglobin A1c.
+
+© AME Publishing Company.
+
+We found that the type of discharge was most important
+in predicting readmission status based on feature importance
+from the RF model using Gini gain. Demographic
+factors were also important, in the order of age, gender,
+and ethnicity. Details of the initial hospitalization and
+other clinical factors were also important, including
+time spent in hospital, number of procedures, number of
+medications, number of lab procedures, and the created
+service utilization variables. HbA1c test results, insulin, and
+metformin were important in that order. Other lab results
+ranging from glipizide to metformin-rosiglitazone were of
+lesser importance in predicting readmissions (Figure 3).
+Figure 4 shows the partial dependence visualization of
+HbA1c and serum glucose on readmission rate. HbA1c
+measurements of ‘>7%’ and ‘>8%’ were encoded as 1,
+while regular levels were encoded as 0. Also, serum glucose
+measurements of more than 200 and 300 mg/dL were
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 12 of 16
+
+encoded as 1, with normal blood glucose measurements
+encoded as 0. In the visualization, purple shades represent
+lower readmission rates, while blue shades represent higher
+readmission rates. Thus, higher levels of both blood glucose
+and HbA1c were associated with a higher likelihood of
+readmission.
+Discussion
+Key findings
+The landscape of predicting hospital readmission risk
+among diabetes patients has evolved with the advent of
+advanced statistical modeling methods of ML, particularly
+its advanced DL algorithms. In the pursuit of an optimal
+modeling approach, several published studies have explored
+and compared different methodologies to enhance the
+accuracy and efficiency of predicting readmission risks.
+Comparing model performance of the 10 selected GWOoptimized ML algorithms, the results of this study indicate
+that RF clearly stood out as the best algorithm in multiple
+performance metrics, followed by the XGBoost classifier.
+Strengths and limitations
+A strength of this study is that it compared many different
+ML algorithms to predict diabetes readmission rates.
+Furthermore, it utilized a large dataset with a diverse patient
+population and significant sample size. A limitation of the
+study is that the dataset represents one dataset from the
+UCI Machine Learning Repository for 130 hospitals and
+integrated delivery networks from years 1999 to 2008. The
+Hispanic representation is low, and the length of stay in
+the hospital was only between 1 and 14 days. Although the
+electronic health records dataset comprises hospitals from
+each of the four geographic regions (Midwest, Northeast,
+South, and West) of the United States, the sample may
+still not be representative of more recent patients with
+diabetes. Although statistically significant, predictors
+such as blood serum glucose can vary from day to day for
+patients. Another limitation is that for the study to be useful
+clinically, there must be integration of these models in realtime hospital settings to predict patients most likely for
+readmission.
+Comparison with similar research
+Our findings of RF being superior are consistent with that
+
+© AME Publishing Company.
+
+Journal of Medical Artificial Intelligence, 2024
+
+of a few studies in the literature: Thenappan et al. [2023]
+utilized ML classifiers to reduce the risk of readmission
+for diabetes patients (27). The study employed logistic
+regression, RF, and SVMs on a dataset containing patient
+demographic information, medical history, and laboratory
+results. The RF model emerged as the most precise,
+achieving an 83% precision rate. The study emphasized
+the significance of personalized diabetes management
+considering individual patient characteristics and risk
+factors. Also, a study by Shang et al. [2021] analyzed over
+100,000 records of patients with diabetes, comparing
+ML classifiers of RF, Naïve Bayes, and decision tree
+ensemble (8). The RF model also exhibited the best
+performance, suggesting its suitability for predicting 30-day
+readmissions in patients with diabetes.
+Our algorithms performed better than that from Rajput
+and Alashetty [2022], who proposed a ML approach with
+a novel preprocessing technique to reduce the readmission
+risk for diabetes patients (28). By using ML algorithms
+like KNN, SVMs, decision trees, RF, logistic regression,
+gradient boosting, and Gaussian Naïve Bayes, the study
+achieved 77.4% accuracy, compared with 88% from RF and
+from XGBoost classifier in our study. Also, Cui et al. [2018]
+presented an improved SVM-based method for predicting
+readmissions in patients with diabetes (13). Their method
+achieved an accuracy of 81.02% (sensitivity of 82.89%,
+and specificity of 79.23%), outperforming other popular
+algorithms, but was slightly inferior to GWO-optimized RF
+and XGBoost classifier in our study.
+Wang and Zhu [2022] conducted a nationwide study
+using hospital admission data statistics to predict diseasespecific 30-day readmissions (29). They employed an
+ensemble learning framework and identified variations in
+readmission rates among different diseases, emphasizing
+the importance of understanding disease-specific factors
+in predicting readmissions, which is further confirmed by
+our findings with serum glucose, HbA1c, and other disease
+measures in predicting hospital re-admission.
+Our findings of XGBoost as a competitive alternative
+is also consistent with that from Cuong and Wang [2021]
+who compared various machine and DL methods, including
+logistic regression, artificial neural network, Naïve Bayesian
+classifier, SVM, and XGBoost (30). The XGBoost model,
+implemented in Amazon SageMaker, demonstrated the best
+performance, underscoring its efficacy in predicting hospital
+readmissions for patients with diabetes.
+Our findings of the relationships between readmission
+and patient demographics are also consistent with those
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+from Alloghani et al. [2019] who applied ML to recognize
+patterns and combinations of factors associated with
+readmission among diabetes patients (31). The study used
+classifiers like linear discriminant analysis, RF, KNN,
+Naïve Bayes, J48, and SVM. Their findings indicated
+that patients more likely to be readmitted were women,
+Caucasians, outpatients, and those undergoing less rigorous
+lab procedures. However, their findings of receiving less
+medication being associated with higher re-admission
+contrast with our findings.
+Notably, our findings contrasted with those of Hai et al.,
+who found that DL models such as LSTM had higher
+AUROC (0.79) than traditional ML models such as RF
+(0.72), P<0.0001, while we found that traditional ML
+methods remained strong. This discrepancy could be due
+to Hai et al. (4) using a dataset from the Temple University
+Health System hospitals, encompassing a staggering
+number of 2,836,569 encounters, which allowed the DL
+model to perform better.
+Explanations of findings
+Effective follow-up treatment can assist to reduce
+readmissions and related medical expenses (32). Efforts
+to minimize potentially unnecessary hospitalizations for
+diabetes should thus target not just the overall population
+with diabetes, but also, and more particularly, individuals
+who have previously had at least one hospital stay.
+In short, the studies in current literature collectively
+highlight the growing role of advanced ML and DL
+algorithms in predicting hospital readmission risks among
+diabetes patients. While various models demonstrated
+effectiveness, the DL LSTM model by Hai et al. [2022] and
+our GWO-optimized algorithms stood out, showcasing
+significantly superior performance compared to traditional
+models, making them notable candidates for consideration
+in future predictive models (4).
+Our new study introduced model comparison with key
+metrics such as F1, AUROC, accuracy, precision score,
+recall score, and AUROC. In the XGBoost classifier, the
+model achieves a high F1 score of 0.84, and an accuracy of
+0.88. The precision and recall scores are also noteworthy at
+0.84 and 0.88, respectively.
+Although the best models were obtained, they
+should be further refined to include additional clinical
+parameters that may enhance prediction of meaningful
+outcomes. For example, it has been well-documented
+that hypoglycemia and hyperglycemia are associated with
+
+© AME Publishing Company.
+
+Page 13 of 16
+
+adverse patient outcomes. A study by Zapatero et al. found
+that hypoglycemia in diabetes patients in Spanish internal
+medicine wards was associated with early readmission,
+in addition to increased length of stay and inpatient
+mortality (33). Cichosz et al. found that spontaneous
+hypoglycemia in intensive care units (ICUs) led to an
+increased mortality rate of 15.6% in those patients vs.
+8% in patients without hypoglycemia. With respect to
+hyperglycemia, it was strongly associated with adverse
+events in patients without diabetes in ICUs, while the
+impact was smaller in patients with diabetes (34). A possible
+explanation provided for this discrepancy is that surveillance
+of glucose is more prevalent in patients with diabetes, which
+may have led to increased identification of hyperglycemia
+(and therefore potentially earlier intervention or treatment,
+reducing adverse outcomes) (34). Strack et al. also explained
+that monitoring HbA1c appeared to be associated with
+lower readmission rates when the primary diagnosis was
+diabetes because of increased level of care and attention
+paid to diabetes when it was the primary diagnosis (9). A
+summary of other studies detailing the impact of HbA1c
+on 30-day readmission can be found in Rubin (2). Future
+work using the best ML models for examining the effects
+of hypoglycemia and hyperglycemia, via HbA1c measure,
+point of care glucose testing, and/or continuous glucose
+monitoring, is warranted in patients both with and without
+diabetes.
+Implications and actions needed
+Comparing these results with the metrics presented previous
+works outlined above, it is evident that the new model,
+represented by RF and XGBoost classifier, demonstrated
+competitive performance. The AUROC, accuracy, and
+precision score values were notably high, indicating robust
+predictive capabilities. In contrast to previous studies,
+RF outperformed several traditional models cited in the
+literature.
+Across various studies, the presented models have utilized
+different algorithms such as DL, RF, SVMs, and gradient
+boosting, each tailored to specific datasets and objectives.
+However, the new model, based on the RF and XGBoost
+classifier, appears to achieve comparable or superior results
+in terms of accuracy and predictive power.
+While it is crucial to acknowledge the diversity in
+datasets, methodologies, and goals across these studies, the
+RF and XGBoost models set a high standard in terms of
+its overall performance metrics. Whether this sets a new
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 14 of 16
+
+standard or target for the field will depend on the specific
+context and goals of the predictive models.
+Advancements in ML models for predicting hospital
+readmissions, as reflected in the RF and XGBoost
+results, suggest progress in the field. The high accuracy
+and precision scores indicate improved capabilities in
+identifying patients at risk of readmission. However, the
+decision for hospitals to adopt these new models should
+be carefully considered in the context of their specific
+patient populations, resources, and the overall goals of
+readmission prevention. Identifying other important clinical
+or demographic risk factors for hospital readmission, and
+including these in future modeling studies, is also important,
+with an ultimate goal of reducing hospital readmission for
+patients with diabetes.
+In conclusion, the new RF and XGBoost model present
+promising results with high accuracy and precision.
+While they may not establish an entirely new standard, it
+certainly raises the bar for predictive modeling in hospital
+readmission scenarios. Hospitals should adjust the positive
+class threshold for readmissions based on their specific
+needs, balancing more false positives against fewer false
+negatives to find the optimal threshold. Higher hospital
+readmission rates are associated with an increased disease
+burden for patients with diabetes and have important
+medical, social, quality of life, and financial implications (5),
+so predictive modeling could be a useful tool in predicting
+which patients are at higher risk for readmission and
+designing programs to reduce this risk. These could include
+close outpatient follow-up following hospital discharge (with
+the patient’s primary care provider or endocrinologist),
+home health visits, telemedicine follow-up shortly after
+discharge, or other interventions (3). Hospitals should assess
+the compatibility of the model with their specific needs
+before considering adoption, recognizing the ongoing
+advancements in the field of predictive analytics for
+healthcare.
+Conclusions
+The vast amount of electronic health records data available
+can be used to create robust models for predicting hospital
+readmission rates. Our work with one such dataset, from
+the UCI ML repository, of patients from 130 hospitals
+across the United States, showed that the RF and XGBoost
+models, when enhanced with GWO for feature selection,
+group k-fold cross-validation and SMOTE, and feature
+engineering, produced models with F1 scores rivaling or
+
+© AME Publishing Company.
+
+Journal of Medical Artificial Intelligence, 2024
+
+outperforming those models presented in the literature.
+Our work also demonstrated the hierarchy of the eleven
+examined ML models from best to worst for the prediction.
+Future work would involve applying these trained models
+to patients with diabetes in a real-time hospital setting,
+identifying those that are most at-risk for being readmitted
+based on a combination of their demographics, admission
+status, and laboratory tests. These data-driven approaches
+to improving healthcare show high promise and in fact
+already demonstrate remarkable accuracy and utility. Thus,
+hospitals can be encouraged to begin using these models to
+improve patient care and ultimately outcomes for patients
+with diabetes to reduce diabetes related co-morbidities and
+complications.
+Acknowledgments
+Although it was completely anonymous, we would like to
+thank the patients whose data we used. The dataset used
+in this study can be obtained from “Diabetes 130-US
+Hospitals for Years 1999–2008” from the UCI Machine
+Learning Repository located at https://archive.ics.uci.
+edu/dataset/296/diabetes+130-us+hospitals+for+yea
+rs+1999-2008.
+Funding: None.
+Footnote
+Reporting Checklist: The authors have completed the
+TRIPOD reporting checklist. Available at https://jmai.
+amegroups.com/article/view/10.21037/jmai-24-70/rc
+Peer Review File: Available at https://jmai.amegroups.com/
+article/view/10.21037/jmai-24-70/prf
+Conflicts of Interest: All authors have completed the
+ICMJE uniform disclosure form (available at https://jmai.
+amegroups.com/article/view/10.21037/jmai-24-70/coif).
+The authors have no conflicts of interest to declare.
+Ethical Statement: The authors are accountable for all
+aspects of the work in ensuring that questions related
+to the accuracy or integrity of any part of the work are
+appropriately investigated and resolved. IRB and informed
+consent were not required as this study does not involve any
+human experiments.
+Open Access Statement: This is an Open Access article
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Journal of Medical Artificial Intelligence, 2024
+
+distributed in accordance with the Creative Commons
+Attribution-NonCommercial-NoDerivs 4.0 International
+License (CC BY-NC-ND 4.0), which permits the noncommercial replication and distribution of the article with
+the strict proviso that no changes or edits are made and the
+original work is properly cited (including links to both the
+formal publication through the relevant DOI and the license).
+See: https://creativecommons.org/licenses/by-nc-nd/4.0/.
+References
+1.
+
+Parker ED, Lin J, Mahoney T, et al. Economic Costs of
+Diabetes in the U.S. in 2022. Diabetes Care 2024;47:26-43.
+2. Rubin DJ. Correction to: Hospital Readmission of Patients
+with Diabetes. Curr Diab Rep 2018;18:21.
+3. Gregory NS, Seley JJ, Dargar SK, et al. Strategies to
+Prevent Readmission in High-Risk Patients with Diabetes:
+the Importance of an Interdisciplinary Approach. Curr
+Diab Rep 2018;18:54.
+4. Hai AA, Weiner MG, Paranjape A, et al. Deep Learning vs
+Traditional Models for Predicting Hospital Readmission
+among Patients with Diabetes. AMIA Annu Symp Proc
+2022;2022:512-21.
+5. Jiang HJ, Stryer D, Friedman B, et al. Multiple
+hospitalizations for patients with diabetes. Diabetes Care
+2003;26:1421-6.
+6. Moss SE, Klein R, Klein BE. Risk factors for
+hospitalization in people with diabetes. Arch Intern Med
+1999;159:2053-7.
+7. IABAC. What is the difference between machine learning
+and deep learning. 2023. [Cited 2024 Mar 24]. Available
+online: https://iabac.org/blog/what-is-the-differencebetween-machine-learning-and-deep-learning
+8. Shang Y, Jiang K, Wang L, et al. The 30-days hospital
+readmission risk in diabetic patients: predictive modeling
+with machine learning classifiers. BMC Med Inform Decis
+Mak 2021;21:57.
+9. Strack B, DeShazo JP, Gennings C, et al. Impact of HbA1c
+measurement on hospital readmission rates: analysis of
+70,000 clinical database patient records. Biomed Res Int
+2014;2014:781670.
+10. McKay MD, Rowe MM, Bernt FM. Disease chronicity
+and quality of care in hospital readmissions. J Healthc
+Qual 1997;19:33-7.
+11. Benbassat J, Taragin M. Hospital readmissions as
+a measure of quality of health care: advantages and
+limitations. Arch Intern Med 2000;160:1074-81.
+12. Kopecky S, Dwyer C. Nature Inspired Metaheuristic
+
+© AME Publishing Company.
+
+Page 15 of 16
+
+Techniques of Firefly and Grey Wolf Algorithms
+Implemented in Phishing Intrusion Detection Systems.
+In: Arai K. editor. Intelligent Computing. Cham: Springer
+Nature Switzerland; 2023:1309-32.
+13. Cui S, Wang D, Wang Y, et al. An improved support
+vector machine-based diabetic readmission prediction.
+Comput Methods Programs Biomed 2018;166:123-35.
+14. UC Irvine. Diabetes 130-US Hospitals for Years 19992008. 2014. [Cited 2024 Mar 24]. Available online: https://
+archive.ics.uci.edu/dataset/296
+15. IBM. What are support vector machines (SVMs)? 2023.
+[Cited 2024 Mar 24]. Available online: https://www.ibm.
+com/topics/support-vector-machine
+16. IBM. What is the k-nearest neighbors (KNN) algorithm?
+[Cited 2024 Mar 24]. Available online: https://www.ibm.
+com/topics/knn
+17. IBM. What are Naïve Bayes classifiers? [Cited 2024 Mar
+24]. Available online: https://www.ibm.com/topics/naivebayes
+18. Great Learning Team. The Ultimate Guide to AdaBoost
+Algorithm | What is AdaBoost Algorithm? 2022.
+[Cited 2024 Mar 24]. Available online: https://www.
+mygreatlearning.com/blog/adaboost-algorithm/
+19. Rouse M. Multilayer Perceptron. 2017. [Cited 2024
+Mar 24]. Available online: https://www.techopedia.com/
+definition/20879/multilayer-perceptron-mlp
+20. DeepAI. Multilayer Perceptron. 2019. [Cited 2024 Mar
+24]. Available online: https://deepai.org/machine-learningglossary-and-terms/multilayer-perceptron
+21. NVIDIA. XGBoost. [Cited 2024 Mar 24]. Available
+online: https://www.nvidia.com/en-us/glossary/xgboost/
+22. IBM. What is a decision tree? [Cited 2024 Mar 24].
+Available online: https://www.ibm.com/topics/decisiontrees
+23. IBM. What is random forest? [Cited 2024 Mar 24].
+Available online: https://www.ibm.com/topics/randomforest
+24. EliteDataScience. Modern Machine Learning Algorithms:
+Strengths and Weaknesses. 2022. [Cited 2024 Mar 24].
+Available online: https://elitedatascience.com/machinelearning-algorithms
+25. Mirjalili S, Mirjalili SM, Lewis A. Grey Wolf Optimizer.
+Adv Eng Softw 2014;69:46-61.
+26. Chawla NV, Bowyer KW, Hall L O, et al. SMOTE:
+synthetic minority over-sampling technique. J Artif Intell
+Res 2002;16:321-57.
+27. Thenappan S, Ramshankar N, Hemavathy N, et al.
+Machine Learning Classifiers to Decrease Diabetic
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+Page 16 of 16
+
+Patients Probability of Hospital Readmission. In: 2023 4th
+International Conference on Electronics and Sustainable
+Communication Systems (ICESC). IEEE; 2023:829-34.
+28. Rajput GG, Alashetty A. A Machine learning approach
+to reduce the diabetes patient's readmission risk using a
+novel preprocessing technique. In: 2022 4th International
+Conference on Circuits, Control, Communication and
+Computing (I4C). IEEE; 2022:173-7.
+29. Wang S, Zhu X. Nationwide hospital admission data
+statistics and disease-specific 30-day readmission
+prediction. Health Inf Sci Syst 2022;10:25.
+30. Cuong LDP, Wang D. A comparison of machine learning
+methods to predict hospital readmission of diabetic patient.
+Studies of Applied Economics 2021. doi: 10.25115/eea.
+v39i4.4475.
+
+Journal of Medical Artificial Intelligence, 2024
+
+31. Alloghani M, Aljaaf A, Hussain A, et al. Implementation
+of machine learning algorithms to create diabetic patient
+re-admission profiles. BMC Med Inform Decis Mak
+2019;19:253.
+32. Pugh J, Penney LS, Noël PH, et al. Evidence based
+processes to prevent readmissions: more is better, a ten-site
+observational study. BMC Health Serv Res 2021;21:189.
+33. Zapatero A, Gómez-Huelgas R, González N, et al.
+Frequency of hypoglycemia and its impact on length of
+stay, mortality, and short-term readmission in patients with
+diabetes hospitalized in internal medicine wards. Endocr
+Pract 2014;20:870-5.
+34. Cichosz SL, Schaarup C. Hyperglycemia as a Predictor
+for Adverse Outcome in ICU Patients With and Without
+Diabetes. J Diabetes Sci Technol 2017;11:1272-3.
+
+doi: 10.21037/jmai-24-70
+Cite this article as: Liu VB, Sue LY, Wu Y. Comparison of
+machine learning models for predicting 30-day readmission
+rates for patients with diabetes. J Med Artif Intell 2024;7:23.
+
+© AME Publishing Company.
+
+J Med Artif Intell 2024;7:23 | https://dx.doi.org/10.21037/jmai-24-70
+
+

@@ -13,11 +13,11 @@ Status legend:
 
 ### Phase 1: Cross-Validation and Anti-Leakage Setup
 - [x] Stratified 10-fold CV exists, with group-aware variant support.
-- [x] Anti-leakage fold-local pipeline standardized via `build_fold_pipeline` (scaler → optional SMOTE → classifier) across `run_cv_experiment`, `compare_imbalance_strategies`, and `run_tuned_cv_experiment`.
+- [x] Anti-leakage fold-local pipeline standardized via `build_fold_pipeline` (scaler → optional reduction → optional SMOTE → classifier) across `run_cv_experiment`, `compare_imbalance_strategies`, and `run_tuned_cv_experiment`.
 - [x] Imbalance handling unified under the same fold-local pattern (`imbalance_strategy`: none / class_weight / SMOTE) and comparable via `compare_imbalance_strategies` and `run_cv_experiment`.
 
 ### Phase 2: Model Initialization
-- [x] Baseline and interpretable set: ZeroR, OneR, Naive Bayes, Logistic Regression, Decision Tree, kNN, SVM (linear & RBF).
+- [x] Baseline and interpretable set: ZeroR, OneR, Naive Bayes, Logistic Regression, Decision Tree, kNN, SGDClassifier (no kernel SVM in registry; SGD used on full or fold-locally reduced features in notebook §4.5).
 - [x] Advanced ensemble coverage: Random Forest, Gradient Boosting, XGBoost, LightGBM (with optional dependency guards). CatBoost registers when installed; not pinned in `requirements.txt` (optional).
 - [ ] Rule-induction track is missing (PRISM and Apriori/FP-Growth)—defer to optional unsupervised / association-rule notebook or future work.
 - [ ] Optional deep learning comparison is missing (LSTM/DNN).
