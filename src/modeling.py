@@ -93,6 +93,25 @@ except ImportError:  # pragma: no cover
 
 try:
     from lightgbm import LGBMClassifier
+    import lightgbm.compat
+    import lightgbm.sklearn
+
+    for mod in (lightgbm.compat, lightgbm.sklearn):
+        if hasattr(mod, '_LGBMCheckXY') and getattr(mod, '_LGBMCheckXY') is not None:
+            _orig_check_xy = getattr(mod, '_LGBMCheckXY')
+            def _patched_check_xy(*args, _orig=_orig_check_xy, **kwargs):
+                if "force_all_finite" in kwargs:
+                    kwargs["ensure_all_finite"] = kwargs.pop("force_all_finite")
+                return _orig(*args, **kwargs)
+            setattr(mod, '_LGBMCheckXY', _patched_check_xy)
+
+        if hasattr(mod, '_LGBMCheckArray') and getattr(mod, '_LGBMCheckArray') is not None:
+            _orig_check_array = getattr(mod, '_LGBMCheckArray')
+            def _patched_check_array(*args, _orig=_orig_check_array, **kwargs):
+                if "force_all_finite" in kwargs:
+                    kwargs["ensure_all_finite"] = kwargs.pop("force_all_finite")
+                return _orig(*args, **kwargs)
+            setattr(mod, '_LGBMCheckArray', _patched_check_array)
 
     LIGHTGBM_AVAILABLE = True
 except ImportError:  # pragma: no cover
@@ -142,7 +161,7 @@ CLASSIFICATION_MODELS: dict[str, object] = {
     "naive_bayes": GaussianNB(), # fast
     "logistic_regression": LogisticRegression(max_iter=1000, random_state=42), # fast
     "decision_tree": DecisionTreeClassifier(random_state=42), # fast
-    "knn": KNeighborsClassifier(n_neighbors=5), # fast
+    "knn": KNeighborsClassifier(n_neighbors=5, n_jobs=-1), # fast
     "sgd_classifier": SGDClassifier(
         loss="log_loss",
         penalty="l2",
@@ -153,7 +172,7 @@ CLASSIFICATION_MODELS: dict[str, object] = {
         class_weight="balanced",
     ),
     # Ensemble models
-    "random_forest": RandomForestClassifier(n_estimators=100, random_state=42), # pretty fast
+    "random_forest": RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1), # pretty fast
     "gradient_boosting": GradientBoostingClassifier( # pretty fast
         n_estimators=100, random_state=42
     ),
@@ -161,11 +180,11 @@ CLASSIFICATION_MODELS: dict[str, object] = {
 
 if XGBOOST_AVAILABLE:
     CLASSIFICATION_MODELS["xgboost"] = XGBClassifier( # fast
-        n_estimators=100, random_state=42, verbosity=0, eval_metric="logloss",
+        n_estimators=100, random_state=42, verbosity=0, eval_metric="logloss", n_jobs=-1,
     )
 if LIGHTGBM_AVAILABLE:
     CLASSIFICATION_MODELS["lightgbm"] = LGBMClassifier( # very fast
-        n_estimators=100, random_state=42, verbose=-1,
+        n_estimators=100, random_state=42, verbose=-1, n_jobs=-1,
     )
 if CATBOOST_AVAILABLE:
     CLASSIFICATION_MODELS["catboost"] = CatBoostClassifier(
@@ -189,10 +208,21 @@ CLASSIFICATION_MODELS_SGD = {k: v for k, v in CLASSIFICATION_MODELS.items() if k
 # ---------------------------------------------------------------------------
 # Hyperparameter search spaces (used by the nested-CV tuning harness)
 # ---------------------------------------------------------------------------
+import sklearn
+import re
+_sk_match = re.match(r"^(\d+)\.(\d+)", sklearn.__version__)
+_sk_major_minor = tuple(map(int, _sk_match.groups())) if _sk_match else (0, 0)
+
+_lr_penalty_grid = (
+    {"classifier__l1_ratio": [1.0, 0.0]}
+    if _sk_major_minor >= (1, 8)
+    else {"classifier__penalty": ["l1", "l2"]}
+)
+
 HYPERPARAM_GRIDS: dict[str, dict] = {
     "logistic_regression": {
         "classifier__C": [0.01, 0.1, 1.0, 10.0],
-        "classifier__penalty": ["l1", "l2"],
+        **_lr_penalty_grid,
         "classifier__solver": ["liblinear"],
     },
     "decision_tree": {
@@ -540,6 +570,7 @@ def run_cv_experiment(
     threshold: float = 0.5,
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
+    n_jobs: int = -1,
 ) -> dict:
     """Run fold-local cross-validation for all candidate models.
 
@@ -596,7 +627,7 @@ def run_cv_experiment(
         oof_preds = np.full(len(y), fill_value=-1, dtype=int)
         oof_probs = np.full(len(y), fill_value=np.nan)
 
-        for fold_idx, (train_idx, val_idx) in enumerate(splits):
+        def _evaluate_fold(fold_idx, train_idx, val_idx):
             X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
             y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
@@ -626,22 +657,30 @@ def run_cv_experiment(
                 y_prob = None
                 if hasattr(pipeline, "predict_proba"):
                     y_prob = pipeline.predict_proba(X_val)[:, 1]
-                    oof_probs[val_idx] = y_prob
                 elif hasattr(pipeline, "decision_function"):
                     y_prob = expit(pipeline.decision_function(X_val))
-                    oof_probs[val_idx] = y_prob
 
                 if y_prob is not None and threshold != 0.5:
                     y_pred = (y_prob >= threshold).astype(int)
                 else:
                     y_pred = pipeline.predict(X_val)
-                oof_preds[val_idx] = y_pred
 
                 fold_m = compute_classification_metrics(
                     y_val.values, y_pred, y_prob,
                 )
+                return fold_idx, val_idx, y_pred, y_prob, fold_m, None
             except Exception as exc:
-                print(f"  Fold {fold_idx + 1:2d}: FAILED – {exc}")
+                return fold_idx, val_idx, None, None, None, str(exc)
+
+        # Run folds in parallel
+        results_list = joblib.Parallel(n_jobs=n_jobs)(
+            joblib.delayed(_evaluate_fold)(fold_idx, tr_idx, val_idx)
+            for fold_idx, (tr_idx, val_idx) in enumerate(splits)
+        )
+
+        for fold_idx, val_idx, y_pred, y_prob, fold_m, exc_msg in results_list:
+            if exc_msg is not None:
+                print(f"  Fold {fold_idx + 1:2d}: FAILED – {exc_msg}")
                 fold_m = {
                     k: float("nan")
                     for k in [
@@ -650,14 +689,18 @@ def run_cv_experiment(
                         "pr_auc", "brier_score",
                     ]
                 }
-
+            else:
+                oof_preds[val_idx] = y_pred
+                if y_prob is not None:
+                    oof_probs[val_idx] = y_prob
+                
+                auc_str = f"{fold_m.get('auc_roc', float('nan')):.4f}"
+                print(
+                    f"  Fold {fold_idx + 1:2d}: "
+                    f"F1={fold_m['f1']:.4f}  AUC={auc_str}  "
+                    f"Kappa={fold_m['kappa']:.4f}"
+                )
             fold_metrics_list.append(fold_m)
-            auc_str = f"{fold_m.get('auc_roc', float('nan')):.4f}"
-            print(
-                f"  Fold {fold_idx + 1:2d}: "
-                f"F1={fold_m['f1']:.4f}  AUC={auc_str}  "
-                f"Kappa={fold_m['kappa']:.4f}"
-            )
 
         # Aggregate fold metrics with 95 % CIs.
         aggregate: dict[str, dict] = {}
@@ -1412,14 +1455,24 @@ def select_features_l1(
 
     Returns selected column names and the fitted selector estimator.
     """
-    selector_model = LogisticRegression(
-        penalty="l1",
-        solver="liblinear",
-        C=C,
-        class_weight="balanced",
-        max_iter=2000,
-        random_state=random_state,
-    )
+    import sklearn
+    import re
+    _sk_match = re.match(r"^(\d+)\.(\d+)", sklearn.__version__)
+    _sk_major_minor = tuple(map(int, _sk_match.groups())) if _sk_match else (0, 0)
+
+    kwargs = {
+        "solver": "liblinear",
+        "C": C,
+        "class_weight": "balanced",
+        "max_iter": 2000,
+        "random_state": random_state,
+    }
+    if _sk_major_minor >= (1, 8):
+        kwargs["l1_ratio"] = 1.0
+    else:
+        kwargs["penalty"] = "l1"
+
+    selector_model = LogisticRegression(**kwargs)
     selector_model.fit(X_train, y_train)
 
     selector = SelectFromModel(selector_model, prefit=True, threshold="median")
