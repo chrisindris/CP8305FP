@@ -5,7 +5,7 @@
 | Name | Student ID |
 |------|-----------|
 | _Member 1_ | _ID_ |
-| _Member 2_ | _ID_ |
+| _Mojtaba Mohammadi_ | _501069345_ |
 | _Member 3_ | _ID_ |
 
 ## Project Topic
