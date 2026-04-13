@@ -1,0 +1,40 @@
+[2026-04-12T02:32:26.569] error: *** JOB 1306582 ON tri0041 CANCELLED AT 2026-04-12T02:32:26 DUE to SIGNAL Terminated ***
+
+scontrol show job 1306582
+JobId=1306582 JobName=03_modeling.sh
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1939519 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:15
+   RunTime=00:00:55 TimeLimit=00:15:00 TimeMin=N/A
+   SubmitTime=2026-04-12T02:31:22 EligibleTime=2026-04-12T02:31:22
+   AccrueTime=2026-04-12T02:31:22
+   StartTime=2026-04-12T02:31:31 EndTime=2026-04-12T02:32:26 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-12T02:31:31 Scheduler=Backfill
+   Partition=compute AllocNode:Sid=tri-login02:1064300
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0041
+   BatchHost=tri0041
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/03_modeling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh --export=NONE --get-user-env 03_modeling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/03_modeling-1306582.out
+   TresPerTask=cpu=192
+
+sacct -j 1306582
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1306582      03_modeli+ def-wangcs   00:00:55                        01:18.115  02:30.456      0:0 
+1306582.bat+      batch def-wangcs   00:00:56          0  45587940K  01:18.115  02:30.456     0:15 
+1306582.ext+     extern def-wangcs   00:00:57                         00:00:00   00:00:00      0:0 
+

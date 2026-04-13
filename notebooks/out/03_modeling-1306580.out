@@ -1,0 +1,40 @@
+hello world
+
+scontrol show job 1306580
+JobId=1306580 JobName=03_modeling.sh
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1964849 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:03 TimeLimit=00:15:00 TimeMin=N/A
+   SubmitTime=2026-04-12T02:29:58 EligibleTime=2026-04-12T02:29:58
+   AccrueTime=2026-04-12T02:29:58
+   StartTime=2026-04-12T02:29:59 EndTime=2026-04-12T02:30:02 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-12T02:29:59 Scheduler=Main
+   Partition=compute AllocNode:Sid=tri-login02:1064300
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0311
+   BatchHost=tri0311
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/03_modeling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh --export=NONE --get-user-env 03_modeling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/03_modeling-1306580.out
+   TresPerTask=cpu=192
+
+sacct -j 1306580
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1306580      03_modeli+ def-wangcs   00:00:03                         00:00:00   00:00:00      0:0 
+1306580.bat+      batch def-wangcs   00:00:03                         00:00:00   00:00:00      0:0 
+1306580.ext+     extern def-wangcs   00:00:03                         00:00:00   00:00:00      0:0 
+

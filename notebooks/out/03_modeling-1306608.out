@@ -1,0 +1,87 @@
+10
+Shape: (69990, 2473)
+Features: 2472  |  Target: readmitted_binary  |  Classes/Values: 2
+Group-aware CV unavailable (patient_nbr not present in processed data).
+Train: (55992, 2472)  |  Test: (13998, 2472)
+Positive class ratio (train): 0.0898
+Positive class ratio (test) : 0.0898
+L1 feature selection kept 2472 of 2472 features.
+Selected features for optional reduced model: 2472
+
+============================================================
+  Model: zero_r
+============================================================
+  Fold  1: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  2: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  3: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  4: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  5: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  6: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  7: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  8: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  9: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold 10: F1=0.0000  AUC=0.5000  Kappa=0.0000
+            f1: 0.0000 [0.0000, 0.0000]
+       auc_roc: 0.5000 [0.5000, 0.5000]
+         kappa: 0.0000 [0.0000, 0.0000]
+
+============================================================
+  Model: one_r
+============================================================
+  Fold  1: F1=0.1648  AUC=0.5775  Kappa=0.0000
+  Fold  2: F1=0.1648  AUC=0.5985  Kappa=0.0000
+  Fold  3: F1=0.1646  AUC=0.5590  Kappa=0.0000
+  Fold  4: F1=0.1646  AUC=0.5765  Kappa=0.0000
+  Fold  5: F1=0.1649  AUC=0.5919  Kappa=0.0000
+  Fold  6: F1=0.1649  AUC=0.5733  Kappa=0.0000
+  Fold  7: F1=0.1649  AUC=0.5667  Kappa=0.0000
+  Fold  8: F1=0.1649  AUC=0.5870  Kappa=0.0000
+  Fold  9: F1=0.1649  AUC=0.5930  Kappa=0.0000
+  Fold 10: F1=0.1649  AUC=0.5815  Kappa=0.0000
+            f1: 0.1648 [0.1647, 0.1649]
+       auc_roc: 0.5805 [0.5716, 0.5894]
+         kappa: 0.0000 [0.0000, 0.0000]
+
+============================================================
+  Model: naive_bayes
+============================================================
+[2026-04-12T02:41:56.085] error: *** JOB 1306608 ON tri0533 CANCELLED AT 2026-04-12T02:41:56 DUE to SIGNAL Terminated ***
+
+scontrol show job 1306608
+JobId=1306608 JobName=03_modeling.sh
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1913728 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:15
+   RunTime=00:00:51 TimeLimit=00:15:00 TimeMin=N/A
+   SubmitTime=2026-04-12T02:41:05 EligibleTime=2026-04-12T02:41:05
+   AccrueTime=2026-04-12T02:41:05
+   StartTime=2026-04-12T02:41:05 EndTime=2026-04-12T02:41:56 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-12T02:41:05 Scheduler=Main
+   Partition=compute AllocNode:Sid=tri-login02:1064300
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0533
+   BatchHost=tri0533
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=1,mem=767000M,node=1,billing=1
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=1 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/03_modeling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh --export=NONE --get-user-env 03_modeling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/03_modeling-1306608.out
+   TresPerTask=cpu=1
+
+sacct -j 1306608
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1306608      03_modeli+ def-wangcs   00:00:51                        00:53.110  01:47.468      0:0 
+1306608.bat+      batch def-wangcs   00:00:52          0  42641600K  00:53.110  01:47.468     0:15 
+1306608.ext+     extern def-wangcs   00:00:52                         00:00:00   00:00:00      0:0 
+
