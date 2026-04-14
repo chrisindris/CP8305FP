@@ -110,6 +110,9 @@ from src.modeling import (
     save_model,
     SHAP_AVAILABLE,
     LIME_AVAILABLE,
+    REGRESSION_MODELS,
+    train_regressor,
+    evaluate_regressor,
 )
 from src.visualization import (
     plot_confusion_matrix,

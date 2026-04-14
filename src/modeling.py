@@ -9,6 +9,8 @@ intervals, statistical significance testing, calibration diagnostics,
 cost-sensitive evaluation, SHAP explainability, and decision-rule export.
 """
 
+import io
+import os
 import joblib
 import numpy as np
 import pandas as pd
@@ -96,22 +98,27 @@ try:
     import lightgbm.compat
     import lightgbm.sklearn
 
-    for mod in (lightgbm.compat, lightgbm.sklearn):
-        if hasattr(mod, '_LGBMCheckXY') and getattr(mod, '_LGBMCheckXY') is not None:
-            _orig_check_xy = getattr(mod, '_LGBMCheckXY')
+    # LightGBM 4.x calls check_X_y(force_all_finite=False) but sklearn 1.8
+    # renamed that kwarg to ensure_all_finite.  Patch the aliases so the
+    # translation happens at call time.  This fixes main-process usage;
+    # parallel sections additionally use joblib threading backend so all
+    # threads share this patched reference.
+    for _mod in (lightgbm.compat, lightgbm.sklearn):
+        if hasattr(_mod, '_LGBMCheckXY') and getattr(_mod, '_LGBMCheckXY') is not None:
+            _orig_check_xy = getattr(_mod, '_LGBMCheckXY')
             def _patched_check_xy(*args, _orig=_orig_check_xy, **kwargs):
                 if "force_all_finite" in kwargs:
                     kwargs["ensure_all_finite"] = kwargs.pop("force_all_finite")
                 return _orig(*args, **kwargs)
-            setattr(mod, '_LGBMCheckXY', _patched_check_xy)
+            setattr(_mod, '_LGBMCheckXY', _patched_check_xy)
 
-        if hasattr(mod, '_LGBMCheckArray') and getattr(mod, '_LGBMCheckArray') is not None:
-            _orig_check_array = getattr(mod, '_LGBMCheckArray')
+        if hasattr(_mod, '_LGBMCheckArray') and getattr(_mod, '_LGBMCheckArray') is not None:
+            _orig_check_array = getattr(_mod, '_LGBMCheckArray')
             def _patched_check_array(*args, _orig=_orig_check_array, **kwargs):
                 if "force_all_finite" in kwargs:
                     kwargs["ensure_all_finite"] = kwargs.pop("force_all_finite")
                 return _orig(*args, **kwargs)
-            setattr(mod, '_LGBMCheckArray', _patched_check_array)
+            setattr(_mod, '_LGBMCheckArray', _patched_check_array)
 
     LIGHTGBM_AVAILABLE = True
 except ImportError:  # pragma: no cover
@@ -148,6 +155,63 @@ except ImportError:  # pragma: no cover
 # Paths
 # ---------------------------------------------------------------------------
 REPORTS_DIR = Path(__file__).resolve().parents[1] / "reports"
+
+
+# ---------------------------------------------------------------------------
+# CPU budget & parallelization helpers
+# ---------------------------------------------------------------------------
+
+def _get_cpu_budget(total_cpus=None):
+    """Determine available CPU count from env vars or os.cpu_count().
+
+    Checks ``SLURM_CPUS_PER_TASK`` and ``OMP_NUM_THREADS`` before falling
+    back to :func:`os.cpu_count`.
+    """
+    if total_cpus is not None:
+        return total_cpus
+    for var in ("SLURM_CPUS_PER_TASK", "OMP_NUM_THREADS"):
+        val = os.environ.get(var)
+        if val and val.isdigit():
+            return int(val)
+    return os.cpu_count() or 1
+
+
+def _set_estimator_njobs(estimator, n_jobs):
+    """Set ``n_jobs`` on an estimator that supports the parameter."""
+    import warnings
+    try:
+        params = estimator.get_params()
+    except Exception:
+        return
+    if "n_jobs" in params:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=FutureWarning)
+            estimator.set_params(n_jobs=n_jobs)
+
+
+def _suppress_fold_warnings():
+    """Suppress expected, harmless warnings from fold-local feature ops."""
+    import warnings as _w
+    _w.filterwarnings(
+        "ignore", message=r"Features .* are constant", category=UserWarning,
+    )
+    _w.filterwarnings(
+        "ignore", message=r"invalid value encountered in divide",
+        category=RuntimeWarning,
+    )
+    _w.filterwarnings(
+        "ignore", message=r"X does not have valid feature names",
+        category=UserWarning,
+    )
+    _w.filterwarnings(
+        "ignore", message=r"'n_jobs' has no effect",
+        category=FutureWarning,
+    )
+    _w.filterwarnings(
+        "ignore",
+        message=r"`sklearn\.utils\.parallel\.delayed` should be used",
+        category=UserWarning,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -283,6 +347,11 @@ def split_data(
     -------
     X_train, X_test, y_train, y_test
     """
+    import re
+    if hasattr(X, "columns"):
+        X = X.copy()
+        X.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X.columns]
+
     stratify_target = y if stratify else None
     return train_test_split(
         X,
@@ -559,6 +628,132 @@ def compute_confidence_interval(
 # Unified CV experiment runner
 # ---------------------------------------------------------------------------
 
+def _evaluate_single_model(
+    name, estimator, X, y, splits, scale, imbalance_strategy,
+    random_state, reduction, threshold, n_jobs_folds, n_jobs_estimator,
+):
+    """Evaluate a single model across all CV folds.
+
+    Top-level function required by the loky (process-based) joblib backend
+    so that it can be pickled and sent to worker processes.
+
+    Returns
+    -------
+    tuple of (name, result_dict, output_text)
+    """
+    _suppress_fold_warnings()
+    est = clone(estimator)
+    _set_estimator_njobs(est, n_jobs_estimator)
+
+    buf = io.StringIO()
+    buf.write(f"\n{'=' * 60}\n")
+    buf.write(f"  Model: {name}\n")
+    buf.write(f"{'=' * 60}\n")
+
+    fold_metrics_list = []
+    oof_preds = np.full(len(y), fill_value=-1, dtype=int)
+    oof_probs = np.full(len(y), fill_value=np.nan)
+
+    def _evaluate_fold(fold_idx, train_idx, val_idx):
+        X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
+        y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
+        try:
+            use_cw = imbalance_strategy in ("class_weight", "class_weight+smote")
+            pipeline = build_fold_pipeline(
+                est,
+                scale=scale,
+                imbalance_strategy=imbalance_strategy,
+                random_state=random_state,
+                reduction=reduction,
+                y_train=y_tr.values if use_cw else None,
+            )
+            if hasattr(pipeline, "named_steps") and "classifier" in pipeline.named_steps:
+                _set_estimator_njobs(
+                    pipeline.named_steps["classifier"], n_jobs_estimator,
+                )
+
+            uses_smote = imbalance_strategy in ("smote", "class_weight+smote")
+            needs_sample_weight = (
+                use_cw
+                and not uses_smote
+                and not _apply_class_weighting(clone(est), y_tr.values)
+            )
+            if needs_sample_weight:
+                sw = compute_sample_weight("balanced", y_tr)
+                pipeline.fit(X_tr, y_tr, classifier__sample_weight=sw)
+            else:
+                pipeline.fit(X_tr, y_tr)
+
+            y_prob = None
+            if hasattr(pipeline, "predict_proba"):
+                y_prob = pipeline.predict_proba(X_val)[:, 1]
+            elif hasattr(pipeline, "decision_function"):
+                y_prob = expit(pipeline.decision_function(X_val))
+
+            if y_prob is not None and threshold != 0.5:
+                y_pred = (y_prob >= threshold).astype(int)
+            else:
+                y_pred = pipeline.predict(X_val)
+
+            fold_m = compute_classification_metrics(
+                y_val.values, y_pred, y_prob,
+            )
+            return fold_idx, val_idx, y_pred, y_prob, fold_m, None
+        except Exception as exc:
+            return fold_idx, val_idx, None, None, None, str(exc)
+
+    with joblib.parallel_config(backend="threading"):
+        results_list = joblib.Parallel(n_jobs=n_jobs_folds)(
+            joblib.delayed(_evaluate_fold)(fold_idx, tr_idx, val_idx)
+            for fold_idx, (tr_idx, val_idx) in enumerate(splits)
+        )
+
+    for fold_idx, val_idx, y_pred, y_prob, fold_m, exc_msg in results_list:
+        if exc_msg is not None:
+            buf.write(f"  Fold {fold_idx + 1:2d}: FAILED – {exc_msg}\n")
+            fold_m = {
+                k: float("nan")
+                for k in [
+                    "accuracy", "balanced_accuracy", "precision", "recall",
+                    "f1", "f1_weighted", "kappa", "auc_roc", "auprc",
+                    "pr_auc", "brier_score",
+                ]
+            }
+        else:
+            oof_preds[val_idx] = y_pred
+            if y_prob is not None:
+                oof_probs[val_idx] = y_prob
+            auc_str = f"{fold_m.get('auc_roc', float('nan')):.4f}"
+            buf.write(
+                f"  Fold {fold_idx + 1:2d}: "
+                f"F1={fold_m['f1']:.4f}  AUC={auc_str}  "
+                f"Kappa={fold_m['kappa']:.4f}\n"
+            )
+        fold_metrics_list.append(fold_m)
+
+    aggregate = {}
+    for metric in fold_metrics_list[0].keys():
+        scores = np.array([fm[metric] for fm in fold_metrics_list])
+        aggregate[metric] = compute_confidence_interval(scores)
+
+    for metric in ["f1", "auc_roc", "kappa"]:
+        if metric in aggregate:
+            a = aggregate[metric]
+            buf.write(
+                f"  {metric:>12s}: {a['mean']:.4f} "
+                f"[{a['ci_lower']:.4f}, {a['ci_upper']:.4f}]\n"
+            )
+
+    result = {
+        "fold_metrics": fold_metrics_list,
+        "oof_predictions": oof_preds,
+        "oof_probabilities": oof_probs,
+        "aggregate": aggregate,
+    }
+
+    return name, result, buf.getvalue()
+
+
 def run_cv_experiment(
     X: pd.DataFrame,
     y: pd.Series,
@@ -571,13 +766,14 @@ def run_cv_experiment(
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
     n_jobs: int = -1,
+    total_cpus: int | None = None,
 ) -> dict:
-    """Run fold-local cross-validation for all candidate models.
+    """Run fold-local cross-validation for all candidate models **in parallel**.
 
-    Every fold builds an independent preprocessing pipeline
-    (scaler -> optional SMOTE -> estimator) fitted strictly on the training
-    fold.  Out-of-fold (OOF) predictions and probabilities are collected for
-    downstream calibration, cost analysis, and threshold tuning.
+    Models are evaluated concurrently using the loky (process) backend with
+    automatic CPU-budget allocation.  Within each model worker, folds run
+    in parallel via threading.  The budget is sourced from *total_cpus*,
+    or auto-detected from ``SLURM_CPUS_PER_TASK`` / ``OMP_NUM_THREADS``.
 
     Parameters
     ----------
@@ -602,6 +798,12 @@ def run_cv_experiment(
     random_state : int
     reduction : tuple[str, dict] or None
         Optional fold-local reduction; see :func:`make_reduction_step`.
+    n_jobs : int
+        Legacy parameter (kept for API compat).  Effective parallelism is
+        now derived from *total_cpus*.
+    total_cpus : int, optional
+        Total CPU cores available.  Auto-detected from environment when
+        not provided.
 
     Returns
     -------
@@ -611,117 +813,61 @@ def run_cv_experiment(
         oof_probabilities – ndarray of out-of-fold positive-class probabilities
         aggregate         – dict of ``{metric: {mean, std, ci_lower, ci_upper}}``
     """
+    import re
+    if hasattr(X, "columns"):
+        X_clean = X.copy()
+        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
+        X = X_clean
+
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
 
     cv = get_stratified_cv(n_splits=n_splits, random_state=random_state, groups=groups)
     splits = list(cv.split(X, y, groups))
 
-    results = {}
-    for name, estimator in model_configs.items():
-        print(f"\n{'=' * 60}")
-        print(f"  Model: {name}")
-        print(f"{'=' * 60}")
+    # ---- CPU budget allocation ----
+    cpu_budget = _get_cpu_budget(total_cpus)
+    n_models = len(model_configs)
+    n_parallel_models = min(n_models, cpu_budget)
+    cpus_per_model = max(1, cpu_budget // max(1, n_parallel_models))
+    n_jobs_folds = min(n_splits, cpus_per_model)
+    n_jobs_estimator = max(1, cpus_per_model // max(1, n_jobs_folds))
 
-        fold_metrics_list: list[dict] = []
-        oof_preds = np.full(len(y), fill_value=-1, dtype=int)
-        oof_probs = np.full(len(y), fill_value=np.nan)
+    print(
+        f"[Parallel] {n_models} models x {n_splits} folds | "
+        f"CPU budget: {cpu_budget} | "
+        f"{n_parallel_models} parallel models, "
+        f"{n_jobs_folds} fold workers/model, "
+        f"{n_jobs_estimator} CPUs/estimator"
+    )
 
-        def _evaluate_fold(fold_idx, train_idx, val_idx):
-            X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
-            y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
-
-            try:
-                use_cw = imbalance_strategy in ("class_weight", "class_weight+smote")
-                pipeline = build_fold_pipeline(
-                    estimator,
-                    scale=scale,
-                    imbalance_strategy=imbalance_strategy,
-                    random_state=random_state,
-                    reduction=reduction,
-                    y_train=y_tr.values if use_cw else None,
-                )
-
-                uses_smote = imbalance_strategy in ("smote", "class_weight+smote")
-                needs_sample_weight = (
-                    use_cw
-                    and not uses_smote
-                    and not _apply_class_weighting(clone(estimator), y_tr.values)
-                )
-                if needs_sample_weight:
-                    sw = compute_sample_weight("balanced", y_tr)
-                    pipeline.fit(X_tr, y_tr, classifier__sample_weight=sw)
-                else:
-                    pipeline.fit(X_tr, y_tr)
-
-                y_prob = None
-                if hasattr(pipeline, "predict_proba"):
-                    y_prob = pipeline.predict_proba(X_val)[:, 1]
-                elif hasattr(pipeline, "decision_function"):
-                    y_prob = expit(pipeline.decision_function(X_val))
-
-                if y_prob is not None and threshold != 0.5:
-                    y_pred = (y_prob >= threshold).astype(int)
-                else:
-                    y_pred = pipeline.predict(X_val)
-
-                fold_m = compute_classification_metrics(
-                    y_val.values, y_pred, y_prob,
-                )
-                return fold_idx, val_idx, y_pred, y_prob, fold_m, None
-            except Exception as exc:
-                return fold_idx, val_idx, None, None, None, str(exc)
-
-        # Run folds in parallel
-        results_list = joblib.Parallel(n_jobs=n_jobs)(
-            joblib.delayed(_evaluate_fold)(fold_idx, tr_idx, val_idx)
-            for fold_idx, (tr_idx, val_idx) in enumerate(splits)
+    if n_models == 1:
+        name, estimator = next(iter(model_configs.items()))
+        n_jobs_folds_1 = min(n_splits, cpu_budget)
+        n_jobs_est_1 = max(1, cpu_budget // max(1, n_jobs_folds_1))
+        name, result, output = _evaluate_single_model(
+            name, estimator, X, y, splits, scale, imbalance_strategy,
+            random_state, reduction, threshold,
+            n_jobs_folds_1, n_jobs_est_1,
         )
+        print(output, end="")
+        return {name: result}
 
-        for fold_idx, val_idx, y_pred, y_prob, fold_m, exc_msg in results_list:
-            if exc_msg is not None:
-                print(f"  Fold {fold_idx + 1:2d}: FAILED – {exc_msg}")
-                fold_m = {
-                    k: float("nan")
-                    for k in [
-                        "accuracy", "balanced_accuracy", "precision", "recall",
-                        "f1", "f1_weighted", "kappa", "auc_roc", "auprc",
-                        "pr_auc", "brier_score",
-                    ]
-                }
-            else:
-                oof_preds[val_idx] = y_pred
-                if y_prob is not None:
-                    oof_probs[val_idx] = y_prob
-                
-                auc_str = f"{fold_m.get('auc_roc', float('nan')):.4f}"
-                print(
-                    f"  Fold {fold_idx + 1:2d}: "
-                    f"F1={fold_m['f1']:.4f}  AUC={auc_str}  "
-                    f"Kappa={fold_m['kappa']:.4f}"
-                )
-            fold_metrics_list.append(fold_m)
+    parallel_results = joblib.Parallel(
+        n_jobs=n_parallel_models, backend="loky",
+    )(
+        joblib.delayed(_evaluate_single_model)(
+            name, estimator, X, y, splits, scale, imbalance_strategy,
+            random_state, reduction, threshold,
+            n_jobs_folds, n_jobs_estimator,
+        )
+        for name, estimator in model_configs.items()
+    )
 
-        # Aggregate fold metrics with 95 % CIs.
-        aggregate: dict[str, dict] = {}
-        for metric in fold_metrics_list[0].keys():
-            scores = np.array([fm[metric] for fm in fold_metrics_list])
-            aggregate[metric] = compute_confidence_interval(scores)
-
-        results[name] = {
-            "fold_metrics": fold_metrics_list,
-            "oof_predictions": oof_preds,
-            "oof_probabilities": oof_probs,
-            "aggregate": aggregate,
-        }
-
-        for metric in ["f1", "auc_roc", "kappa"]:
-            if metric in aggregate:
-                a = aggregate[metric]
-                print(
-                    f"  {metric:>12s}: {a['mean']:.4f} "
-                    f"[{a['ci_lower']:.4f}, {a['ci_upper']:.4f}]"
-                )
+    results = {}
+    for name, result, output in parallel_results:
+        print(output, end="")
+        results[name] = result
 
     return results
 
@@ -1205,6 +1351,117 @@ def export_forest_top_rules(
 # Nested CV (unbiased tuning + evaluation)
 # ---------------------------------------------------------------------------
 
+def _evaluate_tuned_model(
+    name, estimator, grid, X, y, groups, outer_splits,
+    scale, scoring, random_state, reduction,
+    n_inner_splits, n_jobs_inner, n_fold_workers=2,
+):
+    """Run nested CV for a single model across all outer folds.
+
+    Top-level function for loky pickling.  Uses
+    :class:`concurrent.futures.ThreadPoolExecutor` for outer-fold
+    parallelism so that the inner :class:`GridSearchCV` can use joblib
+    without nesting issues.
+
+    Parameters
+    ----------
+    n_fold_workers : int
+        Max concurrent outer folds per model.  Kept low (default 2)
+        because each concurrent fold holds a full train-split copy
+        plus GridSearchCV state, so memory grows linearly with this.
+
+    Returns
+    -------
+    tuple of (name, result_dict, output_text)
+    """
+    from concurrent.futures import ThreadPoolExecutor
+    _suppress_fold_warnings()
+
+    buf = io.StringIO()
+    buf.write(f"\n{'=' * 60}\n")
+    buf.write(f"  Nested CV: {name}\n")
+    buf.write(f"{'=' * 60}\n")
+
+    n_outer = len(outer_splits)
+    fold_metrics_list = [None] * n_outer
+    best_params_per_fold = [None] * n_outer
+    oof_preds = np.full(len(y), fill_value=-1, dtype=int)
+    oof_probs = np.full(len(y), fill_value=np.nan)
+
+    def _run_outer_fold(fold_idx, train_idx, val_idx):
+        _suppress_fold_warnings()
+        X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
+        y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
+
+        est = clone(estimator)
+        _set_estimator_njobs(est, 1)
+
+        pipeline = build_fold_pipeline(
+            est, scale=scale, random_state=random_state, reduction=reduction,
+        )
+
+        inner_groups = groups.iloc[train_idx] if groups is not None else None
+        inner_cv = get_stratified_cv(
+            n_inner_splits, random_state + fold_idx, inner_groups,
+        )
+
+        gs = GridSearchCV(
+            pipeline, grid, cv=inner_cv, scoring=scoring,
+            n_jobs=n_jobs_inner, refit=True,
+        )
+        with joblib.parallel_config(backend="threading"):
+            gs.fit(X_tr, y_tr, groups=inner_groups)
+
+        best_params = gs.best_params_
+        best_pipeline = gs.best_estimator_
+        y_pred = best_pipeline.predict(X_val)
+
+        y_prob = None
+        if hasattr(best_pipeline, "predict_proba"):
+            y_prob = best_pipeline.predict_proba(X_val)[:, 1]
+
+        fold_m = compute_classification_metrics(y_val.values, y_pred, y_prob)
+        del gs
+        return fold_idx, val_idx, y_pred, y_prob, fold_m, best_params
+
+    n_fold_workers = min(n_outer, n_fold_workers)
+    with ThreadPoolExecutor(max_workers=n_fold_workers) as executor:
+        futures = [
+            executor.submit(_run_outer_fold, fold_idx, tr_idx, val_idx)
+            for fold_idx, (tr_idx, val_idx) in enumerate(outer_splits)
+        ]
+        for future in futures:
+            fold_idx, val_idx, y_pred, y_prob, fold_m, best_params = (
+                future.result()
+            )
+            fold_metrics_list[fold_idx] = fold_m
+            best_params_per_fold[fold_idx] = best_params
+            oof_preds[val_idx] = y_pred
+            if y_prob is not None:
+                oof_probs[val_idx] = y_prob
+            buf.write(
+                f"  Fold {fold_idx + 1:2d}: "
+                f"F1={fold_m['f1']:.4f}  "
+                f"AUC={fold_m.get('auc_roc', float('nan')):.4f}  "
+                f"Best={best_params}\n"
+            )
+
+    aggregate = {}
+    for metric in fold_metrics_list[0].keys():
+        scores = np.array([fm[metric] for fm in fold_metrics_list])
+        aggregate[metric] = compute_confidence_interval(scores)
+
+    result = {
+        "fold_metrics": fold_metrics_list,
+        "oof_predictions": oof_preds,
+        "oof_probabilities": oof_probs,
+        "aggregate": aggregate,
+        "best_params_per_fold": best_params_per_fold,
+    }
+
+    return name, result, buf.getvalue()
+
+
 def run_tuned_cv_experiment(
     X: pd.DataFrame,
     y: pd.Series,
@@ -1218,11 +1475,13 @@ def run_tuned_cv_experiment(
     random_state: int = 42,
     reduction: tuple[str, dict] | None = None,
     n_jobs: int = 1,
+    total_cpus: int | None = None,
 ) -> dict:
     """Nested CV: inner loop tunes hyperparameters, outer loop evaluates.
 
-    This two-level protocol prevents optimistic bias from hyperparameter
-    selection: the outer folds never see the tuning decisions.
+    Models and outer folds run **in parallel**.  This two-level protocol
+    prevents optimistic bias from hyperparameter selection: the outer
+    folds never see the tuning decisions.
 
     Only models that have a corresponding entry in *param_grids* are tuned;
     others are silently skipped.
@@ -1234,11 +1493,17 @@ def run_tuned_cv_experiment(
         Grid-search parameters for the reducer use the ``reducer__`` prefix
         (e.g. ``reducer__n_components``).
     n_jobs : int
-        Parallel jobs for inner :class:`~sklearn.model_selection.GridSearchCV`.
-        Use ``1`` (default) to limit RAM and CPU load: ``-1`` uses all cores
-        and joblib typically copies *X_tr* per worker, which spikes memory on
-        large matrices. Pass ``-1`` only if you have headroom.
+        Legacy parameter (kept for API compat).
+    total_cpus : int, optional
+        Total CPU cores available.  Auto-detected from environment when
+        not provided.
     """
+    import re
+    if hasattr(X, "columns"):
+        X_clean = X.copy()
+        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
+        X = X_clean
+
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
     if param_grids is None:
@@ -1247,78 +1512,61 @@ def run_tuned_cv_experiment(
     outer_cv = get_stratified_cv(n_outer_splits, random_state, groups)
     outer_splits = list(outer_cv.split(X, y, groups))
 
+    tunable = {n: e for n, e in model_configs.items() if n in param_grids}
+    if not tunable:
+        return {}
+
+    # ---- CPU budget (memory-aware) ----
+    # Each loky worker receives a full pickle copy of X and y (~1GB+ for
+    # wide datasets).  Inside each worker, the ThreadPoolExecutor runs
+    # concurrent outer folds, each holding train/val splits and a
+    # GridSearchCV that amplifies memory further.  To prevent OOM:
+    #   1. Cap parallel model workers conservatively.
+    #   2. Cap concurrent outer folds per worker (n_fold_workers).
+    #   3. Give remaining CPUs to GridSearchCV threads.
+    cpu_budget = _get_cpu_budget(total_cpus)
+    n_models = len(tunable)
+    n_parallel_models = min(n_models, max(1, cpu_budget // 96))
+    cpus_per_model = max(1, cpu_budget // max(1, n_parallel_models))
+    n_fold_workers = min(n_outer_splits, max(2, cpus_per_model // 24))
+    n_jobs_inner = max(1, cpus_per_model // max(1, n_fold_workers))
+
+    print(
+        f"[Parallel Nested CV] {n_models} models x {n_outer_splits} outer folds | "
+        f"CPU budget: {cpu_budget} | "
+        f"{n_parallel_models} parallel models, "
+        f"{n_fold_workers} concurrent folds/model, "
+        f"{n_jobs_inner} GridSearchCV workers/fold"
+    )
+
+    if n_models == 1:
+        name = next(iter(tunable))
+        grid = param_grids[name]
+        n_fold_workers_1 = min(n_outer_splits, max(2, cpu_budget // 24))
+        n_jobs_inner_1 = max(1, cpu_budget // max(1, n_fold_workers_1))
+        name, result, output = _evaluate_tuned_model(
+            name, tunable[name], grid, X, y, groups, outer_splits,
+            scale, scoring, random_state, reduction,
+            n_inner_splits, n_jobs_inner_1, n_fold_workers_1,
+        )
+        print(output, end="")
+        return {name: result}
+
+    parallel_results = joblib.Parallel(
+        n_jobs=n_parallel_models, backend="loky",
+    )(
+        joblib.delayed(_evaluate_tuned_model)(
+            name, tunable[name], param_grids[name], X, y, groups, outer_splits,
+            scale, scoring, random_state, reduction,
+            n_inner_splits, n_jobs_inner, n_fold_workers,
+        )
+        for name in tunable
+    )
+
     results = {}
-    for name, estimator in model_configs.items():
-        grid = param_grids.get(name)
-        if grid is None:
-            continue
-
-        print(f"\n{'=' * 60}")
-        print(f"  Nested CV: {name}")
-        print(f"{'=' * 60}")
-
-        fold_metrics_list: list[dict] = []
-        best_params_per_fold: list[dict] = []
-        oof_preds = np.full(len(y), fill_value=-1, dtype=int)
-        oof_probs = np.full(len(y), fill_value=np.nan)
-
-        for fold_idx, (train_idx, val_idx) in enumerate(outer_splits):
-            X_tr, X_val = X.iloc[train_idx], X.iloc[val_idx]
-            y_tr, y_val = y.iloc[train_idx], y.iloc[val_idx]
-
-            pipeline = build_fold_pipeline(
-                estimator,
-                scale=scale,
-                random_state=random_state,
-                reduction=reduction,
-            )
-
-            inner_groups = (
-                groups.iloc[train_idx] if groups is not None else None
-            )
-            inner_cv = get_stratified_cv(
-                n_inner_splits, random_state + fold_idx, inner_groups,
-            )
-
-            gs = GridSearchCV(
-                pipeline, grid, cv=inner_cv, scoring=scoring,
-                n_jobs=n_jobs, refit=True,
-            )
-            gs.fit(X_tr, y_tr, groups=inner_groups)
-            best_params = gs.best_params_
-            best_params_per_fold.append(best_params)
-
-            best_pipeline = gs.best_estimator_
-            y_pred = best_pipeline.predict(X_val)
-            oof_preds[val_idx] = y_pred
-
-            y_prob = None
-            if hasattr(best_pipeline, "predict_proba"):
-                y_prob = best_pipeline.predict_proba(X_val)[:, 1]
-                oof_probs[val_idx] = y_prob
-
-            fold_m = compute_classification_metrics(y_val.values, y_pred, y_prob)
-            fold_metrics_list.append(fold_m)
-            print(
-                f"  Fold {fold_idx + 1:2d}: "
-                f"F1={fold_m['f1']:.4f}  "
-                f"AUC={fold_m.get('auc_roc', float('nan')):.4f}  "
-                f"Best={best_params}"
-            )
-            del gs
-
-        aggregate: dict[str, dict] = {}
-        for metric in fold_metrics_list[0].keys():
-            scores = np.array([fm[metric] for fm in fold_metrics_list])
-            aggregate[metric] = compute_confidence_interval(scores)
-
-        results[name] = {
-            "fold_metrics": fold_metrics_list,
-            "oof_predictions": oof_preds,
-            "oof_probabilities": oof_probs,
-            "aggregate": aggregate,
-            "best_params_per_fold": best_params_per_fold,
-        }
+    for name, result, output in parallel_results:
+        print(output, end="")
+        results[name] = result
 
     return results
 
@@ -1336,6 +1584,7 @@ def compare_imbalance_strategies(
     groups: pd.Series | None = None,
     scoring: str = "f1",
     reduction: tuple[str, dict] | None = None,
+    total_cpus: int | None = None,
 ) -> dict[str, dict[str, float]]:
     """Compare baseline, class-weighted, and SMOTE-based training strategies.
 
@@ -1343,11 +1592,24 @@ def compare_imbalance_strategies(
     Pipelines use the leakage-safe fold-local builder so scaling and SMOTE
     are fit strictly on training folds.
 
+    Strategies are evaluated **in parallel** via
+    :class:`concurrent.futures.ThreadPoolExecutor`.
+
     Parameters
     ----------
     reduction : tuple[str, dict] or None
         Optional fold-local reduction; see :func:`make_reduction_step`.
+    total_cpus : int, optional
+        Total CPU cores available.
     """
+    import re
+    from concurrent.futures import ThreadPoolExecutor
+
+    if hasattr(X_train, "columns"):
+        X_clean = X_train.copy()
+        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
+        X_train = X_clean
+
     if model_name not in CLASSIFICATION_MODELS:
         raise ValueError(
             f"Unknown model '{model_name}'. "
@@ -1358,61 +1620,45 @@ def compare_imbalance_strategies(
     use_scaler = model_name in SCALE_SENSITIVE_MODELS
     splitter = get_stratified_cv(n_splits=cv, random_state=random_state, groups=groups)
 
-    results: dict[str, dict[str, float]] = {}
+    def _eval_strategy(name, pipe):
+        scores = cross_val_score(
+            pipe, X_train, y_train,
+            cv=splitter, scoring=scoring, groups=groups,
+        )
+        return name, {
+            "mean": float(np.mean(scores)),
+            "std": float(np.std(scores)),
+        }
 
-    # Baseline (no imbalance handling).
+    tasks = []
     baseline_pipe = build_fold_pipeline(
-        estimator,
-        scale=use_scaler,
-        imbalance_strategy="none",
-        random_state=random_state,
-        reduction=reduction,
+        estimator, scale=use_scaler, imbalance_strategy="none",
+        random_state=random_state, reduction=reduction,
     )
-    baseline_scores = cross_val_score(
-        baseline_pipe, X_train, y_train,
-        cv=splitter, scoring=scoring, groups=groups,
-    )
-    results["baseline"] = {
-        "mean": float(np.mean(baseline_scores)),
-        "std": float(np.std(baseline_scores)),
-    }
+    tasks.append(("baseline", baseline_pipe))
 
-    # Class-weight balanced.
     if hasattr(estimator, "class_weight"):
         cw_pipe = build_fold_pipeline(
-            estimator,
-            scale=use_scaler,
-            imbalance_strategy="class_weight",
-            random_state=random_state,
-            reduction=reduction,
+            estimator, scale=use_scaler, imbalance_strategy="class_weight",
+            random_state=random_state, reduction=reduction,
         )
-        cw_scores = cross_val_score(
-            cw_pipe, X_train, y_train,
-            cv=splitter, scoring=scoring, groups=groups,
-        )
-        results["class_weight_balanced"] = {
-            "mean": float(np.mean(cw_scores)),
-            "std": float(np.std(cw_scores)),
-        }
+        tasks.append(("class_weight_balanced", cw_pipe))
 
-    # SMOTE (scaler -> SMOTE -> classifier, all fold-local).
     if IMBLEARN_AVAILABLE:
         smote_pipe = build_fold_pipeline(
-            estimator,
-            scale=use_scaler,
-            imbalance_strategy="smote",
-            random_state=random_state,
-            reduction=reduction,
+            estimator, scale=use_scaler, imbalance_strategy="smote",
+            random_state=random_state, reduction=reduction,
         )
-        smote_scores = cross_val_score(
-            smote_pipe, X_train, y_train,
-            cv=splitter, scoring=scoring, groups=groups,
-        )
-        results["smote"] = {
-            "mean": float(np.mean(smote_scores)),
-            "std": float(np.std(smote_scores)),
-        }
-    else:
+        tasks.append(("smote", smote_pipe))
+
+    results: dict[str, dict[str, float]] = {}
+    with ThreadPoolExecutor(max_workers=len(tasks)) as executor:
+        futures = [executor.submit(_eval_strategy, n, p) for n, p in tasks]
+        for future in futures:
+            name, res = future.result()
+            results[name] = res
+
+    if not IMBLEARN_AVAILABLE and "smote" not in results:
         results["smote"] = {"mean": np.nan, "std": np.nan}
 
     print("Imbalance strategy comparison completed.")
@@ -1539,6 +1785,12 @@ def train_classifier(
     -------
     sklearn.pipeline.Pipeline
     """
+    import re
+    if hasattr(X_train, "columns"):
+        X_clean = X_train.copy()
+        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
+        X_train = X_clean
+
     if model_name not in CLASSIFICATION_MODELS:
         raise ValueError(
             f"Unknown model '{model_name}'. "
