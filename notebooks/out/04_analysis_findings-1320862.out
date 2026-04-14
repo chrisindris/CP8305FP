@@ -1,0 +1,61 @@
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/nbformat/__init__.py:96: MissingIDFieldWarning: Cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
+  validate(nb)
+No event loop hook running.
+Model and data loaded successfully.
+Accuracy : 0.9096
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.91      1.00      0.95     12711
+           1       0.92      0.02      0.04      1287
+
+    accuracy                           0.91     13998
+   macro avg       0.92      0.51      0.49     13998
+weighted avg       0.91      0.91      0.87     13998
+
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/04_confusion_matrix_final.png
+<Figure size 600x500 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/04_feature_importance.png
+<Figure size 800x525 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/04_permutation_importance.png
+<Figure size 800x525 with 1 Axes>
+
+scontrol show job 1320862
+JobId=1320862 JobName=openmp_job
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1132929 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=01:10:37 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-04-14T12:19:40 EligibleTime=2026-04-14T12:19:40
+   AccrueTime=2026-04-14T12:19:40
+   StartTime=2026-04-14T12:19:50 EndTime=2026-04-14T13:30:27 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-14T12:19:50 Scheduler=Backfill
+   Partition=compute AllocNode:Sid=tri-login02:2803114
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0837
+   BatchHost=tri0837
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/04_analysis_findings.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 04_analysis_findings.sh --export=NONE --get-user-env 04_analysis_findings.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 04_analysis_findings.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/04_analysis_findings-1320862.out
+   TresPerTask=cpu=192
+
+sacct -j 1320862
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1320862      openmp_job def-wangcs   01:10:37                         00:00:00   00:00:00      0:0 
+1320862.bat+      batch def-wangcs   01:10:37                         00:00:00   00:00:00      0:0 
+1320862.ext+     extern def-wangcs   01:10:37                         00:00:00   00:00:00      0:0 
+

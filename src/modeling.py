@@ -11,6 +11,7 @@ cost-sensitive evaluation, SHAP explainability, and decision-rule export.
 
 import io
 import os
+import re
 import joblib
 import numpy as np
 import pandas as pd
@@ -214,6 +215,22 @@ def _suppress_fold_warnings():
     )
 
 
+_FEATURE_NAME_INVALID_CHARS = re.compile(r'[\[\]{}<>:,"]+')
+
+
+def sanitize_feature_column_names(X: pd.DataFrame) -> pd.DataFrame:
+    """Return a copy of *X* with column names matching training-time sanitization.
+
+    Several training helpers replace characters that can break sklearn feature-name
+    checks (for example one-hot columns like ``A1Cresult_>8`` or ``age_[10-20)``)
+    with underscores.  Call this on holdout or production frames before
+    ``predict`` / ``transform`` when the pipeline was fitted on sanitized names.
+    """
+    out = X.copy()
+    out.columns = [_FEATURE_NAME_INVALID_CHARS.sub('_', str(c)) for c in out.columns]
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Model registry
 # ---------------------------------------------------------------------------
@@ -347,10 +364,8 @@ def split_data(
     -------
     X_train, X_test, y_train, y_test
     """
-    import re
     if hasattr(X, "columns"):
-        X = X.copy()
-        X.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X.columns]
+        X = sanitize_feature_column_names(X)
 
     stratify_target = y if stratify else None
     return train_test_split(
@@ -813,11 +828,8 @@ def run_cv_experiment(
         oof_probabilities – ndarray of out-of-fold positive-class probabilities
         aggregate         – dict of ``{metric: {mean, std, ci_lower, ci_upper}}``
     """
-    import re
     if hasattr(X, "columns"):
-        X_clean = X.copy()
-        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
-        X = X_clean
+        X = sanitize_feature_column_names(X)
 
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
@@ -1498,11 +1510,8 @@ def run_tuned_cv_experiment(
         Total CPU cores available.  Auto-detected from environment when
         not provided.
     """
-    import re
     if hasattr(X, "columns"):
-        X_clean = X.copy()
-        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
-        X = X_clean
+        X = sanitize_feature_column_names(X)
 
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
@@ -1602,13 +1611,10 @@ def compare_imbalance_strategies(
     total_cpus : int, optional
         Total CPU cores available.
     """
-    import re
     from concurrent.futures import ThreadPoolExecutor
 
     if hasattr(X_train, "columns"):
-        X_clean = X_train.copy()
-        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
-        X_train = X_clean
+        X_train = sanitize_feature_column_names(X_train)
 
     if model_name not in CLASSIFICATION_MODELS:
         raise ValueError(
@@ -1785,11 +1791,8 @@ def train_classifier(
     -------
     sklearn.pipeline.Pipeline
     """
-    import re
     if hasattr(X_train, "columns"):
-        X_clean = X_train.copy()
-        X_clean.columns = [re.sub(r'[\[\]{}<>:,"]+', '_', str(col)) for col in X_clean.columns]
-        X_train = X_clean
+        X_train = sanitize_feature_column_names(X_train)
 
     if model_name not in CLASSIFICATION_MODELS:
         raise ValueError(
@@ -1820,6 +1823,8 @@ def evaluate_classifier(
     -------
     dict with accuracy, report, confusion_matrix
     """
+    if hasattr(X_test, "columns"):
+        X_test = sanitize_feature_column_names(X_test)
     y_pred = pipeline.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred)
