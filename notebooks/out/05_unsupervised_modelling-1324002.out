@@ -1,0 +1,155 @@
+No event loop hook running.
+Shape: (69990, 2473)
+Features: 2472  |  Target: readmitted_binary  |  Positive rate: 0.090
+Scaled matrix: (69990, 2472)
+80% variance explained by 1598 / 2472 components
+90% variance explained by 1881 / 2472 components
+95% variance explained by 2044 / 2472 components
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_variance_explained.png
+<Figure size 900x400 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_2d_projection.png
+<Figure size 900x700 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_tsne_2d.png
+<Figure size 900x700 with 1 Axes>
+umap-learn not installed — skipping UMAP visualisation.
+Clustering on PCA-50 representation: (69990, 50)
+  k=2  inertia=9754820.88
+  k=3  inertia=9342442.15
+  k=4  inertia=9187525.19
+  k=5  inertia=8974397.05
+  k=6  inertia=8610575.03
+  k=7  inertia=8455564.59
+  k=8  inertia=8467686.57
+  k=9  inertia=8331347.79
+  k=10  inertia=8175975.69
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_elbow_curve.png
+<Figure size 700x400 with 1 Axes>
+  k=2  silhouette=skipped (smallest cluster is 0.0001 of data)
+  k=3  silhouette=0.0799
+  k=4  silhouette=skipped (smallest cluster is 0.0073 of data)
+  k=5  silhouette=skipped (smallest cluster is 0.0001 of data)
+  k=6  silhouette=skipped (smallest cluster is 0.0001 of data)
+  k=7  silhouette=skipped (smallest cluster is 0.0001 of data)
+  k=8  silhouette=0.0593
+  k=9  silhouette=0.0597
+  k=10  silhouette=skipped (smallest cluster is 0.0000 of data)
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_silhouette_scores.png
+<Figure size 700x400 with 1 Axes>
+
+Best silhouette at k=3
+KMeans (k=3) – Silhouette Score: 0.0799
+<ipython-input-1-7574eada19d4>:2: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['cluster'] = cluster_labels
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_scatter_pca.png
+<Figure size 900x700 with 1 Axes>
+Cluster means (unscaled features):
+         time_in_hospital  ...  number_diagnoses
+cluster                    ...                  
+0                    4.29  ...              7.46
+1                    4.18  ...              7.00
+2                    4.82  ...              6.58
+
+[3 rows x 8 columns]
+Saved to ../reports/tables/05_cluster_profiles.csv
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_profiles.png
+<Figure size 1800x800 with 8 Axes>
+Cluster × Readmission Crosstab:
+readmitted_binary      0     1    All
+cluster                              
+0                  33990  3429  37419
+1                  26681  2544  29225
+2                   3034   312   3346
+All                63705  6285  69990
+
+Chi-squared = 4.74, p = 9.35e-02, dof = 2
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_readmission_rates.png
+<Figure size 700x400 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_dendrogram.png
+<Figure size 1400x600 with 1 Axes>
+Adjusted Rand Index (K-Means vs Agglomerative, k=3): 0.0768
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_kmeans_vs_agglomerative.png
+<Figure size 1600x600 with 2 Axes>
+  k=2  BIC=13096066  AIC=13071793
+  k=3  BIC=8298719  AIC=8262306
+  k=4  BIC=7943876  AIC=7895321
+  k=5  BIC=7734335  AIC=7673639
+  k=6  BIC=7699902  AIC=7627065
+  k=7  BIC=7305441  AIC=7220463
+  k=8  BIC=6939566  AIC=6842447
+  k=9  BIC=6342094  AIC=6232834
+  k=10  BIC=6620782  AIC=6499382
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_gmm_bic_aic.png
+<Figure size 800x400 with 1 Axes>
+GMM (k=3) fitted.
+Mean membership confidence: 0.995
+Cluster sizes: [39273  6475 24242]
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_gmm_scatter.png
+<Figure size 900x700 with 1 Axes>
+ARI (K-Means vs GMM): 0.1243
+Transaction matrix: 69,990 rows × 69 items
+Frequent itemsets found: 55,277
+Association rules (lift >= 1.2): 2,948,778
+Rules with readmitted_binary in consequent: 0
+Empty DataFrame
+Columns: [antecedents, consequents, support, confidence, lift]
+Index: []
+No rules with readmitted_binary in consequent found at these thresholds.
+             n  readmit_rate  ...  number_inpatient_mean  number_diagnoses_mean
+cluster                       ...                                              
+0        37419         0.092  ...                  0.181                  7.455
+1        29225         0.087  ...                  0.184                  7.003
+2         3346         0.093  ...                  0.053                  6.576
+
+[3 rows x 10 columns]
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_feature_heatmap.png
+<Figure size 1000x340 with 2 Axes>
+Cluster 0 (n=37,419): 0 readmission-consequent rules
+Cluster 1 (n=29,225): 0 readmission-consequent rules
+Cluster 2 (n=3,346): 153 readmission-consequent rules
+                                               antecedents  ...      lift
+2416962  frozenset({change_No, age_ordinal, max_glu_ser...  ...  1.215519
+2416886         frozenset({change_No, max_glu_serum_None})  ...  1.215519
+2416882  frozenset({change_No, max_glu_serum_None, glyb...  ...  1.215519
+2416914  frozenset({change_No, age_ordinal, max_glu_ser...  ...  1.215519
+2416918         frozenset({change_No, max_glu_serum_None})  ...  1.215519
+
+[5 rows x 5 columns]
+
+scontrol show job 1324002
+JobId=1324002 JobName=openmp_job
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1128660 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:06:05 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-04-14T17:59:20 EligibleTime=2026-04-14T17:59:20
+   AccrueTime=2026-04-14T17:59:20
+   StartTime=2026-04-14T17:59:21 EndTime=2026-04-14T18:05:26 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-14T17:59:21 Scheduler=Backfill
+   Partition=compute AllocNode:Sid=tri-login02:2803114
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri1217
+   BatchHost=tri1217
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/05_unsupervised_modelling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/05_unsupervised_modelling-1324002.out
+   TresPerTask=cpu=192
+
+sacct -j 1324002
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1324002      openmp_job def-wangcs   00:06:05                         00:00:00   00:00:00      0:0 
+1324002.bat+      batch def-wangcs   00:06:05                         00:00:00   00:00:00      0:0 
+1324002.ext+     extern def-wangcs   00:06:05                         00:00:00   00:00:00      0:0 
+

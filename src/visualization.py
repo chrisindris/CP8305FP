@@ -22,6 +22,26 @@ from sklearn.metrics import (
 )
 from sklearn.inspection import permutation_importance, PartialDependenceDisplay
 from sklearn.calibration import calibration_curve
+from joblib import parallel_backend
+
+# LightGBM 4.5.0 calls check_array(force_all_finite=...) but scikit-learn >=1.8
+# renamed it to ensure_all_finite, causing a TypeError on predict().  Patch once.
+_LGBM_NEEDS_PATCH = False
+try:
+    import lightgbm.sklearn as _lgb_sk
+    from sklearn.utils.validation import check_array as _sk_check_array
+    import inspect as _inspect
+
+    if "force_all_finite" not in _inspect.signature(_sk_check_array).parameters:
+        _LGBM_NEEDS_PATCH = True
+
+        def _patched_check_array(X, *args, **kwargs):
+            kwargs.pop("force_all_finite", None)
+            return _sk_check_array(X, *args, **kwargs)
+
+        _lgb_sk._LGBMCheckArray = _patched_check_array
+except Exception:
+    pass
 
 
 # ---------------------------------------------------------------------------
@@ -225,9 +245,15 @@ def plot_permutation_importance(
     title: str = "Permutation Importance",
 ) -> plt.Figure:
     """Model-agnostic permutation importance chart."""
-    result = permutation_importance(
-        model, X_test, y_test, n_repeats=10, random_state=random_state
-    )
+    # Use threading backend when LightGBM compat patch is active so worker
+    # threads share the in-memory monkey-patch (loky spawns new processes
+    # that import lightgbm fresh and miss the patch).
+    backend = "threading" if _LGBM_NEEDS_PATCH else "loky"
+    with parallel_backend(backend):
+        result = permutation_importance(
+            model, X_test, y_test, n_repeats=10, random_state=random_state,
+            n_jobs=-1,
+        )
     sorted_idx = result.importances_mean.argsort()[::-1][:top_n]
     feature_names = list(X_test.columns)
 

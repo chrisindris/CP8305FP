@@ -1,0 +1,1078 @@
+Looking in links: /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/gentoo2023/x86-64-v4, /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/gentoo2023/x86-64-v3, /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/gentoo2023/generic, /cvmfs/soft.computecanada.ca/custom/python/wheelhouse/generic
+Requirement already satisfied: numpy in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 2)) (2.4.2+computecanada)
+Requirement already satisfied: pandas in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 3)) (3.0.0+computecanada)
+Requirement already satisfied: scipy in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 4)) (1.17.0+computecanada)
+Requirement already satisfied: scikit-learn in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 7)) (1.8.0+computecanada)
+Requirement already satisfied: mlxtend in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 8)) (0.24.0)
+Requirement already satisfied: imbalanced-learn in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 9)) (0.14.1+computecanada)
+Requirement already satisfied: xgboost in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 12)) (3.2.0+computecanada)
+Requirement already satisfied: lightgbm in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 13)) (4.5.0+computecanada)
+Requirement already satisfied: shap in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (0.50.0+computecanada)
+Requirement already satisfied: lime in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (0.2.0.1)
+Requirement already satisfied: matplotlib in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (3.10.8+computecanada)
+Requirement already satisfied: seaborn in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 21)) (0.13.2+computecanada)
+Requirement already satisfied: plotly in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 22)) (6.7.0)
+Requirement already satisfied: jupyter in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (1.1.1+computecanada)
+Requirement already satisfied: notebook in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (7.5.5)
+Requirement already satisfied: ipykernel in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (7.2.0+computecanada)
+Requirement already satisfied: openpyxl in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 30)) (3.1.5+computecanada)
+Requirement already satisfied: xlrd in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 31)) (2.0.2+computecanada)
+Requirement already satisfied: fairlearn in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 32)) (0.12.0)
+Requirement already satisfied: kagglehub in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 33)) (1.0.0)
+Requirement already satisfied: tqdm in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 36)) (4.67.3+computecanada)
+Requirement already satisfied: joblib in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from -r /scratch/indrisch/CP8305FP/requirements.txt (line 37)) (1.5.3+computecanada)
+Requirement already satisfied: python-dateutil>=2.8.2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from pandas->-r /scratch/indrisch/CP8305FP/requirements.txt (line 3)) (2.9.0.post0+computecanada)
+Requirement already satisfied: threadpoolctl>=3.2.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from scikit-learn->-r /scratch/indrisch/CP8305FP/requirements.txt (line 7)) (3.6.0+computecanada)
+Requirement already satisfied: sklearn-compat<0.2,>=0.1.5 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from imbalanced-learn->-r /scratch/indrisch/CP8305FP/requirements.txt (line 9)) (0.1.5+computecanada)
+Requirement already satisfied: packaging>20.9 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (26.0+computecanada)
+Requirement already satisfied: slicer==0.0.8 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (0.0.8+computecanada)
+Requirement already satisfied: numba>=0.54 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (0.65.0+computecanada)
+Requirement already satisfied: cloudpickle in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (3.1.2+computecanada)
+Requirement already satisfied: typing-extensions in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (4.15.0+computecanada)
+Requirement already satisfied: scikit-image>=0.12 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from lime->-r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (0.26.0+computecanada)
+Requirement already satisfied: contourpy>=1.0.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (1.3.3+computecanada)
+Requirement already satisfied: cycler>=0.10 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (0.12.1+computecanada)
+Requirement already satisfied: fonttools>=4.22.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (4.62.1+computecanada)
+Requirement already satisfied: kiwisolver>=1.3.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (1.4.9+computecanada)
+Requirement already satisfied: pillow>=8 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (12.1.0+computecanada)
+Requirement already satisfied: pyparsing>=3 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from matplotlib->-r /scratch/indrisch/CP8305FP/requirements.txt (line 20)) (3.3.2+computecanada)
+Requirement already satisfied: narwhals>=1.15.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from plotly->-r /scratch/indrisch/CP8305FP/requirements.txt (line 22)) (2.19.0)
+Requirement already satisfied: jupyter-console in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (6.6.3+computecanada)
+Requirement already satisfied: nbconvert in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (7.17.1)
+Requirement already satisfied: ipywidgets in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (8.1.8+computecanada)
+Requirement already satisfied: jupyterlab in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (4.5.6)
+Requirement already satisfied: jupyter-server<3,>=2.4.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.17.0+computecanada)
+Requirement already satisfied: jupyterlab-server<3,>=2.28.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.28.0+computecanada)
+Requirement already satisfied: notebook-shim<0.3,>=0.2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.2.4+computecanada)
+Requirement already satisfied: tornado>=6.2.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (6.5.5+computecanada)
+Requirement already satisfied: anyio>=3.1.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (4.13.0+computecanada)
+Requirement already satisfied: argon2-cffi>=21.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (25.1.0+computecanada)
+Requirement already satisfied: jinja2>=3.0.3 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (3.1.6+computecanada)
+Requirement already satisfied: jupyter-client>=7.4.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (8.8.0+computecanada)
+Requirement already satisfied: jupyter-core!=5.0.*,>=4.12 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (5.9.1+computecanada)
+Requirement already satisfied: jupyter-events>=0.11.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.12.0+computecanada)
+Requirement already satisfied: jupyter-server-terminals>=0.4.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.5.4+computecanada)
+Requirement already satisfied: nbformat>=5.3.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (5.10.4+computecanada)
+Requirement already satisfied: overrides>=5.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (7.7.0+computecanada)
+Requirement already satisfied: prometheus-client>=0.9 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.25.0)
+Requirement already satisfied: pyzmq>=24 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (27.1.0+computecanada)
+Requirement already satisfied: send2trash>=1.8.2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.1.0+computecanada)
+Requirement already satisfied: terminado>=0.8.3 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.18.1+computecanada)
+Requirement already satisfied: traitlets>=5.6.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (5.14.3+computecanada)
+Requirement already satisfied: websocket-client>=1.7 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.9.0+computecanada)
+Requirement already satisfied: async-lru>=1.0.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (2.3.0)
+Requirement already satisfied: httpx<1,>=0.25.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.28.1+computecanada)
+Requirement already satisfied: jupyter-lsp>=2.0.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (2.3.1)
+Requirement already satisfied: setuptools>=41.1.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (68.0.0)
+Requirement already satisfied: certifi in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from httpx<1,>=0.25.0->jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (2026.2.25+computecanada)
+Requirement already satisfied: httpcore==1.* in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from httpx<1,>=0.25.0->jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (1.0.9+computecanada)
+Requirement already satisfied: idna in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from httpx<1,>=0.25.0->jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (3.11+computecanada)
+Requirement already satisfied: h11>=0.16 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from httpcore==1.*->httpx<1,>=0.25.0->jupyterlab->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.16.0+computecanada)
+Requirement already satisfied: babel>=2.10 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.18.0)
+Requirement already satisfied: json5>=0.9.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.14.0+computecanada)
+Requirement already satisfied: jsonschema>=4.18.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (4.26.0+computecanada)
+Requirement already satisfied: requests>=2.31 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.33.1+computecanada)
+Requirement already satisfied: comm>=0.1.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.2.3+computecanada)
+Requirement already satisfied: debugpy>=1.6.5 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (1.8.20+computecanada)
+Requirement already satisfied: ipython>=7.23.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (9.10.1)
+Requirement already satisfied: matplotlib-inline>=0.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.2.1+computecanada)
+Requirement already satisfied: nest-asyncio>=1.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (1.6.0+computecanada)
+Requirement already satisfied: psutil>=5.7 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (7.2.2+computecanada)
+Requirement already satisfied: et-xmlfile in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from openpyxl->-r /scratch/indrisch/CP8305FP/requirements.txt (line 30)) (2.0.0+computecanada)
+Requirement already satisfied: kagglesdk<1.0,>=0.1.14 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from kagglehub->-r /scratch/indrisch/CP8305FP/requirements.txt (line 33)) (0.1.18)
+Requirement already satisfied: pyyaml in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from kagglehub->-r /scratch/indrisch/CP8305FP/requirements.txt (line 33)) (6.0.3+computecanada)
+Requirement already satisfied: protobuf in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from kagglesdk<1.0,>=0.1.14->kagglehub->-r /scratch/indrisch/CP8305FP/requirements.txt (line 33)) (7.34.1+computecanada)
+Requirement already satisfied: argon2-cffi-bindings in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (25.1.0+computecanada)
+Requirement already satisfied: decorator>=4.3.2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (5.2.1+computecanada)
+Requirement already satisfied: ipython-pygments-lexers>=1.0.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (1.1.1+computecanada)
+Requirement already satisfied: jedi>=0.18.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.19.2+computecanada)
+Requirement already satisfied: pexpect>4.3 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (4.9.0+computecanada)
+Requirement already satisfied: prompt_toolkit<3.1.0,>=3.0.41 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (3.0.52+computecanada)
+Requirement already satisfied: pygments>=2.11.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (2.20.0+computecanada)
+Requirement already satisfied: stack_data>=0.6.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.6.3+computecanada)
+Requirement already satisfied: wcwidth in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.6.0+computecanada)
+Requirement already satisfied: parso<0.9.0,>=0.8.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jedi>=0.18.1->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.8.6+computecanada)
+Requirement already satisfied: MarkupSafe>=2.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jinja2>=3.0.3->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (3.0.3+computecanada)
+Requirement already satisfied: attrs>=22.2.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (26.1.0+computecanada)
+Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2025.9.1+computecanada)
+Requirement already satisfied: referencing>=0.28.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.37.0+computecanada)
+Requirement already satisfied: rpds-py>=0.25.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.30.0+computecanada)
+Requirement already satisfied: platformdirs>=2.5 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-core!=5.0.*,>=4.12->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (4.9.6)
+Requirement already satisfied: python-json-logger>=2.0.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (4.1.0+computecanada)
+Requirement already satisfied: rfc3339-validator in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.1.4+computecanada)
+Requirement already satisfied: rfc3986-validator>=0.1.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (0.1.1+computecanada)
+Requirement already satisfied: fqdn in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.5.1+computecanada)
+Requirement already satisfied: isoduration in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (20.11.0+computecanada)
+Requirement already satisfied: jsonpointer>1.13 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (3.1.1)
+Requirement already satisfied: rfc3987-syntax>=1.1.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.1.0+computecanada)
+Requirement already satisfied: uri-template in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.3.0+computecanada)
+Requirement already satisfied: webcolors>=24.6.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (25.10.0+computecanada)
+Requirement already satisfied: beautifulsoup4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (4.14.3+computecanada)
+Requirement already satisfied: bleach!=5.0.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from bleach[css]!=5.0.0->nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (6.3.0+computecanada)
+Requirement already satisfied: defusedxml in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.7.1+computecanada)
+Requirement already satisfied: jupyterlab-pygments in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.3.0+computecanada)
+Requirement already satisfied: mistune<4,>=2.0.3 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (3.2.0+computecanada)
+Requirement already satisfied: nbclient>=0.5.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.10.4+computecanada)
+Requirement already satisfied: pandocfilters>=1.4.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (1.5.1+computecanada)
+Requirement already satisfied: webencodings in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from bleach!=5.0.0->bleach[css]!=5.0.0->nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (0.5.1+computecanada)
+Requirement already satisfied: tinycss2<1.5,>=1.1.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from bleach[css]!=5.0.0->nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (1.4.0+computecanada)
+Requirement already satisfied: fastjsonschema>=2.15 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from nbformat>=5.3.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.21.2+computecanada)
+Requirement already satisfied: llvmlite<0.48,>=0.47.0dev0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from numba>=0.54->shap->-r /scratch/indrisch/CP8305FP/requirements.txt (line 16)) (0.47.0+computecanada)
+Requirement already satisfied: ptyprocess>=0.5 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from pexpect>4.3->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.7.0+computecanada)
+Requirement already satisfied: six>=1.5 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from python-dateutil>=2.8.2->pandas->-r /scratch/indrisch/CP8305FP/requirements.txt (line 3)) (1.17.0+computecanada)
+Requirement already satisfied: charset_normalizer<4,>=2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from requests>=2.31->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (3.4.7+computecanada)
+Requirement already satisfied: urllib3<3,>=1.26 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from requests>=2.31->jupyterlab-server<3,>=2.28.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.6.3+computecanada)
+Requirement already satisfied: lark>=1.2.2 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from rfc3987-syntax>=1.1.0->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.3.1+computecanada)
+Requirement already satisfied: networkx>=3.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from scikit-image>=0.12->lime->-r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (3.6.1+computecanada)
+Requirement already satisfied: imageio!=2.35.0,>=2.33 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from scikit-image>=0.12->lime->-r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (2.37.3)
+Requirement already satisfied: tifffile>=2022.8.12 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from scikit-image>=0.12->lime->-r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (2026.3.3)
+Requirement already satisfied: lazy-loader>=0.4 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from scikit-image>=0.12->lime->-r /scratch/indrisch/CP8305FP/requirements.txt (line 17)) (0.5)
+Requirement already satisfied: executing>=1.2.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (2.2.1+computecanada)
+Requirement already satisfied: asttokens>=2.1.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (3.0.1+computecanada)
+Requirement already satisfied: pure-eval in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel->-r /scratch/indrisch/CP8305FP/requirements.txt (line 27)) (0.2.3+computecanada)
+Requirement already satisfied: cffi>=1.0.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2.0.0+computecanada)
+Requirement already satisfied: pycparser in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from cffi>=1.0.1->argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (3.0+computecanada)
+Requirement already satisfied: soupsieve>=1.6.1 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from beautifulsoup4->nbconvert->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (2.8.3+computecanada)
+Requirement already satisfied: widgetsnbextension~=4.0.14 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipywidgets->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (4.0.15+computecanada)
+Requirement already satisfied: jupyterlab_widgets~=3.0.15 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from ipywidgets->jupyter->-r /scratch/indrisch/CP8305FP/requirements.txt (line 25)) (3.0.16+computecanada)
+Requirement already satisfied: arrow>=0.15.0 in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (1.4.0+computecanada)
+Requirement already satisfied: tzdata in /scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages (from arrow>=0.15.0->isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.4.0->notebook->-r /scratch/indrisch/CP8305FP/requirements.txt (line 26)) (2026.1)
+Note: you may need to restart the kernel to use updated packages.
+CPU budget: 192
+No event loop hook running.
+Shape: (69990, 2473)
+Features: 2472  |  Target: readmitted_binary  |  Classes/Values: 2
+Group-aware CV unavailable (patient_nbr not present in processed data).
+Train: (55992, 2472)  |  Test: (13998, 2472)
+Positive class ratio (train): 0.0898
+Positive class ratio (test) : 0.0898
+L1 feature selection kept 2472 of 2472 features.
+Selected features for optional reduced model: 2472
+[Parallel] 11 models x 10 folds | CPU budget: 192 | 11 parallel models, 10 fold workers/model, 1 CPUs/estimator
+
+============================================================
+  Model: zero_r
+============================================================
+  Fold  1: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  2: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  3: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  4: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  5: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  6: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  7: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  8: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold  9: F1=0.0000  AUC=0.5000  Kappa=0.0000
+  Fold 10: F1=0.0000  AUC=0.5000  Kappa=0.0000
+            f1: 0.0000 [0.0000, 0.0000]
+       auc_roc: 0.5000 [0.5000, 0.5000]
+         kappa: 0.0000 [0.0000, 0.0000]
+
+============================================================
+  Model: one_r
+============================================================
+  Fold  1: F1=0.1648  AUC=0.5775  Kappa=0.0000
+  Fold  2: F1=0.1648  AUC=0.5985  Kappa=0.0000
+  Fold  3: F1=0.1646  AUC=0.5590  Kappa=0.0000
+  Fold  4: F1=0.1646  AUC=0.5765  Kappa=0.0000
+  Fold  5: F1=0.1649  AUC=0.5919  Kappa=0.0000
+  Fold  6: F1=0.1649  AUC=0.5733  Kappa=0.0000
+  Fold  7: F1=0.1649  AUC=0.5667  Kappa=0.0000
+  Fold  8: F1=0.1649  AUC=0.5870  Kappa=0.0000
+  Fold  9: F1=0.1649  AUC=0.5930  Kappa=0.0000
+  Fold 10: F1=0.1649  AUC=0.5815  Kappa=0.0000
+            f1: 0.1648 [0.1647, 0.1649]
+       auc_roc: 0.5805 [0.5716, 0.5894]
+         kappa: 0.0000 [0.0000, 0.0000]
+
+============================================================
+  Model: naive_bayes
+============================================================
+  Fold  1: F1=0.1668  AUC=0.5102  Kappa=0.0040
+  Fold  2: F1=0.1689  AUC=0.5164  Kappa=0.0063
+  Fold  3: F1=0.1675  AUC=0.5129  Kappa=0.0050
+  Fold  4: F1=0.1669  AUC=0.5114  Kappa=0.0045
+  Fold  5: F1=0.1667  AUC=0.5096  Kappa=0.0037
+  Fold  6: F1=0.1676  AUC=0.5123  Kappa=0.0048
+  Fold  7: F1=0.1688  AUC=0.5159  Kappa=0.0061
+  Fold  8: F1=0.1660  AUC=0.5077  Kappa=0.0030
+  Fold  9: F1=0.1692  AUC=0.5168  Kappa=0.0065
+  Fold 10: F1=0.1670  AUC=0.5106  Kappa=0.0042
+            f1: 0.1676 [0.1668, 0.1683]
+       auc_roc: 0.5124 [0.5102, 0.5146]
+         kappa: 0.0048 [0.0040, 0.0057]
+
+============================================================
+  Model: logistic_regression
+============================================================
+  Fold  1: F1=0.1690  AUC=0.6114  Kappa=0.0072
+  Fold  2: F1=0.1684  AUC=0.5942  Kappa=0.0063
+  Fold  3: F1=0.1711  AUC=0.6014  Kappa=0.0100
+  Fold  4: F1=0.1691  AUC=0.5945  Kappa=0.0078
+  Fold  5: F1=0.1691  AUC=0.6072  Kappa=0.0071
+  Fold  6: F1=0.1689  AUC=0.6031  Kappa=0.0070
+  Fold  7: F1=0.1713  AUC=0.5886  Kappa=0.0096
+  Fold  8: F1=0.1674  AUC=0.6007  Kappa=0.0053
+  Fold  9: F1=0.1720  AUC=0.6127  Kappa=0.0104
+  Fold 10: F1=0.1680  AUC=0.6269  Kappa=0.0058
+            f1: 0.1694 [0.1683, 0.1705]
+       auc_roc: 0.6041 [0.5961, 0.6120]
+         kappa: 0.0077 [0.0064, 0.0089]
+
+============================================================
+  Model: decision_tree
+============================================================
+  Fold  1: F1=0.1118  AUC=0.5149  Kappa=0.0320
+  Fold  2: F1=0.1098  AUC=0.5126  Kappa=0.0261
+  Fold  3: F1=0.1156  AUC=0.5155  Kappa=0.0319
+  Fold  4: F1=0.1339  AUC=0.5251  Kappa=0.0518
+  Fold  5: F1=0.1298  AUC=0.5225  Kappa=0.0458
+  Fold  6: F1=0.1401  AUC=0.5283  Kappa=0.0585
+  Fold  7: F1=0.0764  AUC=0.4962  Kappa=-0.0080
+  Fold  8: F1=0.1043  AUC=0.5106  Kappa=0.0226
+  Fold  9: F1=0.1354  AUC=0.5258  Kappa=0.0530
+  Fold 10: F1=0.1239  AUC=0.5204  Kappa=0.0428
+            f1: 0.1181 [0.1045, 0.1317]
+       auc_roc: 0.5172 [0.5104, 0.5240]
+         kappa: 0.0357 [0.0217, 0.0496]
+
+============================================================
+  Model: knn
+============================================================
+  Fold  1: F1=0.1704  AUC=0.5348  Kappa=0.0180
+  Fold  2: F1=0.1666  AUC=0.5324  Kappa=0.0132
+  Fold  3: F1=0.1763  AUC=0.5574  Kappa=0.0248
+  Fold  4: F1=0.1745  AUC=0.5581  Kappa=0.0230
+  Fold  5: F1=0.1688  AUC=0.5454  Kappa=0.0158
+  Fold  6: F1=0.1691  AUC=0.5382  Kappa=0.0167
+  Fold  7: F1=0.1716  AUC=0.5401  Kappa=0.0190
+  Fold  8: F1=0.1839  AUC=0.5667  Kappa=0.0345
+  Fold  9: F1=0.1849  AUC=0.5672  Kappa=0.0349
+  Fold 10: F1=0.1769  AUC=0.5519  Kappa=0.0259
+            f1: 0.1743 [0.1698, 0.1788]
+       auc_roc: 0.5492 [0.5400, 0.5584]
+         kappa: 0.0226 [0.0172, 0.0280]
+
+============================================================
+  Model: sgd_classifier
+============================================================
+  Fold  1: F1=0.1697  AUC=0.6015  Kappa=0.0087
+  Fold  2: F1=0.1692  AUC=0.5863  Kappa=0.0080
+  Fold  3: F1=0.1702  AUC=0.5883  Kappa=0.0097
+  Fold  4: F1=0.1679  AUC=0.5879  Kappa=0.0068
+  Fold  5: F1=0.1687  AUC=0.5967  Kappa=0.0076
+  Fold  6: F1=0.1702  AUC=0.5891  Kappa=0.0092
+  Fold  7: F1=0.1714  AUC=0.5876  Kappa=0.0105
+  Fold  8: F1=0.1697  AUC=0.5924  Kappa=0.0089
+  Fold  9: F1=0.1726  AUC=0.6090  Kappa=0.0122
+  Fold 10: F1=0.1693  AUC=0.6071  Kappa=0.0085
+            f1: 0.1699 [0.1689, 0.1708]
+       auc_roc: 0.5946 [0.5885, 0.6007]
+         kappa: 0.0090 [0.0079, 0.0101]
+
+============================================================
+  Model: random_forest
+============================================================
+  Fold  1: F1=0.1987  AUC=0.6299  Kappa=0.0517
+  Fold  2: F1=0.2035  AUC=0.6467  Kappa=0.0578
+  Fold  3: F1=0.1975  AUC=0.6311  Kappa=0.0509
+  Fold  4: F1=0.1845  AUC=0.6016  Kappa=0.0357
+  Fold  5: F1=0.1949  AUC=0.6337  Kappa=0.0470
+  Fold  6: F1=0.1930  AUC=0.6199  Kappa=0.0451
+  Fold  7: F1=0.1877  AUC=0.5995  Kappa=0.0388
+  Fold  8: F1=0.1955  AUC=0.6273  Kappa=0.0482
+  Fold  9: F1=0.1919  AUC=0.6179  Kappa=0.0437
+  Fold 10: F1=0.1869  AUC=0.6237  Kappa=0.0374
+            f1: 0.1934 [0.1892, 0.1976]
+       auc_roc: 0.6231 [0.6129, 0.6334]
+         kappa: 0.0456 [0.0406, 0.0506]
+
+============================================================
+  Model: gradient_boosting
+============================================================
+  Fold  1: F1=0.1808  AUC=0.6206  Kappa=0.0261
+  Fold  2: F1=0.1895  AUC=0.6439  Kappa=0.0363
+  Fold  3: F1=0.1821  AUC=0.6221  Kappa=0.0278
+  Fold  4: F1=0.1882  AUC=0.6193  Kappa=0.0355
+  Fold  5: F1=0.1858  AUC=0.6436  Kappa=0.0312
+  Fold  6: F1=0.1903  AUC=0.6161  Kappa=0.0377
+  Fold  7: F1=0.1836  AUC=0.6220  Kappa=0.0291
+  Fold  8: F1=0.1858  AUC=0.6164  Kappa=0.0317
+  Fold  9: F1=0.1878  AUC=0.6383  Kappa=0.0341
+  Fold 10: F1=0.1902  AUC=0.6412  Kappa=0.0372
+            f1: 0.1864 [0.1840, 0.1888]
+       auc_roc: 0.6284 [0.6199, 0.6368]
+         kappa: 0.0327 [0.0297, 0.0356]
+
+============================================================
+  Model: xgboost
+============================================================
+  Fold  1: F1=0.1663  AUC=0.6313  Kappa=0.0020
+  Fold  2: F1=0.1657  AUC=0.6143  Kappa=0.0014
+  Fold  3: F1=0.1659  AUC=0.6137  Kappa=0.0020
+  Fold  4: F1=0.1663  AUC=0.5977  Kappa=0.0024
+  Fold  5: F1=0.1675  AUC=0.6465  Kappa=0.0037
+  Fold  6: F1=0.1669  AUC=0.6137  Kappa=0.0028
+  Fold  7: F1=0.1688  AUC=0.6001  Kappa=0.0052
+  Fold  8: F1=0.1671  AUC=0.6152  Kappa=0.0032
+  Fold  9: F1=0.1656  AUC=0.6292  Kappa=0.0013
+  Fold 10: F1=0.1661  AUC=0.6385  Kappa=0.0019
+            f1: 0.1666 [0.1659, 0.1673]
+       auc_roc: 0.6200 [0.6086, 0.6314]
+         kappa: 0.0026 [0.0017, 0.0034]
+
+============================================================
+  Model: lightgbm
+============================================================
+  Fold  1: F1=0.2155  AUC=0.6475  Kappa=0.0868
+  Fold  2: F1=0.2454  AUC=0.6724  Kappa=0.1224
+  Fold  3: F1=0.2225  AUC=0.6518  Kappa=0.0951
+  Fold  4: F1=0.2180  AUC=0.6421  Kappa=0.0900
+  Fold  5: F1=0.2355  AUC=0.6686  Kappa=0.1093
+  Fold  6: F1=0.2171  AUC=0.6443  Kappa=0.0887
+  Fold  7: F1=0.2254  AUC=0.6399  Kappa=0.0981
+  Fold  8: F1=0.2147  AUC=0.6399  Kappa=0.0854
+  Fold  9: F1=0.2291  AUC=0.6656  Kappa=0.1020
+  Fold 10: F1=0.2360  AUC=0.6699  Kappa=0.1105
+            f1: 0.2259 [0.2185, 0.2334]
+       auc_roc: 0.6542 [0.6446, 0.6638]
+         kappa: 0.0988 [0.0901, 0.1075]
+=== Model Comparison (sorted by F1, with 95% CIs) ===
+                      f1_mean  ...  balanced_accuracy_ci_upper
+model                          ...                            
+lightgbm             0.225921  ...                    0.617908
+random_forest        0.193402  ...                    0.585105
+gradient_boosting    0.186403  ...                    0.571158
+knn                  0.174300  ...                    0.547672
+sgd_classifier       0.169890  ...                    0.524219
+logistic_regression  0.169422  ...                    0.522301
+naive_bayes          0.167552  ...                    0.514574
+xgboost              0.166630  ...                    0.509292
+one_r                0.164798  ...                    0.500000
+decision_tree        0.118104  ...                    0.523982
+zero_r               0.000000  ...                    0.500000
+
+[11 rows x 36 columns]
+
+Best model by CV F1: lightgbm
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/03_f1_confidence_intervals.png
+<Figure size 800x440 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/03_model_comparison.png
+<Figure size 1320x600 with 1 Axes>
+SelectFromModel base estimator: lightgbm (lighter settings than full CV models for speed)
+[Parallel] 1 models x 10 folds | CPU budget: 64 | 1 parallel models, 10 fold workers/model, 6 CPUs/estimator
+[Parallel] 1 models x 10 folds | CPU budget: 64 | 1 parallel models, 10 fold workers/model, 6 CPUs/estimator
+[Parallel] 1 models x 10 folds | CPU budget: 64 | 1 parallel models, 10 fold workers/model, 6 CPUs/estimator
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   78   79   87  154  164  201  217  221  229
+  249  264  287  311  312  314  321  324  328  396  419  421  436  455
+  483  484  487  509  529  540  555  570  571  574  600  642  662  666
+  678  680  712  718  724  742  754  758  759  769  774  782  794  796
+  798  801  803  804  807  811  815  826  827  842  886  889  890  927
+  979  990  996  999 1000 1012 1014 1088 1099 1101 1118 1120 1134 1142
+ 1181 1228 1235 1238 1251 1252 1255 1259 1287 1300 1302 1303 1333 1337
+ 1345 1360 1386 1390 1398 1399 1404 1416 1419 1425 1427 1434 1435 1440
+ 1443 1450 1455 1456 1471 1477 1480 1483 1484 1497 1499 1502 1510 1514
+ 1516 1543 1549 1553 1556 1563 1584 1585 1590 1610 1617 1620 1623 1642
+ 1645 1646 1710 1725 1751 1764 1834 1844 1855 1858 1861 1863 1906 1909
+ 1972 1980 2000 2002 2003 2022 2051 2060 2065 2094 2107 2121 2128 2137
+ 2143 2144 2147 2151 2152 2156 2185 2187 2189 2204 2205 2206 2207 2211
+ 2236 2237 2239 2244 2252 2259 2264 2283 2286 2288 2291 2293 2295 2299
+ 2311 2380 2388 2390 2446 2452] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   85   96  128  154  164  217  221  229  249
+  311  312  314  321  328  329  419  421  436  455  472  483  484  509
+  529  540  555  563  570  574  600  642  662  674  680  712  718  724
+  754  758  759  769  774  782  794  796  801  804  807  811  815  826
+  827  836  842  886  889  890  927  964  975  979  990  996  999 1000
+ 1012 1014 1020 1100 1107 1118 1120 1134 1142 1181 1199 1215 1228 1232
+ 1235 1238 1245 1252 1259 1287 1299 1300 1302 1333 1337 1345 1360 1386
+ 1390 1399 1404 1415 1416 1419 1422 1425 1427 1434 1437 1440 1443 1450
+ 1454 1456 1471 1477 1483 1484 1497 1499 1502 1505 1507 1510 1514 1536
+ 1543 1549 1551 1556 1558 1563 1573 1580 1584 1590 1610 1611 1620 1623
+ 1646 1679 1710 1724 1741 1760 1764 1834 1851 1855 1858 1861 1863 1906
+ 1972 1994 2000 2002 2003 2051 2060 2094 2098 2125 2128 2137 2143 2144
+ 2151 2156 2185 2187 2188 2189 2192 2204 2205 2207 2211 2236 2237 2239
+ 2248 2252 2259 2264 2277 2283 2288 2291 2293 2295 2299 2303 2311 2380
+ 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   97  115  154  164  217  221  229  249  270
+  311  312  314  321  328  419  421  436  455  483  484  509  528  529
+  540  553  555  570  574  575  600  642  661  662  680  712  713  718
+  724  743  754  758  759  764  769  774  782  794  796  801  804  806
+  807  811  815  825  826  827  842  861  886  889  890  917  926  927
+  958  979  990  996  999 1000 1012 1014 1042 1118 1120 1134 1135 1142
+ 1181 1228 1235 1238 1240 1252 1259 1268 1287 1300 1302 1326 1333 1337
+ 1345 1351 1360 1372 1386 1390 1399 1401 1403 1404 1411 1416 1419 1425
+ 1427 1430 1434 1440 1443 1450 1456 1471 1477 1483 1484 1497 1499 1502
+ 1510 1514 1523 1543 1549 1556 1561 1563 1582 1584 1590 1610 1620 1623
+ 1646 1681 1710 1764 1834 1855 1858 1861 1863 1892 1906 1957 1972 1991
+ 2000 2002 2003 2051 2060 2094 2128 2137 2143 2144 2151 2156 2185 2187
+ 2189 2195 2204 2205 2207 2211 2224 2233 2236 2237 2239 2252 2259 2264
+ 2283 2288 2290 2291 2293 2295 2299 2311 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   90  100  111  154  164  217  221  229  249
+  275  311  312  314  321  328  419  421  436  455  483  484  509  527
+  529  540  555  570  574  600  641  642  662  665  680  712  718  724
+  754  758  759  769  774  780  782  794  796  801  804  807  811  815
+  826  827  842  886  889  890  915  927  966  967  979  990  996  999
+ 1000 1012 1014 1019 1118 1120 1134 1142 1181 1202 1228 1234 1235 1238
+ 1252 1259 1287 1296 1300 1302 1333 1337 1345 1360 1382 1386 1390 1399
+ 1404 1416 1419 1425 1426 1427 1433 1434 1440 1443 1450 1456 1471 1476
+ 1477 1483 1484 1490 1497 1499 1502 1506 1510 1512 1514 1533 1537 1543
+ 1549 1556 1563 1574 1584 1590 1595 1610 1612 1620 1623 1646 1710 1764
+ 1778 1782 1789 1834 1855 1858 1861 1863 1906 1972 2000 2002 2003 2051
+ 2060 2094 2109 2128 2137 2143 2144 2151 2156 2160 2182 2185 2187 2189
+ 2204 2205 2207 2211 2236 2237 2239 2252 2259 2262 2264 2283 2288 2291
+ 2293 2295 2299 2311 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   91  153  154  164  209  217  221  222  229
+  249  311  312  314  321  328  330  344  419  421  433  436  455  483
+  484  509  529  540  555  565  570  574  600  642  653  662  670  680
+  712  718  724  754  758  759  760  761  769  774  782  787  794  796
+  801  804  807  811  815  826  827  842  855  863  886  889  890  923
+  925  927  971  979  990  996  999 1000 1012 1014 1089 1106 1118 1120
+ 1134 1138 1142 1181 1187 1205 1228 1235 1236 1238 1244 1252 1259 1287
+ 1300 1302 1333 1337 1345 1350 1352 1360 1377 1386 1390 1399 1404 1416
+ 1418 1419 1421 1425 1427 1434 1440 1443 1450 1456 1461 1462 1471 1477
+ 1483 1484 1497 1499 1502 1510 1514 1543 1549 1556 1562 1563 1578 1584
+ 1590 1596 1610 1620 1623 1646 1670 1710 1764 1817 1834 1855 1858 1861
+ 1863 1906 1972 2000 2002 2003 2051 2060 2070 2094 2128 2136 2137 2143
+ 2144 2151 2156 2167 2185 2187 2189 2193 2204 2205 2207 2211 2231 2235
+ 2236 2237 2239 2252 2259 2264 2281 2283 2284 2288 2291 2293 2295 2299
+ 2311 2377 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61   77  146  154  156  164  199  217  221  229
+  249  311  312  314  321  328  400  419  421  436  455  483  484  509
+  513  529  540  555  570  574  600  642  662  672  680  712  716  718
+  724  728  735  754  758  759  763  769  774  782  794  796  797  801
+  804  807  811  815  826  827  832  840  842  886  889  890  927  979
+  990  996  999 1000 1012 1014 1023 1118 1120 1134 1142 1155 1181 1226
+ 1228 1235 1238 1252 1259 1287 1297 1300 1302 1333 1337 1345 1360 1386
+ 1389 1390 1399 1402 1404 1416 1419 1425 1427 1434 1439 1440 1443 1450
+ 1456 1458 1464 1471 1477 1483 1484 1497 1499 1502 1510 1514 1543 1549
+ 1556 1560 1563 1564 1567 1584 1590 1610 1620 1623 1646 1710 1735 1764
+ 1787 1834 1847 1855 1858 1861 1862 1863 1906 1926 1972 2000 2002 2003
+ 2007 2051 2060 2064 2092 2094 2118 2128 2137 2143 2144 2145 2151 2156
+ 2185 2187 2189 2204 2205 2207 2209 2211 2236 2237 2239 2252 2259 2264
+ 2283 2288 2291 2293 2295 2298 2299 2311 2327 2380 2388 2448] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61  154  164  217  220  221  229  249  301  307
+  311  312  314  321  328  419  421  436  455  483  484  509  529  540
+  555  570  574  600  629  642  644  662  680  706  712  718  724  754
+  758  759  765  769  774  782  794  796  801  804  807  811  815  826
+  827  842  865  866  886  889  890  927  979  990  996  999 1000 1012
+ 1014 1118 1120 1134 1142 1181 1224 1228 1235 1238 1246 1252 1258 1259
+ 1287 1300 1302 1329 1333 1337 1345 1357 1360 1365 1381 1386 1390 1399
+ 1404 1416 1419 1425 1427 1434 1440 1443 1450 1456 1463 1471 1477 1483
+ 1484 1497 1499 1502 1510 1514 1542 1543 1549 1556 1563 1584 1586 1590
+ 1610 1620 1623 1646 1710 1764 1784 1834 1855 1858 1861 1863 1906 1972
+ 2000 2002 2003 2051 2060 2094 2097 2123 2128 2132 2137 2143 2144 2151
+ 2156 2185 2187 2189 2204 2205 2207 2211 2219 2225 2227 2230 2236 2237
+ 2239 2245 2252 2253 2259 2264 2283 2288 2291 2293 2295 2299 2311 2358
+ 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61  154  164  217  221  229  249  260  265  306
+  311  312  314  316  321  328  419  421  436  455  483  484  509  521
+  529  540  555  564  570  573  574  589  600  642  662  680  695  699
+  712  717  718  721  722  724  732  747  754  756  758  759  769  771
+  774  782  783  794  796  801  804  807  811  815  826  827  842  868
+  886  889  890  927  979  990  996  999 1000 1005 1012 1014 1097 1118
+ 1120 1134 1142 1181 1228 1235 1238 1239 1252 1259 1287 1300 1302 1324
+ 1333 1337 1340 1345 1360 1380 1386 1390 1399 1404 1416 1419 1425 1427
+ 1434 1440 1443 1450 1456 1470 1471 1477 1483 1484 1497 1499 1502 1510
+ 1514 1543 1549 1556 1563 1584 1590 1610 1620 1623 1629 1646 1676 1710
+ 1761 1764 1834 1855 1858 1861 1863 1906 1972 2000 2002 2003 2010 2016
+ 2051 2060 2069 2094 2112 2120 2128 2137 2143 2144 2148 2150 2151 2156
+ 2184 2185 2187 2189 2191 2204 2205 2207 2211 2222 2232 2236 2237 2239
+ 2252 2259 2264 2283 2288 2291 2293 2295 2299 2311 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61  154  163  164  217  221  229  249  283  302
+  311  312  314  321  328  353  378  419  421  423  436  455  483  484
+  509  529  540  555  570  574  600  601  611  642  662  664  671  680
+  712  715  718  723  724  754  758  759  769  774  782  785  794  796
+  801  804  807  811  813  815  826  827  829  833  842  886  889  890
+  927  979  990  996  999 1000 1012 1014 1118 1120 1121 1134 1142 1148
+ 1181 1208 1228 1235 1238 1252 1259 1287 1300 1302 1333 1337 1345 1360
+ 1386 1390 1399 1404 1416 1419 1425 1427 1434 1440 1443 1450 1456 1460
+ 1471 1477 1483 1484 1497 1499 1502 1510 1514 1530 1543 1547 1549 1556
+ 1563 1577 1584 1590 1610 1615 1620 1623 1646 1710 1718 1764 1768 1834
+ 1855 1858 1861 1863 1879 1896 1906 1908 1972 2000 2002 2003 2025 2051
+ 2060 2094 2128 2137 2140 2143 2144 2149 2151 2156 2181 2185 2187 2189
+ 2194 2202 2204 2205 2207 2208 2211 2236 2237 2239 2252 2255 2258 2259
+ 2261 2264 2283 2288 2291 2293 2295 2299 2311 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/sklearn/feature_selection/_univariate_selection.py:110: UserWarning: Features [  52   54   55   60   61  154  164  217  221  229  249  267  305  311
+  312  314  321  328  419  421  436  455  483  484  506  509  529  538
+  540  554  555  560  570  574  600  642  662  669  680  712  718  724
+  739  754  758  759  769  774  782  794  796  801  804  807  811  815
+  826  827  842  886  889  890  927  979  990  996  999 1000 1003 1012
+ 1014 1030 1118 1120 1134 1142 1181 1228 1235 1238 1252 1259 1260 1287
+ 1300 1302 1333 1337 1345 1360 1369 1386 1390 1395 1399 1404 1416 1419
+ 1425 1427 1434 1440 1442 1443 1450 1453 1456 1457 1471 1477 1483 1484
+ 1488 1497 1499 1502 1510 1514 1543 1549 1554 1556 1563 1584 1590 1610
+ 1620 1623 1646 1710 1764 1834 1855 1858 1861 1863 1866 1906 1958 1972
+ 2000 2002 2003 2051 2060 2072 2074 2094 2104 2128 2133 2137 2138 2143
+ 2144 2151 2156 2157 2185 2187 2189 2196 2204 2205 2207 2211 2226 2236
+ 2237 2239 2251 2252 2254 2259 2264 2283 2288 2291 2293 2295 2296 2299
+ 2311 2380 2388] are constant.
+  warnings.warn("Features %s are constant." % constant_features_idx, UserWarning)
+
+============================================================
+  Model: sgd_classifier
+============================================================
+  Fold  1: F1=0.2155  AUC=0.6283  Kappa=0.0906
+  Fold  2: F1=0.2127  AUC=0.6066  Kappa=0.0971
+  Fold  3: F1=0.2006  AUC=0.6165  Kappa=0.0627
+  Fold  4: F1=0.1982  AUC=0.6093  Kappa=0.0608
+  Fold  5: F1=0.2208  AUC=0.6356  Kappa=0.0941
+  Fold  6: F1=0.2247  AUC=0.6415  Kappa=0.0970
+  Fold  7: F1=0.2081  AUC=0.6178  Kappa=0.0796
+  Fold  8: F1=0.1973  AUC=0.6191  Kappa=0.0771
+  Fold  9: F1=0.2238  AUC=0.6206  Kappa=0.0979
+  Fold 10: F1=0.1641  AUC=0.5362  Kappa=0.0162
+            f1: 0.2066 [0.1936, 0.2195]
+       auc_roc: 0.6132 [0.5923, 0.6340]
+         kappa: 0.0773 [0.0590, 0.0956]
+
+============================================================
+  Model: sgd_classifier
+============================================================
+  Fold  1: F1=0.1789  AUC=0.5680  Kappa=0.0370
+  Fold  2: F1=0.1950  AUC=0.5955  Kappa=0.0618
+  Fold  3: F1=0.1859  AUC=0.5795  Kappa=0.0434
+  Fold  4: F1=0.1863  AUC=0.5857  Kappa=0.0438
+  Fold  5: F1=0.1906  AUC=0.5960  Kappa=0.0547
+  Fold  6: F1=0.1942  AUC=0.6007  Kappa=0.0519
+  Fold  7: F1=0.1850  AUC=0.5757  Kappa=0.0454
+  Fold  8: F1=0.1814  AUC=0.5755  Kappa=0.0380
+  Fold  9: F1=0.1796  AUC=0.5718  Kappa=0.0398
+  Fold 10: F1=0.1851  AUC=0.5886  Kappa=0.0418
+            f1: 0.1862 [0.1822, 0.1902]
+       auc_roc: 0.5837 [0.5756, 0.5918]
+         kappa: 0.0458 [0.0401, 0.0515]
+
+============================================================
+  Model: sgd_classifier
+============================================================
+  Fold  1: F1=0.2149  AUC=0.6288  Kappa=0.0882
+  Fold  2: F1=0.2256  AUC=0.6270  Kappa=0.1073
+  Fold  3: F1=0.2060  AUC=0.6161  Kappa=0.0715
+  Fold  4: F1=0.1878  AUC=0.5996  Kappa=0.0494
+  Fold  5: F1=0.2177  AUC=0.6349  Kappa=0.0846
+  Fold  6: F1=0.2281  AUC=0.6350  Kappa=0.1004
+  Fold  7: F1=0.2052  AUC=0.6146  Kappa=0.0711
+  Fold  8: F1=0.2057  AUC=0.6175  Kappa=0.0783
+  Fold  9: F1=0.2010  AUC=0.6020  Kappa=0.0662
+  Fold 10: F1=0.2190  AUC=0.6390  Kappa=0.0951
+            f1: 0.2111 [0.2023, 0.2199]
+       auc_roc: 0.6214 [0.6116, 0.6313]
+         kappa: 0.0812 [0.0687, 0.0937]
+=== SGDClassifier with fold-local dimensionality reduction (10-fold CV, light feature settings) ===
+                             f1_mean  ...  balanced_accuracy_ci_upper
+model                                 ...                            
+sfm_median__sgd_classifier  0.211082  ...                    0.599644
+kbest20__sgd_classifier     0.206565  ...                    0.598946
+pca32__sgd_classifier       0.186202  ...                    0.565216
+
+[3 rows x 36 columns]
+=== Statistical Significance Tests (F1 vs. ZeroR baseline) ===
+                 model baseline  ... significant_t  significant_w
+9             lightgbm   zero_r  ...          True           True
+6        random_forest   zero_r  ...          True           True
+7    gradient_boosting   zero_r  ...          True           True
+4                  knn   zero_r  ...          True           True
+5       sgd_classifier   zero_r  ...          True           True
+2  logistic_regression   zero_r  ...          True           True
+1          naive_bayes   zero_r  ...          True           True
+8              xgboost   zero_r  ...          True           True
+0                one_r   zero_r  ...          True           True
+3        decision_tree   zero_r  ...          True           True
+
+[10 rows x 9 columns]
+
+=== Statistical Significance Tests (F1 vs. Logistic Regression) ===
+                 model baseline  ... significant_t  significant_w
+9             lightgbm    one_r  ...          True           True
+6        random_forest    one_r  ...          True           True
+7    gradient_boosting    one_r  ...          True           True
+4                  knn    one_r  ...          True           True
+5       sgd_classifier    one_r  ...          True           True
+2  logistic_regression    one_r  ...          True           True
+1          naive_bayes    one_r  ...          True           True
+8              xgboost    one_r  ...          True           True
+3        decision_tree    one_r  ...          True           True
+0               zero_r    one_r  ...          True           True
+
+[10 rows x 9 columns]
+Imbalance comparison for best model: lightgbm
+Imbalance strategy comparison completed.
+Imbalance strategy comparison (CV F1):
+                           mean       std
+class_weight_balanced  0.224820  0.005903
+baseline               0.015667  0.007247
+smote                  0.009452  0.004005
+Tuning top models: ['lightgbm', 'random_forest', 'gradient_boosting', 'knn', 'sgd_classifier']
+[Parallel Nested CV] 5 models x 10 outer folds | CPU budget: 192 | 5 parallel models, 19 GridSearchCV workers/fold
+[31m---------------------------------------------------------------------------[39m
+[31mTerminatedWorkerError[39m                     Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 13[39m
+[32m      8[39m [38;5;28mprint[39m([33mf[39m[33m'[39m[33mTuning top models: [39m[38;5;132;01m{[39;00m[38;5;28mlist[39m(top_models.keys())[38;5;132;01m}[39;00m[33m'[39m)
+[32m     10[39m [38;5;28;01mif[39;00m top_models:
+[32m     11[39m     [38;5;66;03m# Inner GridSearchCV used n_jobs=-1 before: all CPU cores × joblib workers each[39;00m
+[32m     12[39m     [38;5;66;03m# hold a copy of the outer-fold training data → heavy RAM and fan noise.[39;00m
+[32m---> [39m[32m13[39m     tuned_results = [43mrun_tuned_cv_experiment[49m[43m([49m
+[32m     14[39m [43m        [49m[43mX_train[49m[43m,[49m[43m [49m[43my_train[49m[43m,[49m
+[32m     15[39m [43m        [49m[43mmodel_configs[49m[43m=[49m[43mtop_models[49m[43m,[49m
+[32m     16[39m [43m        [49m[43mparam_grids[49m[43m=[49m[43mHYPERPARAM_GRIDS[49m[43m,[49m
+[32m     17[39m [43m        [49m[43mn_outer_splits[49m[43m=[49m[43mK_FOLDS[49m[43m,[49m
+[32m     18[39m [43m        [49m[43mn_inner_splits[49m[43m=[49m[32;43m5[39;49m[43m,[49m
+[32m     19[39m [43m        [49m[43mgroups[49m[43m=[49m[43mgroups_train[49m[43m,[49m
+[32m     20[39m [43m        [49m[43mscale[49m[43m=[49m[38;5;28;43;01mTrue[39;49;00m[43m,[49m
+[32m     21[39m [43m        [49m[43mscoring[49m[43m=[49m[33;43m'[39;49m[33;43mf1[39;49m[33;43m'[39;49m[43m,[49m
+[32m     22[39m [43m        [49m[43mrandom_state[49m[43m=[49m[32;43m42[39;49m[43m,[49m
+[32m     23[39m [43m        [49m[43mtotal_cpus[49m[43m=[49m[43mN_CPUS[49m[43m,[49m
+[32m     24[39m [43m    [49m[43m)[49m
+[32m     25[39m     tuned_summary = build_metrics_summary_table(tuned_results)
+[32m     26[39m     [38;5;28mprint[39m([33m'[39m[38;5;130;01m\n[39;00m[33m=== Tuned Model Comparison (Nested CV, unbiased) ===[39m[33m'[39m)
+
+[36mFile [39m[32m/scratch/indrisch/CP8305FP/src/modeling.py:1533[39m, in [36mrun_tuned_cv_experiment[39m[34m(X, y, model_configs, param_grids, n_outer_splits, n_inner_splits, groups, scale, scoring, random_state, reduction, n_jobs, total_cpus)[39m
+[32m   1530[39m     [38;5;28mprint[39m(output, end=[33m"[39m[33m"[39m)
+[32m   1531[39m     [38;5;28;01mreturn[39;00m {name: result}
+[32m-> [39m[32m1533[39m parallel_results = [43mjoblib[49m[43m.[49m[43mParallel[49m[43m([49m
+[32m   1534[39m [43m    [49m[43mn_jobs[49m[43m=[49m[43mn_parallel_models[49m[43m,[49m[43m [49m[43mbackend[49m[43m=[49m[33;43m"[39;49m[33;43mloky[39;49m[33;43m"[39;49m[43m,[49m
+[32m   1535[39m [43m[49m[43m)[49m[43m([49m
+[32m   1536[39m [43m    [49m[43mjoblib[49m[43m.[49m[43mdelayed[49m[43m([49m[43m_evaluate_tuned_model[49m[43m)[49m[43m([49m
+[32m   1537[39m [43m        [49m[43mname[49m[43m,[49m[43m [49m[43mtunable[49m[43m[[49m[43mname[49m[43m][49m[43m,[49m[43m [49m[43mparam_grids[49m[43m[[49m[43mname[49m[43m][49m[43m,[49m[43m [49m[43mX[49m[43m,[49m[43m [49m[43my[49m[43m,[49m[43m [49m[43mgroups[49m[43m,[49m[43m [49m[43mouter_splits[49m[43m,[49m
+[32m   1538[39m [43m        [49m[43mscale[49m[43m,[49m[43m [49m[43mscoring[49m[43m,[49m[43m [49m[43mrandom_state[49m[43m,[49m[43m [49m[43mreduction[49m[43m,[49m
+[32m   1539[39m [43m        [49m[43mn_inner_splits[49m[43m,[49m[43m [49m[43mn_jobs_inner[49m[43m,[49m
+[32m   1540[39m [43m    [49m[43m)[49m
+[32m   1541[39m [43m    [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mname[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43mtunable[49m
+[32m   1542[39m [43m[49m[43m)[49m
+[32m   1544[39m results = {}
+[32m   1545[39m [38;5;28;01mfor[39;00m name, result, output [38;5;129;01min[39;00m parallel_results:
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:2072[39m, in [36mParallel.__call__[39m[34m(self, iterable)[39m
+[32m   2066[39m [38;5;66;03m# The first item from the output is blank, but it makes the interpreter[39;00m
+[32m   2067[39m [38;5;66;03m# progress until it enters the Try/Except block of the generator and[39;00m
+[32m   2068[39m [38;5;66;03m# reaches the first `yield` statement. This starts the asynchronous[39;00m
+[32m   2069[39m [38;5;66;03m# dispatch of the tasks to the workers.[39;00m
+[32m   2070[39m [38;5;28mnext[39m(output)
+[32m-> [39m[32m2072[39m [38;5;28;01mreturn[39;00m output [38;5;28;01mif[39;00m [38;5;28mself[39m.return_generator [38;5;28;01melse[39;00m [38;5;28;43mlist[39;49m[43m([49m[43moutput[49m[43m)[49m
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:1682[39m, in [36mParallel._get_outputs[39m[34m(self, iterator, pre_dispatch)[39m
+[32m   1679[39m     [38;5;28;01myield[39;00m
+[32m   1681[39m     [38;5;28;01mwith[39;00m [38;5;28mself[39m._backend.retrieval_context():
+[32m-> [39m[32m1682[39m         [38;5;28;01myield from[39;00m [38;5;28mself[39m._retrieve()
+[32m   1684[39m [38;5;28;01mexcept[39;00m [38;5;167;01mGeneratorExit[39;00m:
+[32m   1685[39m     [38;5;66;03m# The generator has been garbage collected before being fully[39;00m
+[32m   1686[39m     [38;5;66;03m# consumed. This aborts the remaining tasks if possible and warn[39;00m
+[32m   1687[39m     [38;5;66;03m# the user if necessary.[39;00m
+[32m   1688[39m     [38;5;28mself[39m._exception = [38;5;28;01mTrue[39;00m
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:1784[39m, in [36mParallel._retrieve[39m[34m(self)[39m
+[32m   1778[39m [38;5;28;01mwhile[39;00m [38;5;28mself[39m._wait_retrieval():
+[32m   1779[39m     [38;5;66;03m# If the callback thread of a worker has signaled that its task[39;00m
+[32m   1780[39m     [38;5;66;03m# triggered an exception, or if the retrieval loop has raised an[39;00m
+[32m   1781[39m     [38;5;66;03m# exception (e.g. `GeneratorExit`), exit the loop and surface the[39;00m
+[32m   1782[39m     [38;5;66;03m# worker traceback.[39;00m
+[32m   1783[39m     [38;5;28;01mif[39;00m [38;5;28mself[39m._aborting:
+[32m-> [39m[32m1784[39m         [38;5;28;43mself[39;49m[43m.[49m[43m_raise_error_fast[49m[43m([49m[43m)[49m
+[32m   1785[39m         [38;5;28;01mbreak[39;00m
+[32m   1787[39m     nb_jobs = [38;5;28mlen[39m([38;5;28mself[39m._jobs)
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:1859[39m, in [36mParallel._raise_error_fast[39m[34m(self)[39m
+[32m   1855[39m [38;5;66;03m# If this error job exists, immediately raise the error by[39;00m
+[32m   1856[39m [38;5;66;03m# calling get_result. This job might not exists if abort has been[39;00m
+[32m   1857[39m [38;5;66;03m# called directly or if the generator is gc'ed.[39;00m
+[32m   1858[39m [38;5;28;01mif[39;00m error_job [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[32m-> [39m[32m1859[39m     [43merror_job[49m[43m.[49m[43mget_result[49m[43m([49m[38;5;28;43mself[39;49m[43m.[49m[43mtimeout[49m[43m)[49m
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:758[39m, in [36mBatchCompletionCallBack.get_result[39m[34m(self, timeout)[39m
+[32m    752[39m backend = [38;5;28mself[39m.parallel._backend
+[32m    754[39m [38;5;28;01mif[39;00m backend.supports_retrieve_callback:
+[32m    755[39m     [38;5;66;03m# We assume that the result has already been retrieved by the[39;00m
+[32m    756[39m     [38;5;66;03m# callback thread, and is stored internally. It's just waiting to[39;00m
+[32m    757[39m     [38;5;66;03m# be returned.[39;00m
+[32m--> [39m[32m758[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_return_or_raise[49m[43m([49m[43m)[49m
+[32m    760[39m [38;5;66;03m# For other backends, the main thread needs to run the retrieval step.[39;00m
+[32m    761[39m [38;5;28;01mtry[39;00m:
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/parallel.py:773[39m, in [36mBatchCompletionCallBack._return_or_raise[39m[34m(self)[39m
+[32m    771[39m [38;5;28;01mtry[39;00m:
+[32m    772[39m     [38;5;28;01mif[39;00m [38;5;28mself[39m.status == TASK_ERROR:
+[32m--> [39m[32m773[39m         [38;5;28;01mraise[39;00m [38;5;28mself[39m._result
+[32m    774[39m     [38;5;28;01mreturn[39;00m [38;5;28mself[39m._result
+[32m    775[39m [38;5;28;01mfinally[39;00m:
+
+[31mTerminatedWorkerError[39m: A worker process managed by the executor was unexpectedly terminated. This could be caused by a segmentation fault while calling the function or by an excessive memory usage causing the Operating System to kill the worker.
+
+The exit codes of the workers are {SIGKILL(-9)}
+Detailed tracebacks of the workers should have been printed to stderr in the executor process if faulthandler was not disabled.
+/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/joblib/externals/loky/backend/resource_tracker.py:359: UserWarning: resource_tracker: There appear to be 100 leaked semlock objects to clean up at shutdown
+  warnings.warn(
+[2026-04-12T04:23:46.403] error: Detected 2 oom_kill events in StepId=1307119.batch. Some of the step tasks have been OOM Killed.
+
+scontrol show job 1307119
+JobId=1307119 JobName=openmp_job
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1841258 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=OutOfMemory Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:125
+   RunTime=00:10:44 TimeLimit=03:00:00 TimeMin=N/A
+   SubmitTime=2026-04-12T04:13:03 EligibleTime=2026-04-12T04:13:03
+   AccrueTime=2026-04-12T04:13:03
+   StartTime=2026-04-12T04:13:03 EndTime=2026-04-12T04:23:47 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-12T04:13:03 Scheduler=Main
+   Partition=compute AllocNode:Sid=tri-login02:2706456
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0541
+   BatchHost=tri0541
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/03_modeling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh --export=NONE --get-user-env 03_modeling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 03_modeling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/03_modeling-1307119.out
+   TresPerTask=cpu=192
+
+sacct -j 1307119
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1307119      openmp_job def-wangcs   00:10:44                        00:50.425  00:00.092      0:0 
+1307119.bat+      batch def-wangcs   00:10:44                         00:00:00   00:00:00      0:0 
+1307119.ext+     extern def-wangcs   00:10:44                         00:00:00   00:00:00      0:0 
+1307119.0         watch def-wangcs   00:01:19          0     11992K  00:00.143  00:00.053      0:9 
+1307119.1          tmux def-wangcs   00:00:02          0     12268K  00:00.020  00:00.009      0:0 
+1307119.2          tmux def-wangcs   00:00:01          0      7792K  00:00.019  00:00.012      0:0 
+1307119.3          tmux def-wangcs   00:00:25          0     23328K  00:50.242  00:00.016      0:0 
+
+
+kernel messages produced during job executions:
+[Apr12 04:22] tuned invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=0
+[  +0.000016] CPU: 172 PID: 3311 Comm: tuned Tainted: G S         OE      ------  ---  5.14.0-611.36.1.el9_7.x86_64 #1
+[  +0.000003] Hardware name: Lenovo ThinkSystem SD665 V3/SB27B96517, BIOS QGE140H-8.21 05/14/2025
+[  +0.000002] Call Trace:
+[  +0.000003]  <TASK>
+[  +0.000002]  dump_stack_lvl+0x34/0x48
+[  +0.000009]  dump_header+0x49/0x212
+[  +0.000004]  oom_kill_process.cold+0xb/0x10
+[  +0.000001]  out_of_memory+0xee/0x2b0
+[  +0.000005]  __alloc_pages_slowpath.constprop.0+0x793/0xb10
+[  +0.000005]  __alloc_pages+0x21c/0x250
+[  +0.000003]  alloc_pages_mpol+0x93/0x1e0
+[  +0.000003]  ? filemap_get_entry+0xe3/0x140
+[  +0.000003]  folio_alloc+0x12/0x30
+[  +0.000001]  __filemap_get_folio+0x189/0x2e0
+[  +0.000002]  filemap_fault+0x4d5/0x8b0
+[  +0.000002]  ? __futex_wait+0x14c/0x1b0
+[  +0.000004]  __do_fault+0x31/0x150
+[  +0.000004]  do_read_fault+0x11e/0x1d0
+[  +0.000002]  do_pte_missing+0x157/0x200
+[  +0.000001]  __handle_mm_fault+0x2fe/0x650
+[  +0.000002]  handle_mm_fault+0xfb/0x270
+[  +0.000001]  do_user_addr_fault+0x215/0x620
+[  +0.000003]  exc_page_fault+0x61/0x150
+[  +0.000004]  asm_exc_page_fault+0x22/0x30
+[  +0.000005] RIP: 0033:0x7fac4e21237a
+[  +0.000003] Code: 24 08 e8 c9 f8 ff ff 4c 8b 54 24 18 45 31 c0 44 89 e2 89 c5 8b 74 24 08 48 8b 7c 24 10 41 b9 ff ff ff ff b8 ca 00 00 00 0f 05 <89> ef 48 89 44 24 08 e8 1a f9 ff ff 48 8b 44 24 08 e9 69 ff ff ff
+[  +0.000002] RSP: 002b:00007fffd906af70 EFLAGS: 00010246
+[  +0.000002] RAX: ffffffffffffff92 RBX: 000055ccd36867d0 RCX: 00007fac4e21237a
+[  +0.000001] RDX: 0000000000000000 RSI: 0000000000000089 RDI: 000055ccd36867d0
+[  +0.000000] RBP: 0000000000000000 R08: 0000000000000000 R09: 00000000ffffffff
+[  +0.000001] R10: 00007fffd906b030 R11: 0000000000000246 R12: 0000000000000000
+[  +0.000000] R13: 0000000000000001 R14: 00007fffd906afb0 R15: fffffffeffffffff
+[  +0.000001]  </TASK>
+[  +0.000007] Mem-Info:
+[  +0.000028] active_anon:146807757 inactive_anon:48879464 isolated_anon:0
+               active_file:153 inactive_file:196 isolated_file:0
+               unevictable:768 dirty:0 writeback:0
+               slab_reclaimable:87441 slab_unreclaimable:337445
+               mapped:41692 shmem:482932 pagetables:388809
+               sec_pagetables:1154 bounce:0
+               kernel_misc_reclaimable:0
+               free:157941 free_pcp:730 free_cma:0
+[  +0.000003] Node 0 active_anon:522672kB inactive_anon:95849588kB active_file:0kB inactive_file:1096kB unevictable:3072kB isolated(anon):0kB isolated(file):0kB mapped:4kB dirty:0kB writeback:0kB shmem:3192kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:81438720kB writeback_tmp:0kB kernel_stack:8416kB pagetables:182528kB sec_pagetables:2612kB all_unreclaimable? yes
+[  +0.000004] Node 1 active_anon:97914728kB inactive_anon:553420kB active_file:0kB inactive_file:12kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:10356kB dirty:0kB writeback:0kB shmem:16548kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:88201216kB writeback_tmp:0kB kernel_stack:3936kB pagetables:197344kB sec_pagetables:356kB all_unreclaimable? yes
+[  +0.000002] Node 2 active_anon:98465788kB inactive_anon:25336kB active_file:672kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:1512kB dirty:0kB writeback:0kB shmem:2640kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90415104kB writeback_tmp:0kB kernel_stack:4064kB pagetables:174032kB sec_pagetables:548kB all_unreclaimable? yes
+[  +0.000002] Node 3 active_anon:1692656kB inactive_anon:96377416kB active_file:0kB inactive_file:44kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:4752kB dirty:0kB writeback:0kB shmem:6868kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90269696kB writeback_tmp:0kB kernel_stack:7540kB pagetables:193200kB sec_pagetables:540kB all_unreclaimable? yes
+[  +0.000001] Node 4 active_anon:98319588kB inactive_anon:204012kB active_file:1536kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:20kB dirty:0kB writeback:0kB shmem:40kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:69027840kB writeback_tmp:0kB kernel_stack:4692kB pagetables:213516kB sec_pagetables:292kB all_unreclaimable? yes
+[  +0.000002] Node 5 active_anon:98075796kB inactive_anon:443288kB active_file:0kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:150120kB dirty:0kB writeback:0kB shmem:150612kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:87666688kB writeback_tmp:0kB kernel_stack:11460kB pagetables:206664kB sec_pagetables:196kB all_unreclaimable? yes
+[  +0.000002] Node 6 active_anon:98380124kB inactive_anon:150860kB active_file:0kB inactive_file:2000kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:0kB dirty:0kB writeback:0kB shmem:256kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90302464kB writeback_tmp:0kB kernel_stack:5604kB pagetables:198968kB sec_pagetables:28kB all_unreclaimable? yes
+[  +0.000001] Node 7 active_anon:93859676kB inactive_anon:1913936kB active_file:1056kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:4kB dirty:0kB writeback:0kB shmem:1751572kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:80709632kB writeback_tmp:0kB kernel_stack:8816kB pagetables:188984kB sec_pagetables:44kB all_unreclaimable? yes
+[  +0.000003] Node 0 DMA free:11264kB boost:0kB min:4kB low:16kB high:28kB reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:15996kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000004] lowmem_reserve[]: 0 2321 96219 96219 96219
+[  +0.000005] Node 0 DMA32 free:371204kB boost:0kB min:676kB low:3052kB high:5428kB reserved_highatomic:0KB active_anon:6536kB inactive_anon:2045952kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:2498360kB managed:2430168kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 93897 93897 93897
+[  +0.000006] Node 0 Normal free:39140kB boost:116736kB min:144084kB low:240232kB high:336380kB reserved_highatomic:2048KB active_anon:516136kB inactive_anon:93803636kB active_file:0kB inactive_file:1096kB unevictable:3072kB writepending:0kB present:97779648kB managed:96157628kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000007] Node 1 Normal free:28076kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:0KB active_anon:97914728kB inactive_anon:553420kB active_file:0kB inactive_file:12kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 2 Normal free:32352kB boost:2048kB min:30228kB low:129312kB high:228396kB reserved_highatomic:4096KB active_anon:98465788kB inactive_anon:25336kB active_file:672kB inactive_file:0kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:128kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 3 Normal free:36548kB boost:2048kB min:30228kB low:129312kB high:228396kB reserved_highatomic:10240KB active_anon:1692656kB inactive_anon:96377416kB active_file:0kB inactive_file:44kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 4 Normal free:27784kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:0KB active_anon:98319588kB inactive_anon:204012kB active_file:1536kB inactive_file:0kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:944kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 5 Normal free:30088kB boost:2048kB min:30228kB low:129312kB high:228396kB reserved_highatomic:0KB active_anon:98075796kB inactive_anon:443288kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:248kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000006] Node 6 Normal free:27700kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:0KB active_anon:98380124kB inactive_anon:150860kB active_file:0kB inactive_file:2000kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 7 Normal free:27608kB boost:0kB min:28156kB low:127152kB high:226148kB reserved_highatomic:0KB active_anon:93859676kB inactive_anon:1913936kB active_file:1056kB inactive_file:0kB unevictable:0kB writepending:0kB present:100594432kB managed:98999284kB mlocked:0kB bounce:0kB free_pcp:1600kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000003] Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB 1*1024kB (U) 1*2048kB (M) 2*4096kB (M) = 11264kB
+[  +0.000012] Node 0 DMA32: 17*4kB (UM) 18*8kB (UM) 21*16kB (UM) 23*32kB (UME) 22*64kB (UME) 25*128kB (UME) 11*256kB (UE) 12*512kB (UE) 10*1024kB (UME) 5*2048kB (UME) 82*4096kB (UME) = 371204kB
+[  +0.000015] Node 0 Normal: 2399*4kB (UME) 1037*8kB (UME) 990*16kB (UME) 105*32kB (UME) 0*64kB 0*128kB 0*256kB 0*512kB 0*1024kB 1*2048kB (M) 0*4096kB = 39140kB
+[  +0.000012] Node 1 Normal: 515*4kB (UME) 246*8kB (UME) 67*16kB (UME) 342*32kB (UME) 44*64kB (UE) 56*128kB (UM) 0*256kB 0*512kB 0*1024kB 1*2048kB (M) 0*4096kB = 28076kB
+[  +0.000013] Node 2 Normal: 491*4kB (UE) 273*8kB (UME) 247*16kB (UME) 314*32kB (UME) 32*64kB (UE) 93*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 32100kB
+[  +0.000012] Node 3 Normal: 985*4kB (UME) 248*8kB (UME) 108*16kB (UE) 175*32kB (UME) 212*64kB (UME) 76*128kB (UME) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 36548kB
+[  +0.000013] Node 4 Normal: 1027*4kB (UM) 736*8kB (UE) 331*16kB (UME) 254*32kB (UME) 46*64kB (UM) 0*128kB 0*256kB 0*512kB 1*1024kB (M) 0*2048kB 0*4096kB = 27388kB
+[  +0.000012] Node 5 Normal: 579*4kB (UE) 404*8kB (UE) 70*16kB (UME) 365*32kB (UE) 77*64kB (UME) 38*128kB (UM) 0*256kB 0*512kB 0*1024kB 1*2048kB (U) 0*4096kB = 30188kB
+[  +0.000013] Node 6 Normal: 355*4kB (UME) 229*8kB (UM) 62*16kB (UM) 173*32kB (UM) 14*64kB (U) 27*128kB (UM) 45*256kB (UM) 0*512kB 0*1024kB 1*2048kB (M) 0*4096kB = 27700kB
+[  +0.000013] Node 7 Normal: 883*4kB (UME) 384*8kB (UE) 109*16kB (UME) 374*32kB (UE) 82*64kB (UE) 8*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 26588kB
+[  +0.000014] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 2 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 2 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 3 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 3 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 4 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 4 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 5 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 5 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 6 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 6 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 7 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 7 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] 483281 total pagecache pages
+[  +0.000001] 0 pages in swap cache
+[  +0.000000] Free swap  = 0kB
+[  +0.000001] Total swap = 0kB
+[  +0.000001] 201217053 pages RAM
+[  +0.000001] 0 pages HighMem/MovableOnly
+[  +0.000001] 3190380 pages reserved
+[  +0.000000] 0 pages cma reserved
+[  +0.000002] 0 pages hwpoisoned
+[  +0.000001] Tasks state (memory values in pages):
+[  +0.000001] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
+[  +0.000078] [   2680]     0  2680    17445     3840   180224        0          -250 systemd-journal
+[  +0.000003] [   2727]    32  2727     3859      768    65536        0             0 rpcbind
+[  +0.000003] [   2735]     0  2735    13117     1536    90112        0         -1000 systemd-udevd
+[  +0.000003] [   3249]    81  3249     2676      384    57344        0          -900 dbus-broker-lau
+[  +0.000001] [   3250]    81  3250     1287        0    49152        0          -900 dbus-broker
+[  +0.000002] [   3251]     0  3251   118864     1536   147456        0             0 NetworkManager
+[  +0.000001] [   3254]     0  3254    20838      384    65536        0             0 irqbalance
+[  +0.000002] [   3264]     0  3264     5035      768    77824        0             0 systemd-logind
+[  +0.000002] [   3311]     0  3311   119256     3456   139264        0             0 tuned
+[  +0.000001] [   3319]     0  3319    68095      384    77824        0             0 gssproxy
+[  +0.000002] [   3332]     0  3332    55340      384    53248        0             0 agetty
+[  +0.000001] [   3333]     0  3333    55351      384    45056        0             0 agetty
+[  +0.000001] [   3580]   997  3580   746138     1920   258048        0             0 polkitd
+[  +0.000001] [   4213]    29  4213     3023        0    57344        0             0 rpc.statd
+[  +0.000002] [   4283]     0  4283    51467      768   167936        0             0 rsyslogd
+[  +0.000001] [   4302]   998  4302    21162      384    61440        0             0 chronyd
+[  +0.000001] [   4395]     0  4395   106092     1152   147456        0             0 automount
+[  +0.000002] [   4587]     0  4587   307903     5615   126976        0             0 utilcpu
+[  +0.000001] [   4620]     0  4620     8302      768    81920        0         -1000 sshd
+[  +0.000001] [   4645]     0  4645    55729      384    53248        0             0 likwid-collecto
+[  +0.000002] [   4713]     0  4713   310379     1696   126976        0             0 node_exporter
+[  +0.000001] [   7053]     0  7053     1756        0    49152        0          -999 slurmstepd
+[  +0.000002] [2458812]     0 2458812    68991     1920   126976        0             0 sssd
+[  +0.000001] [2458873]     0 2458873    73245     1860   159744        0             0 sssd_be
+[  +0.000002] [2458926]     0 2458926    74647     2770   180224        0             0 sssd_nss
+[  +0.000001] [2458928]     0 2458928    66434     2688   110592        0             0 sssd_pam
+[  +0.000001] [2460758]   993 2460758    52854      384    81920        0             0 munged
+[  +0.000003] [3999839]     0 3999839     4616        0    69632        0             0 cvmfs2
+[  +0.000002] [3999841]     0 3999841   134875     7313   208896        0             0 cvmfs2
+[  +0.000003] [ 107617]     0 107617     4616        0    65536        0             0 cvmfs2
+[  +0.000002] [ 107619]     0 107619  3499138   111597  1994752        0             0 cvmfs2
+[  +0.000006] [1874655]     0 1874655   391309      768   229376        0             0 slurmd
+[  +0.000002] [2022607]     0 2022607     4616        0    69632        0             0 cvmfs2
+[  +0.000002] [2022610]     0 2022610  3253217    71893  1683456        0             0 cvmfs2
+[  +0.000012] [1802493]     0 1802493   136111      768   126976        0          -999 slurmstepd
+[  +0.000001] [1802607]     0 1802607   134148      384   126976        0          -999 slurmstepd
+[  +0.000002] [1802616] 3122343 1802616    55716      384    69632        0             0 slurm_script
+[  +0.000002] [1802686] 3122343 1802686 10208851   399396  6397952        0             0 ipython
+[  +0.000001] [1802735] 3122343 1802735    30944     9984   221184        0             0 python
+[  +0.000001] [1802736] 3122343 1802736     6175     1920    90112        0             0 python
+[  +0.000005] [2198094] 3122343 2198094 64637004 36710934 297844736        0             0 python
+[  +0.000001] [2198095] 3122343 2198095 68427832 40364430 327184384        0             0 python
+[  +0.000002] [2198096] 3122343 2198096 65615989 38642625 313315328        0             0 python
+[  +0.000001] [2198097] 3122343 2198097 66506866 37523777 304439296        0             0 python
+[  +0.000001] [2198098] 3122343 2198098 67846111 41409288 335581184        0             0 python
+[  +0.000002] [2199317]     0 2199317   138166        0   135168        0          -999 slurmstepd
+[  +0.000001] [2199351] 3122343 2199351   138203        0   135168        0             0 slurmstepd
+[  +0.000002] [2199352] 3122343 2199352    55767      384    53248        0             0 prolog.task
+[  +0.000001] [2199357] 3122343 2199357   307609      384   102400        0             0 pubJobinfo
+[  +0.000001] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=tuned.service,mems_allowed=0-7,global_oom,task_memcg=/system.slice/slurmstepd.scope/job_1307119/step_batch/user/task_0,task=python,pid=2198098,uid=3122343
+[  +0.000169] Out of memory: Killed process 2198098 (python) total-vm:271384444kB, anon-rss:165440544kB, file-rss:56832kB, shmem-rss:139776kB, UID:3122343 pgtables:327716kB oom_score_adj:0
+[  +5.291997] oom_reaper: reaped process 2198098 (python), now anon-rss:0kB, file-rss:56832kB, shmem-rss:0kB
+[  +6.131300] cvmfs2 invoked oom-killer: gfp_mask=0x140cca(GFP_HIGHUSER_MOVABLE|__GFP_COMP), order=0, oom_score_adj=0
+[  +0.000015] CPU: 174 PID: 2199382 Comm: cvmfs2 Tainted: G S         OE      ------  ---  5.14.0-611.36.1.el9_7.x86_64 #1
+[  +0.000004] Hardware name: Lenovo ThinkSystem SD665 V3/SB27B96517, BIOS QGE140H-8.21 05/14/2025
+[  +0.000001] Call Trace:
+[  +0.000002]  <TASK>
+[  +0.000003]  dump_stack_lvl+0x34/0x48
+[  +0.000009]  dump_header+0x49/0x212
+[  +0.000003]  oom_kill_process.cold+0xb/0x10
+[  +0.000002]  out_of_memory+0xee/0x2b0
+[  +0.000005]  __alloc_pages_slowpath.constprop.0+0x793/0xb10
+[  +0.000005]  __alloc_pages+0x21c/0x250
+[  +0.000003]  alloc_pages_mpol+0x93/0x1e0
+[  +0.000004]  ? filemap_get_entry+0xe3/0x140
+[  +0.000003]  folio_alloc+0x12/0x30
+[  +0.000002]  __filemap_get_folio+0x189/0x2e0
+[  +0.000001]  filemap_fault+0x4d5/0x8b0
+[  +0.000003]  __do_fault+0x31/0x150
+[  +0.000003]  do_read_fault+0x11e/0x1d0
+[  +0.000002]  do_pte_missing+0x157/0x200
+[  +0.000001]  __handle_mm_fault+0x2fe/0x650
+[  +0.000002]  handle_mm_fault+0xfb/0x270
+[  +0.000001]  do_user_addr_fault+0x215/0x620
+[  +0.000004]  exc_page_fault+0x61/0x150
+[  +0.000003]  asm_exc_page_fault+0x22/0x30
+[  +0.000006] RIP: 0033:0x7fa6ebec41a0
+[  +0.000009] Code: Unable to access opcode bytes at 0x7fa6ebec4176.
+[  +0.000000] RSP: 002b:00007fa6c5ff1988 EFLAGS: 00010246
+[  +0.000002] RAX: 0000000000000000 RBX: 00000000024a1e90 RCX: 0000000000000073
+[  +0.000001] RDX: 0000000000000001 RSI: 0000000000000000 RDI: 00000000024a22a0
+[  +0.000001] RBP: 00007fa6c5ff1990 R08: 00007fa6ec363070 R09: 0000000000000000
+[  +0.000000] R10: 00007fa6ec363010 R11: 0000000000000297 R12: 0000000000000001
+[  +0.000000] R13: 0000000000009000 R14: 0000000000000000 R15: 0000000000009000
+[  +0.000001]  </TASK>
+[  +0.000004] Mem-Info:
+[  +0.000047] active_anon:97360817 inactive_anon:98337120 isolated_anon:0
+               active_file:0 inactive_file:3005 isolated_file:0
+               unevictable:768 dirty:0 writeback:0
+               slab_reclaimable:86023 slab_unreclaimable:336990
+               mapped:41703 shmem:482932 pagetables:387966
+               sec_pagetables:1154 bounce:0
+               kernel_misc_reclaimable:0
+               free:151422 free_pcp:0 free_cma:0
+[  +0.000003] Node 0 active_anon:10323532kB inactive_anon:86051960kB active_file:844kB inactive_file:0kB unevictable:3072kB isolated(anon):0kB isolated(file):0kB mapped:4kB dirty:0kB writeback:0kB shmem:3192kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:81545216kB writeback_tmp:0kB kernel_stack:8128kB pagetables:186576kB sec_pagetables:2612kB all_unreclaimable? yes
+[  +0.000003] Node 1 active_anon:12997160kB inactive_anon:85465988kB active_file:0kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:10416kB dirty:0kB writeback:0kB shmem:16548kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:88369152kB writeback_tmp:0kB kernel_stack:3936kB pagetables:192432kB sec_pagetables:356kB all_unreclaimable? yes
+[  +0.000002] Node 2 active_anon:83022040kB inactive_anon:15474728kB active_file:0kB inactive_file:7292kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:1512kB dirty:0kB writeback:0kB shmem:2640kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90535936kB writeback_tmp:0kB kernel_stack:4016kB pagetables:176280kB sec_pagetables:548kB all_unreclaimable? yes
+[  +0.000002] Node 3 active_anon:11057808kB inactive_anon:87011948kB active_file:0kB inactive_file:3776kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:4756kB dirty:0kB writeback:0kB shmem:6868kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90388480kB writeback_tmp:0kB kernel_stack:7204kB pagetables:192272kB sec_pagetables:540kB all_unreclaimable? yes
+[  +0.000001] Node 4 active_anon:88027740kB inactive_anon:10490544kB active_file:0kB inactive_file:1160kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:0kB dirty:0kB writeback:0kB shmem:40kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:69851136kB writeback_tmp:0kB kernel_stack:4756kB pagetables:219160kB sec_pagetables:292kB all_unreclaimable? yes
+[  +0.000002] Node 5 active_anon:15616564kB inactive_anon:82918900kB active_file:0kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:150120kB dirty:0kB writeback:0kB shmem:150612kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:87885824kB writeback_tmp:0kB kernel_stack:9268kB pagetables:197248kB sec_pagetables:196kB all_unreclaimable? yes
+[  +0.000001] Node 6 active_anon:84345088kB inactive_anon:14197152kB active_file:0kB inactive_file:540kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:0kB dirty:0kB writeback:0kB shmem:256kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:90439680kB writeback_tmp:0kB kernel_stack:5556kB pagetables:193968kB sec_pagetables:28kB all_unreclaimable? yes
+[  +0.000003] Node 7 active_anon:84053336kB inactive_anon:11737260kB active_file:236kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:4kB dirty:0kB writeback:0kB shmem:1751572kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:80855040kB writeback_tmp:0kB kernel_stack:8224kB pagetables:193928kB sec_pagetables:44kB all_unreclaimable? yes
+[  +0.000004] Node 0 DMA free:11264kB boost:0kB min:4kB low:16kB high:28kB reserved_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:15996kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000004] lowmem_reserve[]: 0 2321 96219 96219 96219
+[  +0.000006] Node 0 DMA32 free:376016kB boost:0kB min:676kB low:3052kB high:5428kB reserved_highatomic:0KB active_anon:77808kB inactive_anon:1969816kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:2498360kB managed:2430168kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000004] lowmem_reserve[]: 0 0 93897 93897 93897
+[  +0.000008] Node 0 Normal free:28004kB boost:129024kB min:156372kB low:252520kB high:348668kB reserved_highatomic:2048KB active_anon:10245724kB inactive_anon:84082144kB active_file:844kB inactive_file:0kB unevictable:3072kB writepending:0kB present:97779648kB managed:96157628kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000007] Node 1 Normal free:38032kB boost:12288kB min:40468kB low:139552kB high:238636kB reserved_highatomic:0KB active_anon:12997160kB inactive_anon:85465988kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 2 Normal free:28416kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:4096KB active_anon:83022040kB inactive_anon:15474728kB active_file:0kB inactive_file:7292kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000004] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000006] Node 3 Normal free:37852kB boost:2048kB min:30228kB low:129312kB high:228396kB reserved_highatomic:10240KB active_anon:11057808kB inactive_anon:87011948kB active_file:0kB inactive_file:3776kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 4 Normal free:29124kB boost:4096kB min:32276kB low:131360kB high:230444kB reserved_highatomic:0KB active_anon:88027740kB inactive_anon:10490544kB active_file:0kB inactive_file:1160kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000006] Node 5 Normal free:25740kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:0KB active_anon:15616564kB inactive_anon:82918900kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB present:100663296kB managed:99084040kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000006] Node 6 Normal free:21452kB boost:0kB min:28180kB low:127264kB high:226348kB reserved_highatomic:0KB active_anon:84345088kB inactive_anon:14197152kB active_file:0kB inactive_file:540kB unevictable:0kB writepending:0kB present:100663296kB managed:99084044kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000002] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000005] Node 7 Normal free:9788kB boost:0kB min:28156kB low:127152kB high:226148kB reserved_highatomic:0KB active_anon:84053336kB inactive_anon:11737260kB active_file:236kB inactive_file:0kB unevictable:0kB writepending:0kB present:100594432kB managed:98999284kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[  +0.000003] lowmem_reserve[]: 0 0 0 0 0
+[  +0.000004] Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB 1*1024kB (U) 1*2048kB (M) 2*4096kB (M) = 11264kB
+[  +0.000011] Node 0 DMA32: 16*4kB (U) 22*8kB (U) 16*16kB (U) 19*32kB (UME) 12*64kB (UME) 21*128kB (UME) 11*256kB (UE) 12*512kB (UE) 10*1024kB (UME) 4*2048kB (UME) 84*4096kB (UME) = 376016kB
+[  +0.000015] Node 0 Normal: 521*4kB (UM) 978*8kB (UE) 971*16kB (UE) 80*32kB (UE) 0*64kB 0*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 28004kB
+[  +0.000011] Node 1 Normal: 972*4kB (UME) 316*8kB (UME) 148*16kB (UE) 376*32kB (UME) 61*64kB (UME) 104*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 38032kB
+[  +0.000013] Node 2 Normal: 808*4kB (UME) 320*8kB (UME) 100*16kB (UME) 165*32kB (UME) 50*64kB (UME) 98*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 28416kB
+[  +0.000012] Node 3 Normal: 1005*4kB (UME) 279*8kB (UE) 129*16kB (UE) 101*32kB (UE) 235*64kB (UME) 88*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 37852kB
+[  +0.000012] Node 4 Normal: 2299*4kB (UM) 665*8kB (UME) 303*16kB (UME) 199*32kB (UME) 47*64kB (UME) 3*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 29124kB
+[  +0.000012] Node 5 Normal: 783*4kB (UME) 268*8kB (UME) 171*16kB (UME) 228*32kB (UME) 95*64kB (UME) 34*128kB (UM) 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 25740kB
+[  +0.000013] Node 6 Normal: 423*4kB (UE) 232*8kB (UM) 103*16kB (UM) 50*32kB (UM) 43*64kB (UM) 25*128kB (UM) 34*256kB (UM) 0*512kB 0*1024kB 0*2048kB 0*4096kB = 21452kB
+[  +0.000013] Node 7 Normal: 411*4kB (UM) 200*8kB (UME) 73*16kB (UME) 168*32kB (UME) 0*64kB 0*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB 0*4096kB = 9788kB
+[  +0.000012] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000002] Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 1 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 2 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 2 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 3 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 3 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 4 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 4 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 5 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 5 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 6 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000001] Node 6 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] Node 7 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
+[  +0.000000] Node 7 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[  +0.000001] 483380 total pagecache pages
+[  +0.000001] 0 pages in swap cache
+[  +0.000001] Free swap  = 0kB
+[  +0.000001] Total swap = 0kB
+[  +0.000001] 201217053 pages RAM
+[  +0.000000] 0 pages HighMem/MovableOnly
+[  +0.000001] 3190380 pages reserved
+[  +0.000001] 0 pages cma reserved
+[  +0.000000] 0 pages hwpoisoned
+[  +0.000002] Tasks state (memory values in pages):
+[  +0.000000] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
+[  +0.000065] [   2680]     0  2680    17445     6144   180224        0          -250 systemd-journal
+[  +0.000003] [   2727]    32  2727     3859      768    65536        0             0 rpcbind
+[  +0.000002] [   2735]     0  2735    13117     1536    90112        0         -1000 systemd-udevd
+[  +0.000003] [   3249]    81  3249     2676      384    57344        0          -900 dbus-broker-lau
+[  +0.000001] [   3250]    81  3250     1287        0    49152        0          -900 dbus-broker
+[  +0.000002] [   3251]     0  3251   118864     6528   147456        0             0 NetworkManager
+[  +0.000002] [   3254]     0  3254    20838     1152    65536        0             0 irqbalance
+[  +0.000002] [   3264]     0  3264     5035      768    77824        0             0 systemd-logind
+[  +0.000001] [   3311]     0  3311   119256     5376   139264        0             0 tuned
+[  +0.000002] [   3319]     0  3319    68095      384    77824        0             0 gssproxy
+[  +0.000001] [   3332]     0  3332    55340      384    53248        0             0 agetty
+[  +0.000002] [   3333]     0  3333    55351      384    45056        0             0 agetty
+[  +0.000001] [   3580]   997  3580   746138     1920   258048        0             0 polkitd
+[  +0.000001] [   4213]    29  4213     3023        0    57344        0             0 rpc.statd
+[  +0.000002] [   4283]     0  4283    51467     1920   167936        0             0 rsyslogd
+[  +0.000001] [   4302]   998  4302    21162      384    61440        0             0 chronyd
+[  +0.000001] [   4395]     0  4395   106092     1152   147456        0             0 automount
+[  +0.000002] [   4587]     0  4587   307903     5615   126976        0             0 utilcpu
+[  +0.000001] [   4620]     0  4620     8302      768    81920        0         -1000 sshd
+[  +0.000001] [   4645]     0  4645    55729      768    53248        0             0 likwid-collecto
+[  +0.000001] [   4713]     0  4713   310379     1696   126976        0             0 node_exporter
+[  +0.000002] [   7053]     0  7053     1756        0    49152        0          -999 slurmstepd
+[  +0.000002] [2458812]     0 2458812    68991     1920   126976        0             0 sssd
+[  +0.000001] [2458873]     0 2458873    73245     1860   159744        0             0 sssd_be
+[  +0.000002] [2458926]     0 2458926    74647     2770   180224        0             0 sssd_nss
+[  +0.000001] [2458928]     0 2458928    66434     2688   110592        0             0 sssd_pam
+[  +0.000002] [2460758]   993 2460758    52854      384    81920        0             0 munged
+[  +0.000003] [3999839]     0 3999839     4616        0    69632        0             0 cvmfs2
+[  +0.000001] [3999841]     0 3999841   134875     7313   208896        0             0 cvmfs2
+[  +0.000003] [ 107617]     0 107617     4616        0    65536        0             0 cvmfs2
+[  +0.000001] [ 107619]     0 107619  3500969   111597  1994752        0             0 cvmfs2
+[  +0.000005] [1874655]     0 1874655   391309      768   229376        0             0 slurmd
+[  +0.000003] [2022607]     0 2022607     4616        0    69632        0             0 cvmfs2
+[  +0.000001] [2022610]     0 2022610  3253184    71893  1683456        0             0 cvmfs2
+[  +0.000010] [1802493]     0 1802493   136111      768   126976        0          -999 slurmstepd
+[  +0.000001] [1802607]     0 1802607   134148      384   126976        0          -999 slurmstepd
+[  +0.000002] [1802616] 3122343 1802616    55716      384    69632        0             0 slurm_script
+[  +0.000002] [1802686] 3122343 1802686 10208851   399396  6397952        0             0 ipython
+[  +0.000001] [1802735] 3122343 1802735    30944     9984   221184        0             0 python
+[  +0.000001] [1802736] 3122343 1802736     6175     1920    90112        0             0 python
+[  +0.000004] [2198094] 3122343 2198094 64637004 47685384 385794048        0             0 python
+[  +0.000001] [2198095] 3122343 2198095 68427832 50855748 411152384        0             0 python
+[  +0.000002] [2198096] 3122343 2198096 65615989 47957769 387899392        0             0 python
+[  +0.000001] [2198097] 3122343 2198097 66506866 48191163 389885952        0             0 python
+[  +0.000002] [2199317]     0 2199317   138166        0   135168        0          -999 slurmstepd
+[  +0.000001] [2199351] 3122343 2199351   138203        0   135168        0             0 slurmstepd
+[  +0.000002] [2199352] 3122343 2199352    55767      384    53248        0             0 prolog.task
+[  +0.000001] [2199357] 3122343 2199357   307609     2688   106496        0             0 pubJobinfo
+[  +0.000002] [2199363]     0 2199363     7561     8064   102400        0             0 likwid-perfctr
+[  +0.000002] [2199391] 3122343 2199391    55732      384    57344        0             0 sh
+[  +0.000001] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=autofs.service,mems_allowed=0-7,global_oom,task_memcg=/system.slice/slurmstepd.scope/job_1307119/step_batch/user/task_0,task=python,pid=2198095,uid=3122343
+[  +0.000319] Out of memory: Killed process 2198095 (python) total-vm:273711328kB, anon-rss:203230992kB, file-rss:53760kB, shmem-rss:138240kB, UID:3122343 pgtables:401516kB oom_score_adj:0
+[  +5.526162] oom_reaper: reaped process 2198095 (python), now anon-rss:0kB, file-rss:53760kB, shmem-rss:0kB
+
