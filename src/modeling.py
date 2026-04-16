@@ -9,6 +9,8 @@ intervals, statistical significance testing, calibration diagnostics,
 cost-sensitive evaluation, SHAP explainability, and decision-rule export.
 """
 
+import re
+
 import joblib
 import numpy as np
 import pandas as pd
@@ -333,6 +335,18 @@ def make_reduction_step(
     )
 
 
+_UNSAFE_COL_RE = re.compile(r'[\[\]{}"\\]')
+
+
+def _sanitize_feature_names(X: pd.DataFrame) -> pd.DataFrame:
+    """Replace characters that LightGBM / JSON-based learners reject."""
+    new_cols = [_UNSAFE_COL_RE.sub("_", c) for c in X.columns]
+    if new_cols != list(X.columns):
+        X = X.copy()
+        X.columns = new_cols
+    return X
+
+
 def _apply_class_weighting(est, y_train: np.ndarray | None = None) -> bool:
     """Set class-weight parameters on *est* in-place.
 
@@ -582,6 +596,8 @@ def run_cv_experiment(
     """
     if model_configs is None:
         model_configs = CLASSIFICATION_MODELS
+
+    X = _sanitize_feature_names(X)
 
     cv = get_stratified_cv(n_splits=n_splits, random_state=random_state, groups=groups)
     splits = list(cv.split(X, y, groups))
@@ -1201,6 +1217,8 @@ def run_tuned_cv_experiment(
     if param_grids is None:
         param_grids = HYPERPARAM_GRIDS
 
+    X = _sanitize_feature_names(X)
+
     outer_cv = get_stratified_cv(n_outer_splits, random_state, groups)
     outer_splits = list(outer_cv.split(X, y, groups))
 
@@ -1310,6 +1328,8 @@ def compare_imbalance_strategies(
             f"Unknown model '{model_name}'. "
             f"Choose from: {list(CLASSIFICATION_MODELS)}"
         )
+
+    X_train = _sanitize_feature_names(X_train)
 
     estimator = clone(CLASSIFICATION_MODELS[model_name])
     use_scaler = model_name in SCALE_SENSITIVE_MODELS
