@@ -1,0 +1,182 @@
+No event loop hook running.
+Shape: (69990, 2473)
+Features: 2472  |  Target: readmitted_binary  |  Positive rate: 0.090
+Scaled matrix: (69990, 2472)
+80% variance explained by 1598 / 2472 components
+90% variance explained by 1881 / 2472 components
+95% variance explained by 2044 / 2472 components
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_variance_explained.png
+<Figure size 900x400 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_2d_projection.png
+<Figure size 900x700 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_tsne_2d.png
+<Figure size 900x700 with 1 Axes>
+umap-learn not installed — skipping UMAP visualisation.
+Clustering on PCA-50 representation: (69990, 50)
+  k=2  inertia=9754820.88
+  k=3  inertia=9342442.15
+  k=4  inertia=9187525.19
+  k=5  inertia=8974397.05
+  k=6  inertia=8610575.03
+  k=7  inertia=8455564.59
+  k=8  inertia=8467686.57
+  k=9  inertia=8331347.79
+  k=10  inertia=8175975.69
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_elbow_curve.png
+<Figure size 700x400 with 1 Axes>
+  k=2  silhouette=0.9514
+  k=3  silhouette=0.0799
+  k=4  silhouette=0.0819
+  k=5  silhouette=0.0821
+  k=6  silhouette=0.0907
+  k=7  silhouette=0.0947
+  k=8  silhouette=0.0593
+  k=9  silhouette=0.0597
+  k=10  silhouette=0.0575
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_silhouette_scores.png
+<Figure size 700x400 with 1 Axes>
+
+Best silhouette at k=2
+KMeans (k=2) – Silhouette Score: 0.9514
+<ipython-input-1-7574eada19d4>:2: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['cluster'] = cluster_labels
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_scatter_pca.png
+<Figure size 900x700 with 1 Axes>
+Cluster means (unscaled features):
+         time_in_hospital  ...  number_diagnoses
+cluster                    ...                  
+0                    4.27  ...              7.22
+1                    3.00  ...              7.50
+
+[2 rows x 8 columns]
+Saved to ../reports/tables/05_cluster_profiles.csv
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_profiles.png
+<Figure size 1800x800 with 8 Axes>
+Cluster × Readmission Crosstab:
+readmitted_binary      0     1    All
+cluster                              
+0                  63701  6285  69986
+1                      4     0      4
+All                63705  6285  69990
+
+Chi-squared = 0.00, p = 1.00e+00, dof = 1
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_cluster_readmission_rates.png
+<Figure size 700x400 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_dendrogram.png
+<Figure size 1400x600 with 1 Axes>
+Adjusted Rand Index (K-Means vs Agglomerative, k=2): 0.0000
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_kmeans_vs_agglomerative.png
+<Figure size 1600x600 with 2 Axes>
+  k=2  BIC=13096066  AIC=13071793
+  k=3  BIC=8298719  AIC=8262306
+  k=4  BIC=7943876  AIC=7895321
+  k=5  BIC=7734335  AIC=7673639
+  k=6  BIC=7699902  AIC=7627065
+  k=7  BIC=7305441  AIC=7220463
+  k=8  BIC=6939566  AIC=6842447
+  k=9  BIC=6342094  AIC=6232834
+  k=10  BIC=6620782  AIC=6499382
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_gmm_bic_aic.png
+<Figure size 800x400 with 1 Axes>
+GMM (k=2) fitted.
+Mean membership confidence: 1.000
+Cluster sizes: [69986     4]
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 21[39m
+[32m     19[39m ax.set_ylabel([33mf[39m[33m'[39m[33mPC2 ([39m[38;5;132;01m{[39;00mpca2.explained_variance_ratio_[[32m1[39m][38;5;132;01m:[39;00m[33m.1%[39m[38;5;132;01m}[39;00m[33m)[39m[33m'[39m)
+[32m     20[39m ax.set_title([33mf[39m[33m'[39m[33mGMM Soft Clustering (k=[39m[38;5;132;01m{[39;00mOPTIMAL_K[38;5;132;01m}[39;00m[33m), alpha = membership confidence[39m[33m'[39m)
+[32m---> [39m[32m21[39m ax.legend(*[43mscatter[49m[43m.[49m[43mlegend_elements[49m[43m([49m[43m)[49m, title=[33m'[39m[33mComponent[39m[33m'[39m, loc=[33m'[39m[33mupper right[39m[33m'[39m)
+[32m     22[39m fig.tight_layout()
+[32m     23[39m save_figure(fig, [33m'[39m[33m05_gmm_scatter.png[39m[33m'[39m)
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/matplotlib/collections.py:1168[39m, in [36mPathCollection.legend_elements[39m[34m(self, prop, num, fmt, func, **kwargs)[39m
+[32m   1166[39m     [38;5;28;01mif[39;00m np.isclose(size, [32m0.0[39m):
+[32m   1167[39m         [38;5;28;01mcontinue[39;00m
+[32m-> [39m[32m1168[39m h = [43mmlines[49m[43m.[49m[43mLine2D[49m[43m([49m[43m[[49m[32;43m0[39;49m[43m][49m[43m,[49m[43m [49m[43m[[49m[32;43m0[39;49m[43m][49m[43m,[49m[43m [49m[43mls[49m[43m=[49m[33;43m"[39;49m[33;43m"[39;49m[43m,[49m[43m [49m[43mcolor[49m[43m=[49m[43mcolor[49m[43m,[49m[43m [49m[43mms[49m[43m=[49m[43msize[49m[43m,[49m
+[32m   1169[39m [43m                  [49m[43mmarker[49m[43m=[49m[38;5;28;43mself[39;49m[43m.[49m[43mget_paths[49m[43m([49m[43m)[49m[43m[[49m[32;43m0[39;49m[43m][49m[43m,[49m[43m [49m[43m*[49m[43m*[49m[43mkw[49m[43m)[49m
+[32m   1170[39m handles.append(h)
+[32m   1171[39m [38;5;28;01mif[39;00m [38;5;28mhasattr[39m(fmt, [33m"[39m[33mset_locs[39m[33m"[39m):
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/matplotlib/lines.py:421[39m, in [36mLine2D.__init__[39m[34m(self, xdata, ydata, linewidth, linestyle, color, gapcolor, marker, markersize, markeredgewidth, markeredgecolor, markerfacecolor, markerfacecoloralt, fillstyle, antialiased, dash_capstyle, solid_capstyle, dash_joinstyle, solid_joinstyle, pickradius, drawstyle, markevery, **kwargs)[39m
+[32m    417[39m [38;5;28mself[39m.set_markeredgewidth(markeredgewidth)
+[32m    419[39m [38;5;66;03m# update kwargs before updating data to give the caller a[39;00m
+[32m    420[39m [38;5;66;03m# chance to init axes (and hence unit support)[39;00m
+[32m--> [39m[32m421[39m [38;5;28;43mself[39;49m[43m.[49m[43m_internal_update[49m[43m([49m[43mkwargs[49m[43m)[49m
+[32m    422[39m [38;5;28mself[39m.pickradius = pickradius
+[32m    423[39m [38;5;28mself[39m.ind_offset = [32m0[39m
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/matplotlib/artist.py:1233[39m, in [36mArtist._internal_update[39m[34m(self, kwargs)[39m
+[32m   1226[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m_internal_update[39m([38;5;28mself[39m, kwargs):
+[32m   1227[39m [38;5;250m    [39m[33;03m"""[39;00m
+[32m   1228[39m [33;03m    Update artist properties without prenormalizing them, but generating[39;00m
+[32m   1229[39m [33;03m    errors as if calling `set`.[39;00m
+[32m   1230[39m 
+[32m   1231[39m [33;03m    The lack of prenormalization is to maintain backcompatibility.[39;00m
+[32m   1232[39m [33;03m    """[39;00m
+[32m-> [39m[32m1233[39m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[43m.[49m[43m_update_props[49m[43m([49m
+[32m   1234[39m [43m        [49m[43mkwargs[49m[43m,[49m[43m [49m[33;43m"[39;49m[38;5;132;43;01m{cls.__name__}[39;49;00m[33;43m.set() got an unexpected keyword argument [39;49m[33;43m"[39;49m
+[32m   1235[39m [43m        [49m[33;43m"[39;49m[38;5;132;43;01m{prop_name!r}[39;49;00m[33;43m"[39;49m[43m)[49m
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/matplotlib/artist.py:1209[39m, in [36mArtist._update_props[39m[34m(self, props, errfmt)[39m
+[32m   1205[39m             [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mcallable[39m(func):
+[32m   1206[39m                 [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(
+[32m   1207[39m                     errfmt.format([38;5;28mcls[39m=[38;5;28mtype[39m([38;5;28mself[39m), prop_name=k),
+[32m   1208[39m                     name=k)
+[32m-> [39m[32m1209[39m             ret.append([43mfunc[49m[43m([49m[43mv[49m[43m)[49m)
+[32m   1210[39m [38;5;28;01mif[39;00m ret:
+[32m   1211[39m     [38;5;28mself[39m.pchanged()
+
+[36mFile [39m[32m/scratch/indrisch/venv_cp8305fp/lib/python3.11/site-packages/matplotlib/artist.py:1023[39m, in [36mArtist.set_alpha[39m[34m(self, alpha)[39m
+[32m   1014[39m [38;5;250m[39m[33;03m"""[39;00m
+[32m   1015[39m [33;03mSet the alpha value used for blending - not supported on all backends.[39;00m
+[32m   1016[39m 
+[32m   (...)[39m[32m   1020[39m [33;03m    *alpha* must be within the 0-1 range, inclusive.[39;00m
+[32m   1021[39m [33;03m"""[39;00m
+[32m   1022[39m [38;5;28;01mif[39;00m alpha [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(alpha, Real):
+[32m-> [39m[32m1023[39m     [38;5;28;01mraise[39;00m [38;5;167;01mTypeError[39;00m(
+[32m   1024[39m         [33mf[39m[33m'[39m[33malpha must be numeric or None, not [39m[38;5;132;01m{[39;00m[38;5;28mtype[39m(alpha)[38;5;132;01m}[39;00m[33m'[39m)
+[32m   1025[39m [38;5;28;01mif[39;00m alpha [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m [38;5;129;01mnot[39;00m ([32m0[39m <= alpha <= [32m1[39m):
+[32m   1026[39m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([33mf[39m[33m'[39m[33malpha ([39m[38;5;132;01m{[39;00malpha[38;5;132;01m}[39;00m[33m) is outside 0-1 range[39m[33m'[39m)
+
+[31mTypeError[39m: alpha must be numeric or None, not <class 'numpy.ndarray'>
+<Figure size 900x700 with 1 Axes>
+
+scontrol show job 1322393
+JobId=1322393 JobName=openmp_job
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1128084 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:06:36 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-04-14T15:31:44 EligibleTime=2026-04-14T15:31:44
+   AccrueTime=2026-04-14T15:31:44
+   StartTime=2026-04-14T15:32:24 EndTime=2026-04-14T15:39:00 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-14T15:32:24 Scheduler=Backfill
+   Partition=compute AllocNode:Sid=tri-login02:2803114
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri1216
+   BatchHost=tri1216
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/05_unsupervised_modelling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/05_unsupervised_modelling-1322393.out
+   TresPerTask=cpu=192
+
+sacct -j 1322393
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1322393      openmp_job def-wangcs   00:06:36                         00:00:00   00:00:00      0:0 
+1322393.bat+      batch def-wangcs   00:06:36                         00:00:00   00:00:00      0:0 
+1322393.ext+     extern def-wangcs   00:06:36                         00:00:00   00:00:00      0:0 
+

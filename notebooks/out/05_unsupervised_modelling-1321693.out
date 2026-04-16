@@ -1,0 +1,60 @@
+No event loop hook running.
+Shape: (69990, 2473)
+Features: 2472  |  Target: readmitted_binary  |  Positive rate: 0.090
+Scaled matrix: (69990, 2472)
+80% variance explained by 1598 / 2472 components
+90% variance explained by 1881 / 2472 components
+95% variance explained by 2044 / 2472 components
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_variance_explained.png
+<Figure size 900x400 with 1 Axes>
+Figure saved to /scratch/indrisch/CP8305FP/reports/figures/05_pca_2d_projection.png
+<Figure size 900x700 with 1 Axes>
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 12[39m
+[32m      9[39m pca_pre = PCA(n_components=PCA_PRE, random_state=[32m42[39m)
+[32m     10[39m X_pca50 = pca_pre.fit_transform(X_sample)
+[32m---> [39m[32m12[39m tsne = [43mTSNE[49m[43m([49m[43mn_components[49m[43m=[49m[32;43m2[39;49m[43m,[49m[43m [49m[43mperplexity[49m[43m=[49m[32;43m30[39;49m[43m,[49m[43m [49m[43mrandom_state[49m[43m=[49m[32;43m42[39;49m[43m,[49m[43m [49m[43mn_iter[49m[43m=[49m[32;43m1000[39;49m[43m)[49m
+[32m     13[39m X_tsne = tsne.fit_transform(X_pca50)
+[32m     15[39m fig, ax = plt.subplots(figsize=([32m9[39m, [32m7[39m))
+
+[31mTypeError[39m: TSNE.__init__() got an unexpected keyword argument 'n_iter'
+
+scontrol show job 1321693
+JobId=1321693 JobName=openmp_job
+   UserId=indrisch(3122343) GroupId=indrisch(3122343) MCS_label=N/A
+   Priority=1127747 Nice=0 Account=def-wangcs QOS=normal
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=0 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:46 TimeLimit=06:00:00 TimeMin=N/A
+   SubmitTime=2026-04-14T14:28:05 EligibleTime=2026-04-14T14:28:05
+   AccrueTime=2026-04-14T14:28:05
+   StartTime=2026-04-14T14:28:32 EndTime=2026-04-14T14:29:18 Deadline=N/A
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-14T14:28:32 Scheduler=Backfill
+   Partition=compute AllocNode:Sid=tri-login02:2803114
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=tri0037
+   BatchHost=tri0037
+   NumNodes=1 NumCPUs=192 NumTasks=1 CPUs/Task=192 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=192,mem=767000M,node=1,billing=192
+   AllocTRES=cpu=192,mem=767000M,node=1,billing=192
+   Socks/Node=* NtasksPerN:B:S:C=1:0:*:* CoreSpec=*
+   MinCPUsNode=192 MinMemoryNode=767000M MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=NO Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/scratch/indrisch/CP8305FP/notebooks/05_unsupervised_modelling.sh
+   SubmitLine=SBATCH --comment /opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   WorkDir=/scratch/indrisch/CP8305FP/notebooks
+   Comment=/opt/slurm/bin/sbatch --export=NONE --get-user-env 05_unsupervised_modelling.sh
+   StdErr=
+   StdIn=/dev/null
+   StdOut=/scratch/indrisch/CP8305FP/notebooks/out/05_unsupervised_modelling-1321693.out
+   TresPerTask=cpu=192
+
+sacct -j 1321693
+JobID           JobName    Account    Elapsed  MaxVMSize     MaxRSS  SystemCPU    UserCPU ExitCode 
+------------ ---------- ---------- ---------- ---------- ---------- ---------- ---------- -------- 
+1321693      openmp_job def-wangcs   00:00:46                         00:00:00   00:00:00      0:0 
+1321693.bat+      batch def-wangcs   00:00:46                         00:00:00   00:00:00      0:0 
+1321693.ext+     extern def-wangcs   00:00:46                         00:00:00   00:00:00      0:0 
+
