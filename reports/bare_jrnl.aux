@@ -1,19 +1,55 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\providecommand*\HyPL@Entry[1]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{strack_impact_2014}
 \citation{emi-johnson_predicting_2025}
 \citation{uci_diabetes_2014}
 \citation{hu_explainable_2020}
 \citation{graham_identifying_2019}
+\citation{rubin_correction_2018}
+\citation{liu_comparison_2024}
 \citation{strack_impact_2014}
-\HyPL@Entry{0<</S/D>>}
+\citation{strack_impact_2014}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {II}Data}{1}{section.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Correlation heatmap revealing the relationships between key engineered clinical features and the readmission target variable. While this can indicate where to seek future research for causal links, we note that there is limited correlation with the target variable.}}{2}{figure.1}\protected@file@percent }
-\newlabel{fig:correlation_heatmap}{{1}{2}{Correlation heatmap revealing the relationships between key engineered clinical features and the readmission target variable. While this can indicate where to seek future research for causal links, we note that there is limited correlation with the target variable}{figure.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Model}{2}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Analysis and Findings}{2}{section.4}\protected@file@percent }
+\citation{ke2017lightgbm}
+\citation{chen2016xgboost}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Top 5 Global Association Rules by Lift}}{2}{table.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:assoc_rules}{{I}{2}{Top 5 Global Association Rules by Lift}{table.caption.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Correlation heatmap revealing the relationships between key engineered clinical features and the readmission target variable. While this can indicate where to seek future research for causal links, we note that there is limited correlation with the target variable.}}{2}{figure.caption.2}\protected@file@percent }
+\newlabel{fig:correlation_heatmap}{{1}{2}{Correlation heatmap revealing the relationships between key engineered clinical features and the readmission target variable. While this can indicate where to seek future research for causal links, we note that there is limited correlation with the target variable}{figure.caption.2}{}}
+\citation{chawla2002smote}
+\citation{abdi2010principal}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Model}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Analysis and Findings}{3}{section.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Performance of different models on various metrics, after applying techniques to address class imbalance. LightGBM achieved the best overall performance.}}{3}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:metrics}{{2}{3}{Performance of different models on various metrics, after applying techniques to address class imbalance. LightGBM achieved the best overall performance}{figure.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Cross-Validation Performance Results (Mean Metrics). \textit  {Note:} Default threshold metrics for models. AUC-ROC remains robust despite poor F1 calibration.}}{3}{table.caption.4}\protected@file@percent }
+\newlabel{tab:model_comparison}{{II}{3}{Cross-Validation Performance Results (Mean Metrics). \textit {Note:} Default threshold metrics for models. AUC-ROC remains robust despite poor F1 calibration}{table.caption.4}{}}
+\citation{nohara2022explanation}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Receiver Operating Characteristic (ROC) curves highlighting the performance of the various tuned models.}}{4}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:roc_curves}{{3}{4}{Receiver Operating Characteristic (ROC) curves highlighting the performance of the various tuned models}{figure.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Global SHAP summary highlighting the most impactful clinical features on readmission likelihood.}}{5}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:shap_summary}{{4}{5}{Global SHAP summary highlighting the most impactful clinical features on readmission likelihood}{figure.caption.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Permutation importance ranking demonstrating the reliance on historical utilization and medication complexity.}}{5}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:permutation_importance}{{5}{5}{Permutation importance ranking demonstrating the reliance on historical utilization and medication complexity}{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Feature importance output confirming key drivers of readmission risk.}}{6}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:feature_importance}{{6}{6}{Feature importance output confirming key drivers of readmission risk}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Confusion matrix evaluated on the test set using the default threshold, visualizing the extreme drop in minority class recall.}}{6}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:confusion_matrix_final}{{7}{6}{Confusion matrix evaluated on the test set using the default threshold, visualizing the extreme drop in minority class recall}{figure.caption.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Mean Clinical Profiles Across Discovered Clusters}}{6}{table.caption.13}\protected@file@percent }
+\newlabel{tab:cluster_profiles}{{III}{6}{Mean Clinical Profiles Across Discovered Clusters}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusions and Takeaways}{6}{section.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Cost-threshold sweep demonstrating the optimal probability threshold to minimize financial penalties.}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:cost_threshold}{{8}{7}{Cost-threshold sweep demonstrating the optimal probability threshold to minimize financial penalties}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces PCA cumulative explained variance, illustrating the high dimensionality and sparsity of the clinical features.}}{7}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:pca_variance}{{9}{7}{PCA cumulative explained variance, illustrating the high dimensionality and sparsity of the clinical features}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Silhouette scores for K-Means clustering on the PCA-50 projection, identifying an optimal $k=3$ patient clusters.}}{7}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:silhouette_scores}{{10}{7}{Silhouette scores for K-Means clustering on the PCA-50 projection, identifying an optimal $k=3$ patient clusters}{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Feature heatmap highlighting distinct clinical profiles across the three discovered patient clusters.}}{7}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:cluster_heatmap}{{11}{7}{Feature heatmap highlighting distinct clinical profiles across the three discovered patient clusters}{figure.caption.14}{}}
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{strack_impact_2014}{1}
@@ -21,8 +57,12 @@
 \bibcite{uci_diabetes_2014}{3}
 \bibcite{hu_explainable_2020}{4}
 \bibcite{graham_identifying_2019}{5}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Performance of different models on various metrics, after applying techniques to address class imbalance. The cost-sensitive evaluation framework reveals that while some models may have similar AUC-ROC scores, their practical utility in reducing HRRP penalties can differ significantly based on their ability to capture minority class instances.}}{3}{figure.2}\protected@file@percent }
-\newlabel{fig:metrics}{{2}{3}{Performance of different models on various metrics, after applying techniques to address class imbalance. The cost-sensitive evaluation framework reveals that while some models may have similar AUC-ROC scores, their practical utility in reducing HRRP penalties can differ significantly based on their ability to capture minority class instances}{figure.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusions}{3}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{3}{section*.1}\protected@file@percent }
-\gdef \@abspage@last{4}
+\bibcite{rubin_correction_2018}{6}
+\bibcite{liu_comparison_2024}{7}
+\bibcite{ke2017lightgbm}{8}
+\bibcite{chen2016xgboost}{9}
+\bibcite{chawla2002smote}{10}
+\bibcite{abdi2010principal}{11}
+\bibcite{nohara2022explanation}{12}
+\@writefile{toc}{\contentsline {section}{References}{8}{section*.15}\protected@file@percent }
+\gdef \@abspage@last{8}

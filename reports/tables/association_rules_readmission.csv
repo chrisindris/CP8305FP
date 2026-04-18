@@ -1,0 +1,6 @@
+antecedents,consequents,support,confidence,lift
+"frozenset({'max_glu_serum=None', 'A1Cresult=None', 'glipizide=No', 'diabetesMed=No', 'readmitted_binary=0', 'glyburide=No'})","frozenset({'pioglitazone=No', 'rosiglitazone=No', 'metformin=No'})",0.17141284908515614,1.0,1.406715231604993
+"frozenset({'insulin=No', 'rosiglitazone=No', 'max_glu_serum=None', 'metformin=No', 'A1Cresult=None', 'diabetesMed=No', 'readmitted_binary=0', 'gender=Female'})","frozenset({'pioglitazone=No', 'glipizide=No'})",0.09549358331859363,1.0,1.224753583420587
+"frozenset({'race=Caucasian', 'rosiglitazone=No', 'insulin=No', 'max_glu_serum=None', 'gender=Male', 'metformin=No', 'diabetesMed=No', 'readmitted_binary=0', 'change=No'})","frozenset({'pioglitazone=No', 'glipizide=No'})",0.06741937385767349,1.0,1.224753583420587
+"frozenset({'race=Caucasian', 'diabetesMed=No', 'readmitted_binary=0', 'gender=Male'})","frozenset({'pioglitazone=No', 'glipizide=No'})",0.07223434152860483,1.0,1.224753583420587
+"frozenset({'insulin=No', 'A1Cresult=None', 'diabetesMed=No', 'readmitted_binary=0', 'glyburide=No', 'gender=Female', 'change=No'})","frozenset({'pioglitazone=No', 'glipizide=No'})",0.10159581785665153,1.0,1.224753583420587

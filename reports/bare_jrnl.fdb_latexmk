@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex bare_jrnl"] 1775879034.6855 "bare_jrnl.aux" "bare_jrnl.bbl" "bare_jrnl" 1775879319.78202 0
-  "./references.bib" 1775885450 16965 612641e01a7a4292e06bb06c8f3db5d6 ""
+["bibtex bare_jrnl"] 1776363292.07067 "bare_jrnl.aux" "bare_jrnl.bbl" "bare_jrnl" 1776363294.15259 0
+  "./references.bib" 1776359799.032 21510 2f89626fa5569eee109b8c648d0cf98a ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "bare_jrnl.aux" 1775879319.15023 2748 5994178abe0a5dacd817eeca7c08ffbe "pdflatex"
+  "bare_jrnl.aux" 1776363293.90527 7451 b04c291b9a6898f21f7b4760ae15ffb5 "pdflatex"
   (generated)
   "bare_jrnl.bbl"
   "bare_jrnl.blg"
   (rewritten before read)
-["pdflatex"] 1775879318.17654 "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/reports/bare_jrnl.tex" "bare_jrnl.pdf" "bare_jrnl" 1775879319.78231 0
-  "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/reports/bare_jrnl.tex" 1775879317.85004 13686 164f626f5a13a4e13c4a5dfc40c97d83 ""
+["pdflatex"] 1776363292.19979 "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/reports/bare_jrnl.tex" "bare_jrnl.pdf" "bare_jrnl" 1776363294.15284 0
+  "/Users/chrisindris/Documents/PhD/CP8305-KD/Project/CP8305FP/reports/bare_jrnl.tex" 1776363289.52409 26444 20bb46b3d6a33eb15b66a3da25ee8298 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -66,6 +66,8 @@
   "/usr/local/texlive/2025/texmf-dist/tex/latex/atveryend/atveryend.sty" 1728505250 1695 be6b4d13b33db697fd3fd30b24716c1a ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty" 1738182759 2963 d8ec5a1b4e0a106c5c737900202763e4 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/base/atveryend-ltx.sty" 1738182759 2378 14b657ee5031da98cf91648f19642694 ""
+  "/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption.sty" 1696191071 56128 c2ccf1a29d78c33bc553880402e4fb9a ""
+  "/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption3.sty" 1696191071 72619 ee90b6612147680fd73c3b1406a74245 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1579991033 13886 d1306dcf79a944f6988e688c1785f9ce ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty" 1739306980 46850 d87daedc2abdc653769a6f1067849fe0 ""
   "/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/graphics.cfg" 1465944070 1224 978390e9c2234eab29404bc21b268d1e ""
@@ -95,12 +97,21 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1758937881 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "bare_jrnl.aux" 1775879319.15023 2748 5994178abe0a5dacd817eeca7c08ffbe "pdflatex"
-  "bare_jrnl.bbl" 1775879034.83513 2660 013caf6300d6b808880d288deab26837 "bibtex bare_jrnl"
-  "bare_jrnl.out" 1775879319.15138 580 55d30053df6c75e77ccafd9c79e51f9f "pdflatex"
-  "bare_jrnl.tex" 1775879317.85004 13686 164f626f5a13a4e13c4a5dfc40c97d83 ""
-  "figures/01_correlation_heatmap.png" 1775877417.40267 254801 21b85d9bb2bac1ef182e2e68f1dfb1a7 ""
-  "figures/metrics.png" 1775878053.75294 63064 a1177845c4e0f0c2f52869a9679ac219 ""
+  "bare_jrnl.aux" 1776363293.90527 7451 b04c291b9a6898f21f7b4760ae15ffb5 "pdflatex"
+  "bare_jrnl.bbl" 1776363292.19392 4594 7fbf1c7f43df14b0fe3781dd84f648f7 "bibtex bare_jrnl"
+  "bare_jrnl.out" 1776363293.90651 657 5105f75066a76a3d7a8e91f1763e5e93 "pdflatex"
+  "bare_jrnl.tex" 1776363289.52409 26444 20bb46b3d6a33eb15b66a3da25ee8298 ""
+  "figures/01_correlation_heatmap.png" 1776360395.49989 254801 21b85d9bb2bac1ef182e2e68f1dfb1a7 ""
+  "figures/03_cost_threshold_sweep.png" 1776344343.34361 75188 c2239cc4d64100a478c8b1984dc4079f ""
+  "figures/03_model_comparison.png" 1776344599.84892 100413 3a743752c3f2d40efa01e91a20b65e34 ""
+  "figures/03_roc_curves.png" 1776344343.35008 220785 bc4e012c531e2f40052b1a54395efc65 ""
+  "figures/03_shap_summary.png" 1776344343.35221 184909 f4178b772ecf32607091a05fcf7f7d49 ""
+  "figures/04_confusion_matrix_final.png" 1776344343.35294 21853 96c7539e3b8638c5ac8168300d28c644 ""
+  "figures/04_feature_importance.png" 1776344343.35328 81491 438e9e6a57a67b71c579596758a9835d ""
+  "figures/04_permutation_importance.png" 1776344343.35386 102626 2822e9cce99f6755fc47ffbb83fbd520 ""
+  "figures/05_cluster_feature_heatmap.png" 1776344343.35435 80036 c795e2c08a420c98ca60ee5fd410fe2d ""
+  "figures/05_pca_variance_explained.png" 1776344343.38741 53356 f9ccdc6ff0325d1e88f5b84150c118b6 ""
+  "figures/05_silhouette_scores.png" 1776344343.38785 50186 b235668e2fcfd945cabca71df8a93ec4 ""
   (generated)
   "bare_jrnl.aux"
   "bare_jrnl.log"
