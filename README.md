@@ -2,11 +2,11 @@
 
 ## Team Members
 
-| Name | Student ID |
-|------|-----------|
-| _Member 1_ | _ID_ |
-| _Mojtaba Mohammadi_ | _501069345_ |
-| _Member 3_ | _ID_ |
+| Name                   | Student ID    |
+| ---------------------- | ------------- |
+| _Christopher Indris_ | _500874870_     |
+| _Mojtaba Mohammadi_  | _501069345_ |
+| _Mohammad Al Batayeh_           | _ID_        |
 
 ## Project Topic
 
@@ -101,15 +101,15 @@ data/raw/   →   02_data_preprocessing.ipynb   →   data/processed/
 
 Key libraries used in this project:
 
-| Library | Purpose |
-|---------|---------|
+| Library          | Purpose                                         |
+| ---------------- | ----------------------------------------------- |
 | `scikit-learn` | Machine learning models, pipelines, and metrics |
-| `pandas` | Data manipulation and analysis |
-| `numpy` | Numerical computing |
-| `matplotlib` | Plotting |
-| `seaborn` | Statistical visualisation |
-| `plotly` | Interactive charts |
-| `joblib` | Model serialisation |
+| `pandas`       | Data manipulation and analysis                  |
+| `numpy`        | Numerical computing                             |
+| `matplotlib`   | Plotting                                        |
+| `seaborn`      | Statistical visualisation                       |
+| `plotly`       | Interactive charts                              |
+| `joblib`       | Model serialisation                             |
 
 See `requirements.txt` for the full list with pinned versions.
 

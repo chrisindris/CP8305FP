@@ -3,6 +3,8 @@ data/processed/
 diabetic_data.csv
 offline_wheels/
 processed_dataset.csv
+.DS_Store
+data/.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
