@@ -2,11 +2,11 @@
 
 ## Team Members
 
-| Name                   | Student ID    |
-| ---------------------- | ------------- |
-| _Christopher Indris_ | _500874870_     |
-| _Mojtaba Mohammadi_  | _501069345_ |
-| _Mohammad Al Batayeh_           | _501287150_        |
+| Name                     | Student ID    |
+| ------------------------ | ------------- |
+| _Christopher Indris_   | _500874870_ |
+| _Mojtaba Mohammadi_    | _501069345_ |
+| _Mohammad Al Batayneh_ | _501287150_ |
 
 ## Project Topic
 
